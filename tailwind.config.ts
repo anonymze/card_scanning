@@ -1,31 +1,47 @@
-// @ts-expect-error This file does not have type definitions.
-import nativewindPreset from 'nativewind/dist/tailwind/index.js';
-import type { Config } from 'tailwindcss';
-import type { CSSRuleObject } from 'tailwindcss/types/config.d.ts';
-import colors from './src/ui/colors.ts';
+import type { Config } from "tailwindcss";
 
-const variables: { [key: string]: string } = {};
-const colorMap: { [key: string]: string } = {};
-
-for (const [name, color] of Object.entries(colors)) {
-  variables[`--${name}`] = color;
-  colorMap[name] = `var(--${name})`;
-}
-
-export default {
-  content: ['./src/**/*.{js,ts,tsx}'],
-  plugins: [
-    ({
-      addBase,
-    }: {
-      addBase: (base: CSSRuleObject | Array<CSSRuleObject>) => void;
-    }) =>
-      addBase({
-        ':root': variables,
-      }),
-  ],
-  presets: [nativewindPreset],
-  theme: {
-    colors: colorMap,
-  },
+const config = {
+	corePlugins: {
+		// we remove the font weight because we use the font family instead for each font, and font weight can interfere with the font family on Android
+		// when you set font-bold for example, it sets the font weight and the font family so the font family will still be applied
+		fontWeight: false,
+		// default base style tailwind on elements (does not remove utilities ex: text-white)
+		preflight: false,
+	},
+	content: ["./src/**/*.{js,jsx,ts,tsx}", "./components/**/*.{js,jsx,ts,tsx}"],
+	presets: [require("nativewind/preset")],
+	darkMode: "class",
+	theme: {
+		fontFamily: {
+			// light: ["PlusJakartaSans-Light"],
+			// regular: ["PlusJakartaSans-Regular"],
+			// medium: ["PlusJakartaSans-Medium"],
+			// semibold: ["PlusJakartaSans-SemiBold"],
+			// bold: ["PlusJakartaSans-Bold"],
+			// italic: ["PlusJakartaSans-Italic"],
+		},
+		extend: {
+			colors: {
+				dark: "#15202a",
+				primary: "#363F72",
+				primaryLight: "#717BBC",
+				primaryUltraLight: "#EBF2FF",
+				backgroundChat: "#4E5BA6",
+				textChat: "#15202A",
+				background: "#f4f5f6",
+				secondary: "#FCE7F6",
+				secondaryLight: "#fcebf7",
+				defaultGray: "#6A829A",
+				lightGray: "#AFB5D9",
+				darkGray: "#EAECF5",
+				pink: "#F670C7",
+				red2: "#B42318",
+				production: "#FDA29B",
+				encours: "#6172F3",
+				structured: "#7CD4FD",
+			},
+		},
+	},
 } satisfies Config;
+
+export default config;
