@@ -46,6 +46,9 @@ importers:
       expo-dev-client:
         specifier: 5.1.9-canary-20250729-d8899ae
         version: 5.1.9-canary-20250729-d8899ae(expo@54.0.0-canary-20250729-d8899ae(@babel/core@7.28.0)(@expo/metro-runtime@6.0.0-canary-20250729-d8899ae(react-native@0.80.1(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.1.0)))(graphql@16.10.0)(metro-runtime@0.83.0)(react-native@0.80.1(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.1.0))(react-refresh@0.17.0)(react@19.1.0))
+      expo-dev-launcher:
+        specifier: ^5.1.16
+        version: 5.1.16(expo@54.0.0-canary-20250729-d8899ae(@babel/core@7.28.0)(@expo/metro-runtime@6.0.0-canary-20250729-d8899ae(react-native@0.80.1(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.1.0)))(graphql@16.10.0)(metro-runtime@0.83.0)(react-native@0.80.1(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.1.0))(react-refresh@0.17.0)(react@19.1.0))
       expo-font:
         specifier: 13.4.0-canary-20250729-d8899ae
         version: 13.4.0-canary-20250729-d8899ae(expo@54.0.0-canary-20250729-d8899ae(@babel/core@7.28.0)(@expo/metro-runtime@6.0.0-canary-20250729-d8899ae(react-native@0.80.1(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.1.0)))(graphql@16.10.0)(metro-runtime@0.83.0)(react-native@0.80.1(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.1.0))(react-refresh@0.17.0)(react@19.1.0))(react@19.1.0)
@@ -2101,6 +2104,9 @@ packages:
   ajv@6.12.6:
     resolution: {integrity: sha512-j3fVLgvTo527anyYyJOGTYJbG+vnnQYvE0m5mmkc1TK+nxAppkCLMIL0aZ4dblVCNoGShhm+kzE4ZUykBoMg4g==}
 
+  ajv@8.11.0:
+    resolution: {integrity: sha512-wGgprdCvMalC0BztXvitD2hC04YffAvtsUn93JbGXYLAtCUO4xd17mCCZQxUOItiBwZvJScWo8NIvQMQ71rdpg==}
+
   ajv@8.17.1:
     resolution: {integrity: sha512-B/gBuNg5SiMTrPkC+A2+cW0RszwxYmn6VYxB/inlBStS5nx6xHIt/ehKRhIMhqusl7a8LjQoZnjCs5vhwxOQ1g==}
 
@@ -2797,15 +2803,30 @@ packages:
     peerDependencies:
       expo: 54.0.0-canary-20250729-d8899ae
 
+  expo-dev-launcher@5.1.16:
+    resolution: {integrity: sha512-tbCske9pvbozaEblyxoyo/97D6od9Ma4yAuyUnXtRET1CKAPKYS+c4fiZ+I3B4qtpZwN3JNFUjG3oateN0y6Hg==}
+    peerDependencies:
+      expo: '*'
+
   expo-dev-launcher@5.2.0-canary-20250729-d8899ae:
     resolution: {integrity: sha512-R2Y9NHwHRFdmHrgrpkSOnQ+6p8YdUWUxOCX858Jo6VIstvCzxHbLqTdMiRGFXfevqP3g5H7UPeOwWONQCg5E0A==}
     peerDependencies:
       expo: 54.0.0-canary-20250729-d8899ae
 
+  expo-dev-menu-interface@1.10.0:
+    resolution: {integrity: sha512-NxtM/qot5Rh2cY333iOE87dDg1S8CibW+Wu4WdLua3UMjy81pXYzAGCZGNOeY7k9GpNFqDPNDXWyBSlk9r2pBg==}
+    peerDependencies:
+      expo: '*'
+
   expo-dev-menu-interface@1.10.1-canary-20250729-d8899ae:
     resolution: {integrity: sha512-1iVlF+Y1NwDMGYGoYVN+vHXSjkiwyHdCDEReg9yIbZ7UykqHVpJEw0Yg26d47jjE2v332NMsoK95x0LuuzFiqA==}
     peerDependencies:
       expo: 54.0.0-canary-20250729-d8899ae
+
+  expo-dev-menu@6.1.14:
+    resolution: {integrity: sha512-yonNMg2GHJZtuisVowdl1iQjZfYP85r1D1IO+ar9D9zlrBPBJhq2XEju52jd1rDmDkmDuEhBSbPNhzIcsBNiPg==}
+    peerDependencies:
+      expo: '*'
 
   expo-dev-menu@6.2.0-canary-20250729-d8899ae:
     resolution: {integrity: sha512-7a/m2fZJTPi2ZVtjfqvD6pbHLCUOOpVKSkZA1F0XVuEdhQwMpuhyCaOnKySInH2lXs9a09syIM3sghNpLYwu5g==}
@@ -2823,6 +2844,9 @@ packages:
     peerDependencies:
       expo: 54.0.0-canary-20250729-d8899ae
       react: '*'
+
+  expo-json-utils@0.15.0:
+    resolution: {integrity: sha512-duRT6oGl80IDzH2LD2yEFWNwGIC2WkozsB6HF3cDYNoNNdUvFk6uN3YiwsTsqVM/D0z6LEAQ01/SlYvN+Fw0JQ==}
 
   expo-json-utils@0.15.1-canary-20250729-d8899ae:
     resolution: {integrity: sha512-or8tMaOjUShdjbkG/Grfg8ubCkLXLIM3pynM7ZnKO4VCMsZ9O4LfO25cmcEq0L4mfUMPX9h1OUnLqFAukepndQ==}
@@ -2844,6 +2868,11 @@ packages:
     peerDependencies:
       expo: 54.0.0-canary-20250729-d8899ae
       react: '*'
+
+  expo-manifests@0.16.6:
+    resolution: {integrity: sha512-1A+do6/mLUWF9xd3uCrlXr9QFDbjbfqAYmUy8UDLOjof1lMrOhyeC4Yi6WexA/A8dhZEpIxSMCKfn7G4aHAh4w==}
+    peerDependencies:
+      expo: '*'
 
   expo-manifests@0.17.0-canary-20250729-d8899ae:
     resolution: {integrity: sha512-yJSzTaVNBPAYS9kds002/yJ9aAIlbaTnkhJV4NuJDOZiok8INU8OUpBGSSrwr24RNMKitdV1TjU44ZxrIWVjig==}
@@ -7474,6 +7503,13 @@ snapshots:
       json-schema-traverse: 0.4.1
       uri-js: 4.4.1
 
+  ajv@8.11.0:
+    dependencies:
+      fast-deep-equal: 3.1.3
+      json-schema-traverse: 1.0.0
+      require-from-string: 2.0.2
+      uri-js: 4.4.1
+
   ajv@8.17.1:
     dependencies:
       fast-deep-equal: 3.1.3
@@ -8275,6 +8311,16 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  expo-dev-launcher@5.1.16(expo@54.0.0-canary-20250729-d8899ae(@babel/core@7.28.0)(@expo/metro-runtime@6.0.0-canary-20250729-d8899ae(react-native@0.80.1(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.1.0)))(graphql@16.10.0)(metro-runtime@0.83.0)(react-native@0.80.1(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.1.0))(react-refresh@0.17.0)(react@19.1.0)):
+    dependencies:
+      ajv: 8.11.0
+      expo: 54.0.0-canary-20250729-d8899ae(@babel/core@7.28.0)(@expo/metro-runtime@6.0.0-canary-20250729-d8899ae(react-native@0.80.1(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.1.0)))(graphql@16.10.0)(metro-runtime@0.83.0)(react-native@0.80.1(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.1.0))(react-refresh@0.17.0)(react@19.1.0)
+      expo-dev-menu: 6.1.14(expo@54.0.0-canary-20250729-d8899ae(@babel/core@7.28.0)(@expo/metro-runtime@6.0.0-canary-20250729-d8899ae(react-native@0.80.1(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.1.0)))(graphql@16.10.0)(metro-runtime@0.83.0)(react-native@0.80.1(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.1.0))(react-refresh@0.17.0)(react@19.1.0))
+      expo-manifests: 0.16.6(expo@54.0.0-canary-20250729-d8899ae(@babel/core@7.28.0)(@expo/metro-runtime@6.0.0-canary-20250729-d8899ae(react-native@0.80.1(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.1.0)))(graphql@16.10.0)(metro-runtime@0.83.0)(react-native@0.80.1(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.1.0))(react-refresh@0.17.0)(react@19.1.0))
+      resolve-from: 5.0.0
+    transitivePeerDependencies:
+      - supports-color
+
   expo-dev-launcher@5.2.0-canary-20250729-d8899ae(expo@54.0.0-canary-20250729-d8899ae(@babel/core@7.28.0)(@expo/metro-runtime@6.0.0-canary-20250729-d8899ae(react-native@0.80.1(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.1.0)))(graphql@16.10.0)(metro-runtime@0.83.0)(react-native@0.80.1(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.1.0))(react-refresh@0.17.0)(react@19.1.0)):
     dependencies:
       expo: 54.0.0-canary-20250729-d8899ae(@babel/core@7.28.0)(@expo/metro-runtime@6.0.0-canary-20250729-d8899ae(react-native@0.80.1(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.1.0)))(graphql@16.10.0)(metro-runtime@0.83.0)(react-native@0.80.1(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.1.0))(react-refresh@0.17.0)(react@19.1.0)
@@ -8283,9 +8329,18 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  expo-dev-menu-interface@1.10.0(expo@54.0.0-canary-20250729-d8899ae(@babel/core@7.28.0)(@expo/metro-runtime@6.0.0-canary-20250729-d8899ae(react-native@0.80.1(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.1.0)))(graphql@16.10.0)(metro-runtime@0.83.0)(react-native@0.80.1(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.1.0))(react-refresh@0.17.0)(react@19.1.0)):
+    dependencies:
+      expo: 54.0.0-canary-20250729-d8899ae(@babel/core@7.28.0)(@expo/metro-runtime@6.0.0-canary-20250729-d8899ae(react-native@0.80.1(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.1.0)))(graphql@16.10.0)(metro-runtime@0.83.0)(react-native@0.80.1(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.1.0))(react-refresh@0.17.0)(react@19.1.0)
+
   expo-dev-menu-interface@1.10.1-canary-20250729-d8899ae(expo@54.0.0-canary-20250729-d8899ae(@babel/core@7.28.0)(@expo/metro-runtime@6.0.0-canary-20250729-d8899ae(react-native@0.80.1(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.1.0)))(graphql@16.10.0)(metro-runtime@0.83.0)(react-native@0.80.1(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.1.0))(react-refresh@0.17.0)(react@19.1.0)):
     dependencies:
       expo: 54.0.0-canary-20250729-d8899ae(@babel/core@7.28.0)(@expo/metro-runtime@6.0.0-canary-20250729-d8899ae(react-native@0.80.1(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.1.0)))(graphql@16.10.0)(metro-runtime@0.83.0)(react-native@0.80.1(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.1.0))(react-refresh@0.17.0)(react@19.1.0)
+
+  expo-dev-menu@6.1.14(expo@54.0.0-canary-20250729-d8899ae(@babel/core@7.28.0)(@expo/metro-runtime@6.0.0-canary-20250729-d8899ae(react-native@0.80.1(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.1.0)))(graphql@16.10.0)(metro-runtime@0.83.0)(react-native@0.80.1(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.1.0))(react-refresh@0.17.0)(react@19.1.0)):
+    dependencies:
+      expo: 54.0.0-canary-20250729-d8899ae(@babel/core@7.28.0)(@expo/metro-runtime@6.0.0-canary-20250729-d8899ae(react-native@0.80.1(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.1.0)))(graphql@16.10.0)(metro-runtime@0.83.0)(react-native@0.80.1(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.1.0))(react-refresh@0.17.0)(react@19.1.0)
+      expo-dev-menu-interface: 1.10.0(expo@54.0.0-canary-20250729-d8899ae(@babel/core@7.28.0)(@expo/metro-runtime@6.0.0-canary-20250729-d8899ae(react-native@0.80.1(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.1.0)))(graphql@16.10.0)(metro-runtime@0.83.0)(react-native@0.80.1(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.1.0))(react-refresh@0.17.0)(react@19.1.0))
 
   expo-dev-menu@6.2.0-canary-20250729-d8899ae(expo@54.0.0-canary-20250729-d8899ae(@babel/core@7.28.0)(@expo/metro-runtime@6.0.0-canary-20250729-d8899ae(react-native@0.80.1(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.1.0)))(graphql@16.10.0)(metro-runtime@0.83.0)(react-native@0.80.1(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.1.0))(react-refresh@0.17.0)(react@19.1.0)):
     dependencies:
@@ -8302,6 +8357,8 @@ snapshots:
       expo: 54.0.0-canary-20250729-d8899ae(@babel/core@7.28.0)(@expo/metro-runtime@6.0.0-canary-20250729-d8899ae(react-native@0.80.1(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.1.0)))(graphql@16.10.0)(metro-runtime@0.83.0)(react-native@0.80.1(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.1.0))(react-refresh@0.17.0)(react@19.1.0)
       fontfaceobserver: 2.3.0
       react: 19.1.0
+
+  expo-json-utils@0.15.0: {}
 
   expo-json-utils@0.15.1-canary-20250729-d8899ae: {}
 
@@ -8325,6 +8382,14 @@ snapshots:
       expo: 54.0.0-canary-20250729-d8899ae(@babel/core@7.28.0)(@expo/metro-runtime@6.0.0-canary-20250729-d8899ae(react-native@0.80.1(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.1.0)))(graphql@16.10.0)(metro-runtime@0.83.0)(react-native@0.80.1(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.1.0))(react-refresh@0.17.0)(react@19.1.0)
       react: 19.1.0
       rtl-detect: 1.1.2
+
+  expo-manifests@0.16.6(expo@54.0.0-canary-20250729-d8899ae(@babel/core@7.28.0)(@expo/metro-runtime@6.0.0-canary-20250729-d8899ae(react-native@0.80.1(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.1.0)))(graphql@16.10.0)(metro-runtime@0.83.0)(react-native@0.80.1(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.1.0))(react-refresh@0.17.0)(react@19.1.0)):
+    dependencies:
+      '@expo/config': 11.0.13
+      expo: 54.0.0-canary-20250729-d8899ae(@babel/core@7.28.0)(@expo/metro-runtime@6.0.0-canary-20250729-d8899ae(react-native@0.80.1(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.1.0)))(graphql@16.10.0)(metro-runtime@0.83.0)(react-native@0.80.1(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.1.0))(react-refresh@0.17.0)(react@19.1.0)
+      expo-json-utils: 0.15.0
+    transitivePeerDependencies:
+      - supports-color
 
   expo-manifests@0.17.0-canary-20250729-d8899ae(expo@54.0.0-canary-20250729-d8899ae(@babel/core@7.28.0)(@expo/metro-runtime@6.0.0-canary-20250729-d8899ae(react-native@0.80.1(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.1.0)))(graphql@16.10.0)(metro-runtime@0.83.0)(react-native@0.80.1(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.1.0))(react-refresh@0.17.0)(react@19.1.0)):
     dependencies:
