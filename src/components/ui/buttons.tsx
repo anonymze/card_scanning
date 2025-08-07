@@ -7,7 +7,7 @@ const PressableAnimated = Animated.createAnimatedComponent(Pressable);
 const ButtonPrimary = ({
   title,
   icon,
-  action
+  action,
 }: {
   title: string;
   icon?: React.ReactNode;
@@ -16,17 +16,17 @@ const ButtonPrimary = ({
   const [scale, setScale] = React.useState(false);
   return (
     <PressableAnimated
-      onPressIn={()=> {
+      onPressIn={() => {
         setScale(true);
       }}
-      onPressOut={()=> {
+      onPressOut={() => {
         setScale(false);
       }}
       onPress={action}
       style={{
         transitionProperty: 'transform',
         transitionDuration: 200,
-        transform: scale ? [{ scale: 0.95 }] : [{ scale: 1 }]
+        transform: scale ? [{ scale: 0.95 }] : [{ scale: 1 }],
       }}
       className="w-full flex-row items-center justify-center gap-x-4 rounded-2xl border border-foregroundLight/50 bg-background-primary p-5"
     >
