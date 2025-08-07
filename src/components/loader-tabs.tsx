@@ -6,18 +6,17 @@ import {
     Skia,
     SweepGradient,
 } from "@shopify/react-native-skia";
-import React, { useEffect } from "react";
-import { Text } from "react-native";
+import React from "react";
 import Animated, {
-    Easing,
     useAnimatedStyle,
     useDerivedValue,
     useSharedValue,
     withRepeat,
-    withTiming,
+    withTiming
 } from "react-native-reanimated";
 import config from "tailwind.config";
 
+// otherwise the circle is cut off at the edges
 const canvasPadding = 20;
 
 export const LoaderTabs = ({ width, height, loading }: { width: number, height: number, loading: boolean }) => {
@@ -25,17 +24,15 @@ export const LoaderTabs = ({ width, height, loading }: { width: number, height: 
   const circleSize = React.useRef(width);
   const progress = useSharedValue(0);
 
-  // basic rotation animation
-  useEffect(() => {
-    progress.value = withRepeat(
-      withTiming(loading ? 1 : 0, { duration: 1000, easing: Easing.linear }),
-      -1,
-      false,
-    );
+  // basic rotation animation that cancels smoothly
+  React.useEffect(() => {
+    progress.value = loading
+      ? withRepeat(withTiming(1, { duration: 1000 }), -1, false)
+      : withTiming(0, { duration: 400 });
   }, [loading]);
 
   const rContainerStyle = useAnimatedStyle(() => ({
-    transform: [{ rotate: `${Math.PI * 2 * progress.value}rad`  }],
+    transform: [{ rotate: `${-0.95 + Math.PI * 2 * progress.value}rad`  }],
   }));
 
   // path made in svg skia
@@ -50,19 +47,21 @@ export const LoaderTabs = ({ width, height, loading }: { width: number, height: 
   }, []);
 
 
-  // create the empty corner path
+  // create the empty corner path and animated
   const startPath = useDerivedValue(() =>
-    interpolate(progress.value, [0, 0.7, 1], [0.8, 0.5, 0.8]),
+    loading
+      ? interpolate(progress.value, [0, 0.4, 1], [0.8, 0.5, 0.8])
+      : withTiming(0, { duration: 400 })
   );
 
   return (
-    <>
+
       <Animated.View
         style={[rContainerStyle, {
           width: canvasSize.current.width,
           height: canvasSize.current.height,
         }]}
-        className="items-center justify-center rounded-full bg-background-primaryDark"
+        className="items-center justify-center rounded-full bg-background-primaryDark border-foregroundDark border-2"
       >
         <Canvas
           style={{
@@ -77,7 +76,7 @@ export const LoaderTabs = ({ width, height, loading }: { width: number, height: 
             style="stroke"
             strokeWidth={12}
             strokeCap="round"
-            start={loading ? startPath : 0}
+            start={startPath}
             end={1}
           >
             <SweepGradient
@@ -91,7 +90,6 @@ export const LoaderTabs = ({ width, height, loading }: { width: number, height: 
           </Path>
         </Canvas>
       </Animated.View>
-        <Text className="absolute top-1/2 -translate-y-1/2  text-foreground">Oki</Text>
-    </>
+
   );
 }
