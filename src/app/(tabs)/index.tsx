@@ -1,3 +1,4 @@
+import { NoCamera, NoPermissionsCamera } from '@/components/camera';
 import { StyleSheet } from 'react-native';
 import {
   Camera,
@@ -9,8 +10,8 @@ export default function Page() {
   const device = useCameraDevice('front');
   const { hasPermission } = useCameraPermission();
 
-  if (!hasPermission) return null;
-  if (device == null) return null;
+  if (device == null) return  <NoPermissionsCamera />;
+  if (!hasPermission) return <NoCamera />;
 
   return (
     <Camera style={StyleSheet.absoluteFill} device={device} isActive={true} />
