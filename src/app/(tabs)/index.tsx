@@ -1,15 +1,18 @@
-import { useLoaderGlobal } from "@/lib/loader-store";
-import React from "react";
-import { Text, View } from "react-native";
+import { StyleSheet } from 'react-native';
+import {
+  Camera,
+  useCameraDevice,
+  useCameraPermission,
+} from 'react-native-vision-camera';
 
 export default function Page() {
-const { start } = useLoaderGlobal();
-  React.useEffect(() => {
-    start();
-  }, [])
+  const device = useCameraDevice('front');
+  const { hasPermission } = useCameraPermission();
+
+  if (!hasPermission) return null;
+  if (device == null) return null;
+
   return (
-    <View>
-      <Text>Oki</Text>
-    </View>
-  )
+    <Camera style={StyleSheet.absoluteFill} device={device} isActive={true} />
+  );
 }
