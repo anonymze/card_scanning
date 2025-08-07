@@ -17,7 +17,7 @@ const LayoutCamera = ({ children }: { children: React.ReactNode }) => {
         ]}
         style={StyleSheet.absoluteFill}
       />
-      <View className="pt-safe pb-safe flex-1">
+      <View className="p-safe flex-1">
         <View className="m-4 flex-1 items-center justify-center gap-4 rounded-3xl border border-dashed border-foreground">
           {children}
         </View>
@@ -26,7 +26,7 @@ const LayoutCamera = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-const NoPermissionsCamera = () => {
+const CameraNoPermissions = () => {
   return (
     <LayoutCamera>
       <CameraOffIcon
@@ -50,7 +50,7 @@ const NoPermissionsCamera = () => {
   );
 };
 
-const NoCamera = () => {
+const CameraUnavailable = () => {
   return (
     <LayoutCamera>
       <CameraOffIcon
@@ -65,4 +65,4 @@ const NoCamera = () => {
   );
 };
 
-export { LayoutCamera, NoCamera, NoPermissionsCamera };
+export { LayoutCamera, CameraNoPermissions, CameraUnavailable };
