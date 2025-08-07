@@ -2,8 +2,8 @@ import { Text, View } from "react-native";
 
 export default function Page() {
   return (
-    <View>
-      <Text>Oki</Text>
+    <View className="flex-1 bg-red-200">
+      <Text>Okiddddd</Text>
     </View>
   )
 }

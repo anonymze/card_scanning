@@ -53,3 +53,7 @@ Uses Vitest with `vitest-react-native` for React Native testing support.
 
 ### Package Manager
 Uses pnpm as the package manager (specified in packageManager field).
+
+# Instructions
+
+- Use React. something when calling a a hook like useEffect  or callback or memo etc... ex: React.useEffect
