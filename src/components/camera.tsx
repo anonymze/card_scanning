@@ -3,7 +3,8 @@ import { StyleSheet, Text, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import config from 'tailwind.config';
 import { CameraOffIcon, PlusIcon } from './icons';
-import { ButtonPrimary } from './ui/buttons';
+import { ButtonPrimary, ButtonSecondary } from './ui/buttons';
+import { useLoaderGlobal } from '@/lib/loader-store';
 
 const LayoutCamera = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -27,6 +28,7 @@ const LayoutCamera = ({ children }: { children: React.ReactNode }) => {
 };
 
 const CameraNoPermissions = () => {
+    const { start, stop, loading } = useLoaderGlobal();
   return (
     <LayoutCamera>
       <CameraOffIcon
@@ -45,6 +47,10 @@ const CameraNoPermissions = () => {
             Linking.openURL('app-settings:');
           }}
         />
+        <ButtonSecondary title={loading ? 'STOP GLOBAL LOADER' : 'START GLOBAL LOADER'} action={() => {
+          if (!loading) return start();
+          stop();
+        }} />
       </View>
     </LayoutCamera>
   );
@@ -65,4 +71,4 @@ const CameraUnavailable = () => {
   );
 };
 
-export { LayoutCamera, CameraNoPermissions, CameraUnavailable };
+export { CameraNoPermissions, CameraUnavailable, LayoutCamera };
