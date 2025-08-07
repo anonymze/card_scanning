@@ -46,15 +46,20 @@ const ButtonPrimary = ({
   title,
   icon,
   action,
+  className,
 }: {
   title: string;
   action?: () => void;
   icon?: React.ReactNode;
+  className?: string;
 }) => {
   return (
     <Button
       action={action}
-      className="border border-foregroundLight/50 bg-background-primary p-5"
+      className={cn(
+        'border border-foregroundLight/50 bg-background-primary p-5',
+        className,
+      )}
     >
       {icon ? icon : null}
       <Text className="text-xl font-bold text-foreground">{title}</Text>
@@ -66,15 +71,20 @@ const ButtonSecondary = ({
   title,
   action,
   icon,
+  className,
 }: {
   title: string;
   action?: () => void;
   icon?: React.ReactNode;
+  className?: string;
 }) => {
   return (
     <Button
       action={action}
-      className="overflow-hidden border border-white bg-background-secondaryLight p-5"
+      className={cn(
+        'overflow-hidden border border-white bg-background-secondaryLight p-5',
+        className,
+      )}
     >
       <LinearGradient
         start={{ x: 0, y: 0 }}
@@ -85,6 +95,7 @@ const ButtonSecondary = ({
         ]}
         style={StyleSheet.absoluteFill}
       />
+      {icon ? icon : null}
       <Text className="text-xl font-bold text-white">{title}</Text>
     </Button>
   );

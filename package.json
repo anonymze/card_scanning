@@ -1,5 +1,5 @@
 {
-  "name": "nkzw-app",
+  "name": "default-app",
   "version": "1.0.0",
   "private": true,
   "main": "expo-router/entry",
@@ -7,7 +7,7 @@
     "android": "expo run:android",
     "dev": "expo start",
     "format": "prettier --write .",
-    "ios": "expo run:ios --device 'iPhone 16 Pro'",
+    "ios": "expo run:ios",
     "prebuild": "expo prebuild",
     "start": "expo start --dev-client",
     "tsc:check": "tsc",

@@ -40,7 +40,7 @@ export const LoaderTabs = ({
       : withTiming(0, { duration: 400 });
 
     loadingState.value = loading
-      ? withTiming(1, { duration: 300 })
+      ? withTiming(1, { duration: 700 })
       : withTiming(0, { duration: 700 });
   }, [loading]);
 
