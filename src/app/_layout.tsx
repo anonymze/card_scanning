@@ -10,12 +10,12 @@ export const unstable_settings = {
 };
 
 export default function RootLayout() {
-  const { stop } = useLoaderGlobal();
+  const { stop, loading } = useLoaderGlobal();
   const pathname = usePathname();
 
   // stop loader when we navigate
   React.useEffect(() => {
-    // stop();
+    if (loading) stop();
   }, [pathname]);
 
   return (
