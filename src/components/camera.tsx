@@ -1,7 +1,6 @@
 import * as Linking from 'expo-linking';
 import { StyleSheet, Text, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import config from 'tailwind.config';
 import { CameraOffIcon, PlusIcon } from './icons';
 import { ButtonPrimary } from './ui/buttons';
@@ -18,11 +17,11 @@ const LayoutCamera = ({ children }: { children: React.ReactNode }) => {
         ]}
         style={StyleSheet.absoluteFill}
       />
-      <SafeAreaView className="flex-1">
-        <View className="m-4 flex-1 items-center justify-center rounded-3xl border border-foreground border-dashed">
+      <View className="pt-safe pb-safe flex-1">
+        <View className="m-4 flex-1 items-center justify-center gap-4 rounded-3xl border border-dashed border-foreground">
           {children}
         </View>
-      </SafeAreaView>
+      </View>
     </View>
   );
 };
