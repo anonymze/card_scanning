@@ -1,19 +1,23 @@
+import { cn } from '@/lib/tailwind';
 import React from 'react';
-import { Pressable, Text } from 'react-native';
+import { Pressable, StyleSheet, Text } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 import Animated from 'react-native-reanimated';
+import config from 'tailwind.config';
 
 const PressableAnimated = Animated.createAnimatedComponent(Pressable);
 
-const ButtonPrimary = ({
-  title,
-  icon,
+const Button = ({
+  children,
   action,
+  className,
 }: {
-  title: string;
-  icon?: React.ReactNode;
-  action: () => void;
+  children: React.ReactNode;
+  action?: () => void;
+  className?: string;
 }) => {
   const [scale, setScale] = React.useState(false);
+
   return (
     <PressableAnimated
       onPressIn={() => {
@@ -25,15 +29,65 @@ const ButtonPrimary = ({
       onPress={action}
       style={{
         transitionProperty: 'transform',
-        transitionDuration: 200,
-        transform: scale ? [{ scale: 0.95 }] : [{ scale: 1 }],
+        transitionDuration: 180,
+        transform: scale ? [{ scale: 0.97 }] : [{ scale: 1 }],
       }}
-      className="w-full flex-row items-center justify-center gap-x-4 rounded-2xl border border-foregroundLight/50 bg-background-primary p-5"
+      className={cn(
+        'w-full flex-row items-center justify-center gap-x-4 rounded-2xl',
+        className,
+      )}
     >
-      {icon ? icon : null}
-      <Text className="text-xl font-bold text-foreground">{title}</Text>
+      {children}
     </PressableAnimated>
   );
 };
 
-export { ButtonPrimary };
+const ButtonPrimary = ({
+  title,
+  icon,
+  action,
+}: {
+  title: string;
+  action?: () => void;
+  icon?: React.ReactNode;
+}) => {
+  return (
+    <Button
+      action={action}
+      className="border border-foregroundLight/50 bg-background-primary p-5"
+    >
+      {icon ? icon : null}
+      <Text className="text-xl font-bold text-foreground">{title}</Text>
+    </Button>
+  );
+};
+
+const ButtonSecondary = ({
+  title,
+  action,
+  icon,
+}: {
+  title: string;
+  action?: () => void;
+  icon?: React.ReactNode;
+}) => {
+  return (
+    <Button
+      action={action}
+      className="overflow-hidden border border-white bg-background-secondaryLight p-5"
+    >
+      <LinearGradient
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        colors={[
+          config.theme.extend.colors.background.secondary, // slate-900 (top-left)
+          config.theme.extend.colors.background.secondaryDark, // slate-800 (bottom-right)
+        ]}
+        style={StyleSheet.absoluteFill}
+      />
+      <Text className="text-xl font-bold text-white">{title}</Text>
+    </Button>
+  );
+};
+
+export { ButtonPrimary, ButtonSecondary };

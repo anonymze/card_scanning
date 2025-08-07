@@ -41,7 +41,7 @@ export const LoaderTabs = ({
 
     loadingState.value = loading
       ? withTiming(1, { duration: 300 })
-      : withTiming(0, { duration: 400 });
+      : withTiming(0, { duration: 700 });
   }, [loading]);
 
   const rContainerStyle = useAnimatedStyle(() => ({
