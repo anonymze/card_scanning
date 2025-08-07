@@ -23,15 +23,21 @@ export const LoaderTabs = ({ width, height, loading }: { width: number, height: 
   const canvasSize = React.useRef({width: width, height: height});
   const circleSize = React.useRef(width);
   const progress = useSharedValue(0);
+  const loadingState = useSharedValue(0);
 
   // basic rotation animation that cancels smoothly
   React.useEffect(() => {
     progress.value = loading
       ? withRepeat(withTiming(1, { duration: 1000 }), -1, false)
       : withTiming(0, { duration: 400 });
+
+    loadingState.value = loading
+      ? withTiming(1, { duration: 300 })
+      : withTiming(0, { duration: 400 });
   }, [loading]);
 
   const rContainerStyle = useAnimatedStyle(() => ({
+    // -0.95 should be calculated
     transform: [{ rotate: `${-0.95 + Math.PI * 2 * progress.value}rad`  }],
   }));
 
@@ -48,11 +54,11 @@ export const LoaderTabs = ({ width, height, loading }: { width: number, height: 
 
 
   // create the empty corner path and animated
-  const startPath = useDerivedValue(() =>
-    loading
-      ? interpolate(progress.value, [0, 0.4, 1], [0.8, 0.5, 0.8])
-      : withTiming(0, { duration: 400 })
-  );
+  const startPath = useDerivedValue(() => {
+    const animatedStart = interpolate(progress.value, [0, 0.4, 1], [0.8, 0.5, 0.8]);
+    const staticStart = 0;
+    return interpolate(loadingState.value, [0, 1], [staticStart, animatedStart]);
+  });
 
   return (
 
