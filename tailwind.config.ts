@@ -6,9 +6,9 @@ const config = {
 		// when you set font-bold for example, it sets the font weight and the font family so the font family will still be applied
 		fontWeight: false,
 		// default base style tailwind on elements (does not remove utilities ex: text-white)
-		preflight: false,
+		preflight: true,
 	},
-	content: ["./src/**/*.{js,jsx,ts,tsx}", "./components/**/*.{js,jsx,ts,tsx}"],
+	content: ["./src/**/*.{js,jsx,ts,tsx}"],
 	presets: [require("nativewind/preset")],
 	darkMode: "class",
 	theme: {
@@ -22,23 +22,18 @@ const config = {
 		},
 		extend: {
 			colors: {
-				dark: "#15202a",
-				primary: "#363F72",
-				primaryLight: "#717BBC",
-				primaryUltraLight: "#EBF2FF",
-				backgroundChat: "#4E5BA6",
-				textChat: "#15202A",
-				background: "#f4f5f6",
-				secondary: "#FCE7F6",
-				secondaryLight: "#fcebf7",
-				defaultGray: "#6A829A",
-				lightGray: "#AFB5D9",
-				darkGray: "#EAECF5",
-				pink: "#F670C7",
-				red2: "#B42318",
-				production: "#FDA29B",
-				encours: "#6172F3",
-				structured: "#7CD4FD",
+				foreground: "#fbbf24",
+				foregroundLight: "#eab308",
+				foregroundDark: "#f59e0b",
+				gray: "#94a3b8",
+				background: {
+				  primary: "#1e293b",
+				  primaryLight: "#334155",
+				  primaryDark: "#0f172a",
+					secondary: "#2563eb",
+				  secondaryLight: "#3b82f6",
+				  secondaryDark: "#0891b2",
+				}
 			},
 		},
 	},
