@@ -66,3 +66,39 @@ Uses pnpm as the package manager (specified in packageManager field).
 # Instructions
 
 - Use React. something when calling a a hook like useEffect or callback or memo etc... ex: React.useEffect
+
+## Card Detection Project Progress
+
+### Current Goal
+Building a real-time MTG/Pokemon/YuGiOh card scanner using React Native Vision Camera with AI detection.
+
+### Technology Decisions Made
+- **Model Choice**: YOLOv11 (recommended) - 2.4ms inference, fastest performance
+- **Alternative**: YOLOv12 (newer, 4.6ms inference, attention mechanisms)
+- **Training**: Local training with ~500 labeled images per card type
+- **Labeling Tool**: LabelImg for bounding box annotation
+- **Integration**: React Native ExecuTorch for on-device inference
+- **Frame Processing**: useFrameProcessor
+
+### Card Dimensions Research
+- **MTG**: 63mm × 88mm (aspect ratio: ~1.397)
+- **Pokemon**: 63mm × 88mm (aspect ratio: ~1.397)
+- **YuGiOh**: 59mm × 86mm (aspect ratio: ~1.458)
+
+### Architecture Plan
+1. **Detection Phase**: YOLOv12 detects card regions and types
+2. **OCR Phase**: Extract text from detected card regions (future)
+3. **Recognition Phase**: Match extracted text to card database (future)
+
+### Key Insights
+- Delver Lens (Android-only) proves real-time, offline detection is possible
+- iOS market gap exists for high-quality MTG scanning
+- Multi-class training (MTG/Pokemon/YuGiOh) recommended over single-class
+- Perspective correction can be added later, focus on detection accuracy first
+
+### Next Steps
+1. Set up YOLOv12 training environment
+2. Collect and label 500+ card images with LabelImg
+3. Train multi-class detection model
+4. Integrate with React Native ExecuTorch
+5. Implement frame processor with detection boxes
