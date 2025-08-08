@@ -3,10 +3,9 @@ import {
   CameraUnavailable,
   LayoutCamera,
 } from '@/components/camera';
-import { ScanIcon } from '@/components/icons';
+import { DecksIcon, ScanIcon } from '@/components/icons';
 import { ButtonPrimary } from '@/components/ui/buttons';
 import { useLoaderGlobal } from '@/lib/loader-store';
-import React from 'react';
 import { Text, View } from 'react-native';
 import {
   Camera,
@@ -16,7 +15,7 @@ import {
 import config from 'tailwind.config';
 
 export default function Page() {
-  const { start, stop, loading } = useLoaderGlobal()
+  const { start, stop, loading } = useLoaderGlobal();
   const device = useCameraDevice('back');
   const { hasPermission, requestPermission } = useCameraPermission();
 
@@ -33,15 +32,26 @@ export default function Page() {
           style={{
             position: 'absolute',
             inset: 0,
-            borderRadius: 30,
           }}
           device={device}
           isActive={loading}
         />
-        <ButtonPrimary action={() => {
-          if (loading) return stop();
-          start();
-        }} title="Scanner" icon={<ScanIcon color={config.theme.extend.colors.foreground} />} className='mt-auto rounded-none' />
+        <View className="items-center pl-5 pt-5 flex-row gap-1">
+          <DecksIcon
+            className="left-10 top-20 mx-20"
+            color={config.theme.extend.colors.foregroundDark}
+          />
+          <Text className='font-bold text-foregroundDark'>0</Text>
+        </View>
+        <ButtonPrimary
+          action={() => {
+            // if (loading) return stop();
+            // start();
+          }}
+          title="Scanner"
+          icon={<ScanIcon color={config.theme.extend.colors.foreground} />}
+          className="mt-auto rounded-none"
+        />
       </View>
     </LayoutCamera>
   );
