@@ -48,31 +48,21 @@ This is a modern Expo app template with React Native New Architecture enabled an
 
 ### Key Configuration
 
-- **Metro**: Configured with NativeWind integration via `withNativeWind`
-- **Tailwind**: Custom color palette focused on amber/yellow theme, preflight enabled
-- **Expo Plugins**: dev-launcher, router, localization, font, edge-to-edge, vision-camera
+- **Metro**: Configured with NativeWind integration
+- **Tailwind**: Custom color palette, disabled font-weight for Android compatibility
+- **Expo Plugins**: dev-launcher, router, localization, font, web-browser, edge-to-edge
 - **Experiments**: React Canary, React Compiler, typed routes, build cache, tsconfig paths
 - **New Architecture**: Enabled for both iOS and Android
-- **Vision Camera**: Configured for camera permissions without microphone access
 
-### App Architecture
-
-- **Tab Navigation**: Three main tabs - Decks, Scan (center with custom UI), Settings
-- **Global State**: Zustand store for loader state management across the app
-- **Camera Integration**: Vision camera with permission handling and fallback UI states
-- **Styling System**: NativeWind with custom Tailwind config and linear gradients
 
 ### Testing
 
-Uses Vitest with `vitest-react-native` plugin for React Native testing support.
+Uses Vitest with `vitest-react-native` for React Native testing support.
 
 ### Package Manager
 
-Uses pnpm as the package manager (version 10.12.4).
+Uses pnpm as the package manager (specified in packageManager field).
 
-## Development Guidelines
+# Instructions
 
-- Use `React.` prefix when calling hooks (useEffect, useCallback, memo, etc.)
-- App uses French language for UI text
-- Custom color scheme based on amber/yellow theme with dark backgrounds
-- All components should use NativeWind classes for styling
+- Use React. something when calling a a hook like useEffect or callback or memo etc... ex: React.useEffect
