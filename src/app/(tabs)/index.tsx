@@ -11,6 +11,7 @@ import {
   Camera,
   useCameraDevice,
   useCameraPermission,
+  useFrameProcessor,
 } from 'react-native-vision-camera';
 import config from 'tailwind.config';
 
@@ -18,6 +19,14 @@ export default function Page() {
   const { start, stop, loading } = useLoaderGlobal();
   const device = useCameraDevice('back');
   const { hasPermission, requestPermission } = useCameraPermission();
+
+  const frameProcessor = useFrameProcessor((frame) => {
+    'worklet';
+    if (loading) {
+      // Process frame for card detection here
+      console.log(`Processing frame ${frame.width}x${frame.height}`);
+    }
+  }, [loading]);
 
   if (!hasPermission) {
     requestPermission();
@@ -34,7 +43,8 @@ export default function Page() {
             inset: 0,
           }}
           device={device}
-          isActive={loading}
+          isActive={true}
+          frameProcessor={loading ? frameProcessor : undefined}
         />
         <View className="items-center pl-5 pt-5 flex-row gap-1">
           <DecksIcon
@@ -45,10 +55,10 @@ export default function Page() {
         </View>
         <ButtonPrimary
           action={() => {
-            // if (loading) return stop();
-            // start();
+            if (loading) return stop();
+            start();
           }}
-          title="Scanner"
+          title={loading ? "Arrêter" : "Scanner"}
           icon={<ScanIcon color={config.theme.extend.colors.foreground} />}
           className="mt-auto rounded-none"
         />
