@@ -24,30 +24,27 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Architecture Overview
 
-This is a card scanning React Native app built with modern Expo SDK 53 and React Native New Architecture enabled.
+This is a modern Expo app template with React Native New Architecture enabled and React Compiler support.
 
 ### Tech Stack
 
 - **Framework**: Expo SDK 53 with React Native 0.79
-- **Router**: Expo Router with file-based routing and typed routes
-- **Styling**: NativeWind (Tailwind CSS for React Native) with custom color theme
-- **State Management**: Zustand for global state, React 19 with React Compiler
-- **Testing**: Vitest with `vitest-react-native` plugin
+- **Router**: Expo Router (file-based routing)
+- **Styling**: NativeWind (Tailwind CSS for React Native)
+- **State**: React 19 with React Compiler
+- **Testing**: Vitest with React Native support
 - **Storage**: MMKV for fast key-value storage
 - **Animations**: React Native Reanimated v4 + Worklets
 - **Gestures**: React Native Gesture Handler
-- **Camera**: React Native Vision Camera for card scanning functionality
-- **UI Libraries**: @gorhom/bottom-sheet, @legendapp/list, React Native Linear Gradient
+- **UI Libraries**: @gorhom/bottom-sheet, @legendapp/list
 
 ### Project Structure
 
-- `src/app/` - Expo Router pages with tab-based navigation
-- `src/app/(tabs)/` - Tab navigation structure (decks, index/scan, settings)
-- `src/components/` - Component library including camera components and UI elements
-- `src/components/ui/` - Reusable UI components (buttons, etc.)
-- `src/lib/` - Utility functions and store configurations
+- `src/app/` - Expo Router pages (file-based routing)
+- `src/components/ui/` - Reusable UI components
 - `src/styles/global.css` - Global Tailwind CSS styles
 - `src/assets/` - App icons, splash screens, images
+- `src/lib/` - Utility functions and configurations
 
 ### Key Configuration
 
