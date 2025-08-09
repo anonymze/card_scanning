@@ -1,7 +1,32 @@
+import { vars } from 'nativewind';
 import type { Config } from 'tailwindcss';
-import { vars } from "nativewind";
 
-
+export const themes = {
+  light: vars({
+    '--color-foreground': '#fbbf24',
+    '--color-foreground-light': '#eab308',
+    '--color-foreground-dark': '#f59e0b',
+    '--color-gray': '#94a3b8',
+    '--color-bg-primary': '#1e293b',
+    '--color-bg-primary-light': '#334155',
+    '--color-bg-primary-dark': '#0f172a',
+    '--color-bg-secondary': '#2563eb',
+    '--color-bg-secondary-light': '#3b82f6',
+    '--color-bg-secondary-dark': '#0891b2',
+  }),
+  dark: vars({
+    '--color-foreground': '#fde047',
+    '--color-foreground-light': '#facc15',
+    '--color-foreground-dark': '#eab308',
+    '--color-gray': '#64748b',
+    '--color-bg-primary': '#0f172a',
+    '--color-bg-primary-light': '#1e293b',
+    '--color-bg-primary-dark': '#020617',
+    '--color-bg-secondary': '#1d4ed8',
+    '--color-bg-secondary-light': '#2563eb',
+    '--color-bg-secondary-dark': '#1e40af',
+  }),
+};
 
 const config = {
   corePlugins: {
