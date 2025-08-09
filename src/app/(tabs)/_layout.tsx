@@ -11,7 +11,7 @@ export default function TabLayout() {
       screenOptions={{
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: config.theme.extend.colors.background.primaryDark,
+          backgroundColor: config.theme.extend.colors.background.primary.dark,
           borderTopColor: config.theme.extend.colors.foreground.dark,
           borderTopWidth: 2,
         },

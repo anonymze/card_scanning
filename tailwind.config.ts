@@ -1,4 +1,7 @@
 import type { Config } from 'tailwindcss';
+import { vars } from "nativewind";
+
+
 
 const config = {
   corePlugins: {
@@ -29,12 +32,16 @@ const config = {
         },
         gray: '#94a3b8',
         background: {
-          primary: '#1e293b',
-          primaryLight: '#334155',
-          primaryDark: '#0f172a',
-          secondary: '#2563eb',
-          secondaryLight: '#3b82f6',
-          secondaryDark: '#0891b2',
+          primary: {
+            DEFAULT: '#1e293b',
+            light: '#334155',
+            dark: '#0f172a',
+          },
+          secondary: {
+            DEFAULT: '#2563eb',
+            light: '#3b82f6',
+            dark: '#0891b2',
+          },
         },
       },
     },

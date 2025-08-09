@@ -12,8 +12,8 @@ const LayoutCamera = ({ children }: { children: React.ReactNode }) => {
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
         colors={[
-          config.theme.extend.colors.background.primaryDark,
-          config.theme.extend.colors.background.primaryLight,
+          config.theme.extend.colors.background.primary.dark,
+          config.theme.extend.colors.background.primary.light,
         ]}
         style={StyleSheet.absoluteFill}
       />
