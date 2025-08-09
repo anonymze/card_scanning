@@ -18,7 +18,7 @@ export default function TabLayout() {
         tabBarLabelStyle: {
           marginTop: 4,
         },
-        tabBarActiveTintColor: config.theme.extend.colors.foreground,
+        tabBarActiveTintColor: config.theme.extend.colors.foreground.DEFAULT,
         tabBarInactiveTintColor: config.theme.extend.colors.gray,
       }}
     >

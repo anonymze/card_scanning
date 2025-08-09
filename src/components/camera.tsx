@@ -40,7 +40,7 @@ const CameraNoPermissions = () => {
         </Text>
         <ButtonPrimary
           title="Activer la permission"
-          icon={<PlusIcon color={config.theme.extend.colors.foreground} />}
+          icon={<PlusIcon color={config.theme.extend.colors.foreground.DEFAULT} />}
           action={() => {
             Linking.openURL('app-settings:');
           }}
