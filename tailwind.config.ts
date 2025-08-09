@@ -22,7 +22,11 @@ const config = {
     },
     extend: {
       colors: {
-        foreground: '#fbbf24',
+        foreground: {
+          DEFAULT: '#fbbf24',
+          light: '#fbbf24',
+          dark: '#f59e0b',
+        },
         foregroundLight: '#eab308',
         foregroundDark: '#f59e0b',
         gray: '#94a3b8',
