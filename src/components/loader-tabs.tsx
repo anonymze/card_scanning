@@ -84,7 +84,7 @@ export const LoaderTabs = ({
           height: canvasSize.current.height,
         },
       ]}
-      className="items-center justify-center rounded-full border-2 border-foregroundDark bg-background-primaryDark"
+      className="items-center justify-center rounded-full border-2 border-foreground-dark bg-background-primaryDark"
     >
       <Canvas
         style={{
@@ -108,9 +108,9 @@ export const LoaderTabs = ({
               y: canvasSize.current.height / 2 + canvasPadding / 2,
             }}
             colors={[
-              config.theme.extend.colors.foregroundDark,
-              config.theme.extend.colors.foregroundLight,
-              config.theme.extend.colors.foregroundDark,
+              config.theme.extend.colors.foreground.dark,
+              config.theme.extend.colors.foreground.light,
+              config.theme.extend.colors.foreground.dark,
             ]}
           />
           <BlurMask blur={3} style="solid" />

@@ -57,7 +57,7 @@ const ButtonPrimary = ({
     <Button
       action={action}
       className={cn(
-        'border border-foregroundLight/50 bg-background-primary p-5',
+        'border border-foreground-light/50 bg-background-primary p-5',
         className,
       )}
     >

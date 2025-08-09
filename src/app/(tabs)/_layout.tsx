@@ -12,13 +12,13 @@ export default function TabLayout() {
         headerShown: false,
         tabBarStyle: {
           backgroundColor: config.theme.extend.colors.background.primaryDark,
-          borderTopColor: config.theme.extend.colors.foregroundDark,
+          borderTopColor: config.theme.extend.colors.foreground.dark,
           borderTopWidth: 2,
         },
         tabBarLabelStyle: {
           marginTop: 4,
         },
-        tabBarActiveTintColor: config.theme.extend.colors.foreground,
+        tabBarActiveTintColor: config.theme.extend.colors.foreground.DEFAULT,
         tabBarInactiveTintColor: config.theme.extend.colors.gray,
       }}
     >
