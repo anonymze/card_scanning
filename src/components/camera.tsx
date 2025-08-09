@@ -58,7 +58,7 @@ const CameraUnavailable = () => {
         height={90}
         color={config.theme.extend.colors.gray}
       />
-      <Text className="w-4/5 text-center text-lg text-white">
+      <Text className="w-4/5 text-center text-lg text-test">
         Vous semblez ne pas avoir de caméra sur votre appareil.
       </Text>
     </LayoutCamera>
