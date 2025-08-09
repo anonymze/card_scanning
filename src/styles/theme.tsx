@@ -6,7 +6,7 @@ import { View } from 'react-native';
 
 const DEFAULT_THEME: ReturnType<typeof useColorScheme>['colorScheme'] = 'dark';
 
-const themes = {
+export const themes = {
   light: vars({
     '--color-foreground': '#fbbf24',
     '--color-foreground-lighter': '#eab308',
@@ -31,10 +31,10 @@ const themes = {
     '--color-bg-secondary-lighter': '#3b82f6',
     '--color-bg-secondary-darker': '#0891b2',
   }),
-};
+} as const;
 
 export const ThemeContext = createContext<{
-  theme: ReturnType<typeof useColorScheme>['colorScheme'];
+  theme: Exclude<ReturnType<typeof useColorScheme>['colorScheme'], undefined>;
   toggleTheme: () => void;
 }>(null!);
 

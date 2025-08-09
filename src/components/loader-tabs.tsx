@@ -1,3 +1,4 @@
+import { useTheme } from '@/styles/theme';
 import {
   BlurMask,
   Canvas,
@@ -28,6 +29,7 @@ export const LoaderTabs = ({
   height: number;
   loading: boolean;
 }) => {
+  const { theme } = useTheme();
   const canvasSize = React.useRef({ width: width, height: height });
   const circleSize = React.useRef(width);
   const progress = useSharedValue(0);
@@ -108,7 +110,7 @@ export const LoaderTabs = ({
               y: canvasSize.current.height / 2 + canvasPadding / 2,
             }}
             colors={[
-              config.theme.extend.colors.foreground.dark,
+              "hsl(0, 100%, 50%)",
               config.theme.extend.colors.foreground.light,
               config.theme.extend.colors.foreground.dark,
             ]}
