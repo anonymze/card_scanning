@@ -52,9 +52,11 @@ const config = {
       colors: {
         foreground: {
           DEFAULT: '#fbbf24',
-          light: '#eab308',
+          light: '#fbbf24',
           dark: '#f59e0b',
         },
+        foregroundLight: '#eab308',
+        foregroundDark: '#f59e0b',
         gray: '#94a3b8',
         background: {
           primary: {

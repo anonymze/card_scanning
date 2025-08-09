@@ -1,19 +1,17 @@
+import { useTheme } from '@/styles/theme';
 import * as DevClient from 'expo-dev-client';
-import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 
-if (__DEV__) {
+const DevMenu = () => {
+  const { theme } = useTheme();
+
   DevClient.registerDevMenuItems([
     {
-      name: 'Toggle Theme',
+      name: `Toggle Theme (actual: ${theme})`,
       callback: () => console.log('Debug action triggered'),
       shouldCollapse: true,
     },
   ]);
-}
-
-const DevMenu = () => {
-  const [open, setOpen] = React.useState(false);
 
   return (
     <View style={{ position: 'absolute', top: 50, right: 20, zIndex: 9999 }}>
