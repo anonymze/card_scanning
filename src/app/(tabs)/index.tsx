@@ -49,9 +49,9 @@ export default function Page() {
         <View className="items-center pl-5 pt-5 flex-row gap-1">
           <DecksIcon
             className="left-10 top-20 mx-20"
-            color={config.theme.extend.colors.foregroundDark}
+            color={config.theme.extend.colors.foreground.dark}
           />
-          <Text className='font-bold text-foregroundDark'>0</Text>
+          <Text className='font-bold text-foreground-dark'>0</Text>
         </View>
         <ButtonPrimary
           action={() => {
@@ -59,7 +59,7 @@ export default function Page() {
             start();
           }}
           title={loading ? "Arrêter" : "Scanner"}
-          icon={<ScanIcon color={config.theme.extend.colors.foreground} />}
+          icon={<ScanIcon color={config.theme.extend.colors.foreground.DEFAULT} />}
           className="mt-auto rounded-none"
         />
       </View>

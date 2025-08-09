@@ -5,9 +5,9 @@ import { Text, TouchableOpacity, View } from 'react-native';
 if (__DEV__) {
   DevClient.registerDevMenuItems([
     {
-      name: '!!!!!!',
+      name: 'Toggle Theme',
       callback: () => console.log('Debug action triggered'),
-      shouldCollapse: false,
+      shouldCollapse: true,
     },
   ]);
 }
@@ -18,6 +18,7 @@ const DevMenu = () => {
   return (
     <View style={{ position: 'absolute', top: 50, right: 20, zIndex: 9999 }}>
       <TouchableOpacity
+        hitSlop={8}
         onPress={() => setOpen(!open)}
         style={{ backgroundColor: '#ff6b6b', padding: 10, borderRadius: 5 }}
       >
