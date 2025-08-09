@@ -84,7 +84,7 @@ export const LoaderTabs = ({
           height: canvasSize.current.height,
         },
       ]}
-      className="items-center justify-center rounded-full border-2 border-foreground-dark bg-background-primaryDark"
+      className="items-center justify-center rounded-full border-2 border-foreground-dark bg-background-primary-dark"
     >
       <Canvas
         style={{

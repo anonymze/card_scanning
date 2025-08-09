@@ -16,9 +16,9 @@ export default function BackgroundLayout({
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 1 }}
       colors={[
-        config.theme.extend.colors.background.primaryDark, // slate-900 (top-left)
-        config.theme.extend.colors.background.primaryLight, // blue-900 (center)
-        config.theme.extend.colors.background.primary, // slate-800 (bottom-right)
+        config.theme.extend.colors.background.primary.dark, // slate-900 (top-left)
+        config.theme.extend.colors.background.primary.light, // blue-900 (center)
+        config.theme.extend.colors.background.primary.DEFAULT, // slate-800 (bottom-right)
       ]}
       style={[styles.container, style]}
     >

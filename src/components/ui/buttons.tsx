@@ -82,7 +82,7 @@ const ButtonSecondary = ({
     <Button
       action={action}
       className={cn(
-        'overflow-hidden border border-white bg-background-secondaryLight p-5',
+        'overflow-hidden border border-white bg-background-secondary-light p-5',
         className,
       )}
     >
@@ -90,8 +90,8 @@ const ButtonSecondary = ({
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
         colors={[
-          config.theme.extend.colors.background.secondary, // slate-900 (top-left)
-          config.theme.extend.colors.background.secondaryDark, // slate-800 (bottom-right)
+          config.theme.extend.colors.background.secondary.DEFAULT, // slate-900 (top-left)
+          config.theme.extend.colors.background.secondary.dark, // slate-800 (bottom-right)
         ]}
         style={StyleSheet.absoluteFill}
       />
