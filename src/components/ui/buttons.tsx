@@ -1,4 +1,5 @@
 import { cn } from '@/lib/tailwind';
+import { themeRuntimeValues, useTheme } from '@/styles/theme';
 import React from 'react';
 import { Pressable, StyleSheet, Text } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
@@ -57,7 +58,7 @@ const ButtonPrimary = ({
     <Button
       action={action}
       className={cn(
-        'border border-foreground-light/50 bg-background-primary p-5',
+        'border border-foreground-lighter/50 bg-background-primary p-5',
         className,
       )}
     >
@@ -78,11 +79,12 @@ const ButtonSecondary = ({
   icon?: React.ReactNode;
   className?: string;
 }) => {
+      const { theme } = useTheme();
   return (
     <Button
       action={action}
       className={cn(
-        'overflow-hidden border border-white bg-background-secondary-light p-5',
+        'overflow-hidden border border-white bg-background-secondary-lighter p-5',
         className,
       )}
     >
@@ -90,8 +92,8 @@ const ButtonSecondary = ({
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
         colors={[
-          config.theme.extend.colors.background.secondary.DEFAULT, // slate-900 (top-left)
-          config.theme.extend.colors.background.secondary.dark, // slate-800 (bottom-right)
+          themeRuntimeValues[theme].background.secondary.DEFAULT,
+          themeRuntimeValues[theme].background.secondary.darker,
         ]}
         style={StyleSheet.absoluteFill}
       />

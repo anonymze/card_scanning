@@ -1,19 +1,20 @@
+import { themeRuntimeValues, useTheme } from '@/styles/theme';
 import * as Linking from 'expo-linking';
 import { StyleSheet, Text, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import config from 'tailwind.config';
 import { CameraOffIcon, PlusIcon } from './icons';
 import { ButtonPrimary } from './ui/buttons';
 
 const LayoutCamera = ({ children }: { children: React.ReactNode }) => {
+  const { theme } = useTheme();
   return (
     <View className="flex-1">
       <LinearGradient
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
         colors={[
-          config.theme.extend.colors.background.primary.dark,
-          config.theme.extend.colors.background.primary.light,
+          themeRuntimeValues[theme].background.primary.darker,
+          themeRuntimeValues[theme].background.primary.lighter,
         ]}
         style={StyleSheet.absoluteFill}
       />
@@ -27,12 +28,13 @@ const LayoutCamera = ({ children }: { children: React.ReactNode }) => {
 };
 
 const CameraNoPermissions = () => {
+  const { theme } = useTheme();
   return (
     <LayoutCamera>
       <CameraOffIcon
         width={90}
         height={90}
-        color={config.theme.extend.colors.gray}
+        color={themeRuntimeValues[theme].gray}
       />
       <View className="w-4/5 gap-10">
         <Text className="text-center text-lg text-white">
@@ -40,7 +42,9 @@ const CameraNoPermissions = () => {
         </Text>
         <ButtonPrimary
           title="Activer la permission"
-          icon={<PlusIcon color={config.theme.extend.colors.foreground.DEFAULT} />}
+          icon={
+            <PlusIcon color={themeRuntimeValues[theme].foreground.DEFAULT} />
+          }
           action={() => {
             Linking.openURL('app-settings:');
           }}
@@ -51,14 +55,15 @@ const CameraNoPermissions = () => {
 };
 
 const CameraUnavailable = () => {
+  const { theme } = useTheme();
   return (
     <LayoutCamera>
       <CameraOffIcon
         width={90}
         height={90}
-        color={config.theme.extend.colors.gray}
+        color={themeRuntimeValues[theme].gray}
       />
-      <Text className="w-4/5 text-center text-lg text-test">
+      <Text className="w-4/5 text-center text-lg text-white">
         Vous semblez ne pas avoir de caméra sur votre appareil.
       </Text>
     </LayoutCamera>

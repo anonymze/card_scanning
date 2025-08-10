@@ -3,12 +3,12 @@ import * as DevClient from 'expo-dev-client';
 import { Text, TouchableOpacity, View } from 'react-native';
 
 const DevMenu = () => {
-  const { theme } = useTheme();
+  const { theme, toggleTheme } = useTheme();
 
   DevClient.registerDevMenuItems([
     {
       name: `Toggle Theme (actual: ${theme})`,
-      callback: () => console.log('Debug action triggered'),
+      callback: () => toggleTheme(),
       shouldCollapse: true,
     },
   ]);

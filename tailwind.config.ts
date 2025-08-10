@@ -1,6 +1,4 @@
-import { vars } from 'nativewind';
 import type { Config } from 'tailwindcss';
-
 
 const config = {
   corePlugins: {
@@ -25,24 +23,21 @@ const config = {
     extend: {
       colors: {
         foreground: {
-          DEFAULT: '#fbbf24',
-          light: 'blue',
-          dark: '#f59e0b',
+          DEFAULT: 'var(--color-foreground)',
+          lighter: 'var(--color-foreground-lighter)',
+          darker: 'var(--color-foreground-darker)',
         },
-        foregroundLight: '#eab308',
-        foregroundDark: '#f59e0b',
-        gray: '#94a3b8',
-        test: "var(--color-bg-secondary-lighter)",
+        gray: 'var(--color-gray)',
         background: {
           primary: {
-            DEFAULT: '#1e293b',
-            light: '#334155',
-            dark: '#0f172a',
+            DEFAULT: 'var(--color-background-primary)',
+            lighter: 'var(--color-background-primary-lighter)',
+            darker: 'var(--color-background-primary-darker)',
           },
           secondary: {
-            DEFAULT: '#2563eb',
-            light: '#3b82f6',
-            dark: '#0891b2',
+            DEFAULT: 'var(--color-background-secondary)',
+            lighter: 'var(--color-background-secondary-lighter)',
+            darker: 'var(--color-background-secondary-darker)',
           },
         },
       },

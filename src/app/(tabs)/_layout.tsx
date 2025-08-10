@@ -1,25 +1,26 @@
 import { DecksIcon, ScanIcon, SettingsIcon } from '@/components/icons';
 import { LoaderTabs } from '@/components/loader-tabs';
 import { useLoaderGlobal } from '@/lib/loader-store';
+import { themeRuntimeValues, useTheme } from '@/styles/theme';
 import { Tabs } from 'expo-router';
 import { Text, View } from 'react-native';
-import config from 'tailwind.config';
 
 export default function TabLayout() {
+  const { theme } = useTheme();
   return (
     <Tabs
       screenOptions={{
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: config.theme.extend.colors.background.primary.dark,
-          borderTopColor: config.theme.extend.colors.foreground.dark,
+          backgroundColor: themeRuntimeValues[theme].background.primary.darker,
+          borderTopColor: themeRuntimeValues[theme].foreground.darker,
           borderTopWidth: 2,
         },
         tabBarLabelStyle: {
           marginTop: 4,
         },
-        tabBarActiveTintColor: config.theme.extend.colors.foreground.DEFAULT,
-        tabBarInactiveTintColor: config.theme.extend.colors.gray,
+        tabBarActiveTintColor: themeRuntimeValues[theme].foreground.DEFAULT,
+        tabBarInactiveTintColor: themeRuntimeValues[theme].gray,
       }}
     >
       <Tabs.Screen
@@ -41,7 +42,7 @@ export default function TabLayout() {
               <>
                 <LoaderTabs width={100} height={100} loading={loading} />
                 <View className="absolute w-12 items-center justify-center gap-1">
-                  <ScanIcon width={28} height={28} stroke={color} />
+                  <ScanIcon width={28} height={28} stroke={color} color={"transparent"} />
                   <Text
                     style={{
                       color,

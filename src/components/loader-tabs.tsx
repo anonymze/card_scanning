@@ -1,4 +1,4 @@
-import { useTheme } from '@/styles/theme';
+import { themeRuntimeValues, useTheme } from '@/styles/theme';
 import {
   BlurMask,
   Canvas,
@@ -15,7 +15,6 @@ import Animated, {
   withRepeat,
   withTiming,
 } from 'react-native-reanimated';
-import config from 'tailwind.config';
 
 // otherwise the circle is cut off at the edges
 const canvasPadding = 20;
@@ -86,7 +85,7 @@ export const LoaderTabs = ({
           height: canvasSize.current.height,
         },
       ]}
-      className="items-center justify-center rounded-full border-2 border-foreground-dark bg-background-primary-dark"
+      className="items-center justify-center rounded-full border-2 border-foreground-darker bg-background-primary-darker"
     >
       <Canvas
         style={{
@@ -110,9 +109,9 @@ export const LoaderTabs = ({
               y: canvasSize.current.height / 2 + canvasPadding / 2,
             }}
             colors={[
-              "hsl(0, 100%, 50%)",
-              config.theme.extend.colors.foreground.light,
-              config.theme.extend.colors.foreground.dark,
+              themeRuntimeValues[theme].foreground.darker,
+              themeRuntimeValues[theme].foreground.DEFAULT,
+              themeRuntimeValues[theme].foreground.darker,
             ]}
           />
           <BlurMask blur={3} style="solid" />
