@@ -14,11 +14,12 @@ const DevMenu = () => {
     },
   ]);
 
-  const gesture = Gesture.Tap().runOnJS(true).onEnd((ev) => {
-    console.log(ev.x, ev.y);
-    toggleTheme()
-    // DevClient.openMenu();
-  });
+  const gesture = Gesture.Tap()
+    .runOnJS(true)
+    .onEnd((ev) => {
+      toggleTheme(ev.x, ev.y);
+      // DevClient.openMenu();
+    });
 
   return (
     <GestureDetector gesture={gesture}>

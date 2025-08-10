@@ -1,10 +1,14 @@
 // src/shared-components/providers/ThemeProviders.tsx
+import { makeImageFromView } from '@shopify/react-native-skia';
 import { StatusBar } from 'expo-status-bar';
 import { useColorScheme, vars } from 'nativewind';
 import React, { createContext } from 'react';
 import { View } from 'react-native';
 
-const DEFAULT_THEME: Exclude<ReturnType<typeof useColorScheme>['colorScheme'], undefined> = 'dark';
+const DEFAULT_THEME: Exclude<
+  ReturnType<typeof useColorScheme>['colorScheme'],
+  undefined
+> = 'dark';
 
 export const themeRuntimeValues = {
   light: {
@@ -56,38 +60,53 @@ const themeCSSVariables = {
     '--color-foreground-lighter': themeRuntimeValues.light.foreground.lighter,
     '--color-foreground-darker': themeRuntimeValues.light.foreground.darker,
     '--color-gray': themeRuntimeValues.light.gray,
-    '--color-background-primary': themeRuntimeValues.light.background.primary.DEFAULT,
-    '--color-background-primary-lighter': themeRuntimeValues.light.background.primary.lighter,
-    '--color-background-primary-darker': themeRuntimeValues.light.background.primary.darker,
-    '--color-background-secondary': themeRuntimeValues.light.background.secondary.DEFAULT,
-    '--color-background-secondary-lighter': themeRuntimeValues.light.background.secondary.lighter,
-    '--color-background-secondary-darker': themeRuntimeValues.light.background.secondary.darker,
+    '--color-background-primary':
+      themeRuntimeValues.light.background.primary.DEFAULT,
+    '--color-background-primary-lighter':
+      themeRuntimeValues.light.background.primary.lighter,
+    '--color-background-primary-darker':
+      themeRuntimeValues.light.background.primary.darker,
+    '--color-background-secondary':
+      themeRuntimeValues.light.background.secondary.DEFAULT,
+    '--color-background-secondary-lighter':
+      themeRuntimeValues.light.background.secondary.lighter,
+    '--color-background-secondary-darker':
+      themeRuntimeValues.light.background.secondary.darker,
   }),
   dark: vars({
     '--color-foreground': themeRuntimeValues.dark.foreground.DEFAULT,
     '--color-foreground-lighter': themeRuntimeValues.dark.foreground.lighter,
     '--color-foreground-darker': themeRuntimeValues.dark.foreground.darker,
     '--color-gray': themeRuntimeValues.dark.gray,
-    '--color-background-primary': themeRuntimeValues.dark.background.primary.DEFAULT,
-    '--color-background-primary-lighter': themeRuntimeValues.dark.background.primary.lighter,
-    '--color-background-primary-darker': themeRuntimeValues.dark.background.primary.darker,
-    '--color-background-secondary': themeRuntimeValues.dark.background.secondary.DEFAULT,
-    '--color-background-secondary-lighter': themeRuntimeValues.dark.background.secondary.lighter,
-    '--color-background-secondary-darker': themeRuntimeValues.dark.background.secondary.darker,
+    '--color-background-primary':
+      themeRuntimeValues.dark.background.primary.DEFAULT,
+    '--color-background-primary-lighter':
+      themeRuntimeValues.dark.background.primary.lighter,
+    '--color-background-primary-darker':
+      themeRuntimeValues.dark.background.primary.darker,
+    '--color-background-secondary':
+      themeRuntimeValues.dark.background.secondary.DEFAULT,
+    '--color-background-secondary-lighter':
+      themeRuntimeValues.dark.background.secondary.lighter,
+    '--color-background-secondary-darker':
+      themeRuntimeValues.dark.background.secondary.darker,
   }),
 } as const;
 
 export const ThemeContext = createContext<{
   theme: Exclude<ReturnType<typeof useColorScheme>['colorScheme'], undefined>;
-  toggleTheme: () => void;
+  toggleTheme: (x?: number, y?: number) => Promise<void>;
 }>(null!);
 
 export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
+  const screenshotRef = React.useRef<View>(null!);
   const { colorScheme = DEFAULT_THEME } = useColorScheme();
   const [colorSchemeReactive, setColorSchemeReactive] =
     React.useState(colorScheme);
 
-  const toggleTheme = () => {
+  const toggleTheme = async (x?: number, y?: number) => {
+    const overlay1 = await makeImageFromView(screenshotRef);
+    console.log(x,y)
     setColorSchemeReactive(colorSchemeReactive === 'light' ? 'dark' : 'light');
   };
 
@@ -97,6 +116,7 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
     >
       <StatusBar style={colorSchemeReactive === 'light' ? 'light' : 'dark'} />
       <View
+        ref={screenshotRef}
         style={themeCSSVariables[colorSchemeReactive]}
         className="flex-1"
       >
