@@ -1,6 +1,12 @@
-import { ScrollView, StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
+import { themeRuntimeValues, useTheme } from '@/styles/theme';
+import {
+  ScrollView,
+  StyleProp,
+  StyleSheet,
+  View,
+  ViewStyle,
+} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import config from 'tailwind.config';
 
 export default function BackgroundLayout({
   children,
@@ -11,25 +17,22 @@ export default function BackgroundLayout({
   style?: StyleProp<ViewStyle>;
   scrollable?: boolean;
 }) {
+  const { theme } = useTheme();
   return (
     <LinearGradient
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 1 }}
       colors={[
-        config.theme.extend.colors.background.primary.dark, // slate-900 (top-left)
-        config.theme.extend.colors.background.primary.light, // blue-900 (center)
-        config.theme.extend.colors.background.primary.DEFAULT, // slate-800 (bottom-right)
+        themeRuntimeValues[theme].background.primary.darker,
+        themeRuntimeValues[theme].background.primary.lighter,
+        themeRuntimeValues[theme].background.primary.DEFAULT,
       ]}
       style={[styles.container, style]}
     >
       {scrollable ? (
-        <ScrollView className='flex-1 p-safe'>
-          {children}
-        </ScrollView>
+        <ScrollView className="p-safe flex-1">{children}</ScrollView>
       ) : (
-        <View className='flex-1 p-safe'>
-          {children}
-        </View>
+        <View className="p-safe flex-1">{children}</View>
       )}
     </LinearGradient>
   );

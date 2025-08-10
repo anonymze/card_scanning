@@ -6,6 +6,7 @@ import {
 import { DecksIcon, ScanIcon } from '@/components/icons';
 import { ButtonPrimary } from '@/components/ui/buttons';
 import { useLoaderGlobal } from '@/lib/loader-store';
+import { themeRuntimeValues, useTheme } from '@/styles/theme';
 import { Text, View } from 'react-native';
 import {
   Camera,
@@ -13,26 +14,29 @@ import {
   useCameraPermission,
   useFrameProcessor,
 } from 'react-native-vision-camera';
-import config from 'tailwind.config';
 
 export default function Page() {
+  const { theme } = useTheme();
   const { start, stop, loading } = useLoaderGlobal();
   const device = useCameraDevice('back');
   const { hasPermission, requestPermission } = useCameraPermission();
 
-  const frameProcessor = useFrameProcessor((frame) => {
-    'worklet';
-    if (loading) {
-      // Process frame for card detection here
-      console.log(`Processing frame ${frame.width}x${frame.height}`);
-    }
-  }, [loading]);
+  const frameProcessor = useFrameProcessor(
+    (frame) => {
+      'worklet';
+      if (loading) {
+        // Process frame for card detection here
+        console.log(`Processing frame ${frame.width}x${frame.height}`);
+      }
+    },
+    [loading],
+  );
 
+  if (device == null) return <CameraUnavailable />;
   if (!hasPermission) {
     requestPermission();
     return <CameraNoPermissions />;
   }
-  if (device == null) return <CameraUnavailable />;
 
   return (
     <LayoutCamera>
@@ -46,20 +50,22 @@ export default function Page() {
           isActive={true}
           frameProcessor={loading ? frameProcessor : undefined}
         />
-        <View className="items-center pl-5 pt-5 flex-row gap-1">
+        <View className="flex-row items-center gap-1 pl-5 pt-5">
           <DecksIcon
             className="left-10 top-20 mx-20"
-            color={config.theme.extend.colors.foreground.dark}
+            color={themeRuntimeValues[theme].foreground.darker}
           />
-          <Text className='font-bold text-foreground-dark'>0</Text>
+          <Text className="font-bold text-foreground-dark">0</Text>
         </View>
         <ButtonPrimary
           action={() => {
             if (loading) return stop();
             start();
           }}
-          title={loading ? "Arrêter" : "Scanner"}
-          icon={<ScanIcon color={config.theme.extend.colors.foreground.DEFAULT} />}
+          title={loading ? 'Arrêter' : 'Scanner'}
+          icon={
+            <ScanIcon color={themeRuntimeValues[theme].foreground.DEFAULT} />
+          }
           className="mt-auto rounded-none"
         />
       </View>
