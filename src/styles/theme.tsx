@@ -156,6 +156,7 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
     circle.value = { x, y, radius: r };
     setSnapshotOldTheme(await makeImageFromView(screenshotRef));
     await sleepUntilNextFrame();
+    await sleepUntilNextFrame();
     setColorSchemeReactive(colorSchemeReactive === 'light' ? 'dark' : 'light');
     await sleepUntilNextFrame();
     setSnapshotNewTheme(await makeImageFromView(screenshotRef));
