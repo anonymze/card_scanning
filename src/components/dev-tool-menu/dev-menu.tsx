@@ -1,6 +1,6 @@
 import { useTheme } from '@/styles/theme';
 import * as DevClient from 'expo-dev-client';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Pressable, Text, TouchableOpacity, View } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 
 const DevMenu = () => {
@@ -24,13 +24,13 @@ const DevMenu = () => {
   return (
     <GestureDetector gesture={gesture}>
       <View style={{ position: 'absolute', top: 50, right: 20, zIndex: 9999 }}>
-        <TouchableOpacity
+        <Pressable
           hitSlop={8}
           // onPress={() => DevClient.openMenu()}
           style={{ backgroundColor: '#ff6b6b', padding: 10, borderRadius: 5 }}
         >
           <Text style={{ color: 'white', fontWeight: 'bold' }}>🛠️ Dev</Text>
-        </TouchableOpacity>
+        </Pressable>
       </View>
     </GestureDetector>
   );
