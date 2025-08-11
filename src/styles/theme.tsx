@@ -1,9 +1,34 @@
 // src/shared-components/providers/ThemeProviders.tsx
-import { makeImageFromView } from '@shopify/react-native-skia';
+import { sleepUntilNextFrame } from '@/utils/helper';
+import {
+  Canvas,
+  Circle,
+  dist,
+  Image,
+  ImageShader,
+  makeImageFromView,
+  mix,
+  SkImage,
+  vec,
+} from '@shopify/react-native-skia';
 import { StatusBar } from 'expo-status-bar';
 import { useColorScheme, vars } from 'nativewind';
 import React, { createContext } from 'react';
-import { View } from 'react-native';
+import { Dimensions, StyleSheet, View } from 'react-native';
+import {
+  useDerivedValue,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
+import { runOnJS } from 'react-native-worklets';
+
+const { width, height } = Dimensions.get('window');
+const cornersScreen = [
+  vec(0, 0),
+  vec(width, 0),
+  vec(width, height),
+  vec(0, height),
+];
 
 const DEFAULT_THEME: Exclude<
   ReturnType<typeof useColorScheme>['colorScheme'],
@@ -101,13 +126,49 @@ export const ThemeContext = createContext<{
 export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   const screenshotRef = React.useRef<View>(null!);
   const { colorScheme = DEFAULT_THEME } = useColorScheme();
+  const [snapshotOldTheme, setSnapshotOldTheme] =
+    React.useState<SkImage | null>(null);
+  const [snapshotNewTheme, setSnapshotNewTheme] =
+    React.useState<SkImage | null>(null);
+  const transition = useSharedValue(0);
+  const circle = useSharedValue({
+    x: 0,
+    y: 0,
+    radius: 0,
+  });
+  const r = useDerivedValue(() => {
+    return mix(transition.value, 0, circle.value.radius);
+  });
   const [colorSchemeReactive, setColorSchemeReactive] =
     React.useState(colorScheme);
 
   const toggleTheme = async (x?: number, y?: number) => {
-    const overlay1 = await makeImageFromView(screenshotRef);
-    console.log(x,y)
+    if (transition.value > 0 && transition.value < 1) return;
+    if (!x || !y) {
+      return setColorSchemeReactive(
+        colorSchemeReactive === 'light' ? 'dark' : 'light',
+      );
+    }
+
+    const r = Math.max(
+      ...cornersScreen.map((corner) => dist(corner, { x, y })),
+    );
+    circle.value = { x, y, radius: r };
+    setSnapshotOldTheme(await makeImageFromView(screenshotRef));
+    await sleepUntilNextFrame();
     setColorSchemeReactive(colorSchemeReactive === 'light' ? 'dark' : 'light');
+    await sleepUntilNextFrame();
+    setSnapshotNewTheme(await makeImageFromView(screenshotRef));
+
+    transition.value = 0;
+    transition.value = withTiming(1, { duration: 1000 }, (finished) => {
+      if (finished) {
+        runOnJS(() => {
+          setSnapshotOldTheme(null);
+          setSnapshotNewTheme(null);
+        });
+      }
+    });
   };
 
   return (
@@ -116,12 +177,35 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
     >
       <StatusBar style={colorSchemeReactive === 'light' ? 'light' : 'dark'} />
       <View
+        collapsable={false}
         ref={screenshotRef}
         style={themeCSSVariables[colorSchemeReactive]}
         className="flex-1"
       >
         {children}
       </View>
+
+      <Canvas style={StyleSheet.absoluteFill} pointerEvents="none">
+        <Image
+          image={snapshotOldTheme}
+          x={0}
+          y={0}
+          width={width}
+          height={height}
+        />
+        {snapshotNewTheme && (
+          <Circle c={circle} r={r}>
+            <ImageShader
+              image={snapshotNewTheme}
+              x={0}
+              y={0}
+              width={width}
+              height={height}
+              fit="cover"
+            />
+          </Circle>
+        )}
+      </Canvas>
     </ThemeContext.Provider>
   );
 };
