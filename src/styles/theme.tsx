@@ -126,6 +126,7 @@ export const ThemeContext = createContext<{
 export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   const screenshotRef = React.useRef<View>(null!);
   const { colorScheme = DEFAULT_THEME } = useColorScheme();
+  const [active, setActive] = React.useState(false);
   const [snapshotOldTheme, setSnapshotOldTheme] =
     React.useState<SkImage | null>(null);
   const [snapshotNewTheme, setSnapshotNewTheme] =
@@ -143,13 +144,14 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
     React.useState(colorScheme);
 
   const toggleTheme = async (x?: number, y?: number) => {
-    if (transition.value > 0 && transition.value < 1) return;
+    if (active) return;
     if (!x || !y) {
       return setColorSchemeReactive(
         colorSchemeReactive === 'light' ? 'dark' : 'light',
       );
     }
 
+    setActive(true);
     const r = Math.max(
       ...cornersScreen.map((corner) => dist(corner, { x, y })),
     );
@@ -162,12 +164,11 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
     setSnapshotNewTheme(await makeImageFromView(screenshotRef));
 
     transition.value = 0;
-    transition.value = withTiming(1, { duration: 1000 }, (finished) => {
+    transition.value = withTiming(1, { duration: 600 }, (finished) => {
       if (finished) {
-        runOnJS(() => {
-          setSnapshotOldTheme(null);
-          setSnapshotNewTheme(null);
-        });
+        runOnJS(setSnapshotOldTheme)(null);
+        runOnJS(setSnapshotNewTheme)(null);
+        runOnJS(setActive)(false);
       }
     });
   };
@@ -186,7 +187,10 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
         {children}
       </View>
 
-      <Canvas style={StyleSheet.absoluteFill} pointerEvents="none">
+      <Canvas
+        style={StyleSheet.absoluteFill}
+        pointerEvents={active ? 'auto' : 'none'}
+      >
         <Image
           image={snapshotOldTheme}
           x={0}
