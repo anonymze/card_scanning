@@ -33,7 +33,7 @@ const DevMenu = () => {
         <Pressable
           hitSlop={8}
           // onPress={() => DevClient.openMenu()}
-          style={{ backgroundColor: '#ff6b6b', padding: 10, borderRadius: 5 }}
+          style={{ backgroundColor: '#ff5b5b', padding: 10, borderRadius: 5 }}
         >
           <Text style={{ color: 'white', fontWeight: 'bold' }}>🛠️ Dev</Text>
         </Pressable>
