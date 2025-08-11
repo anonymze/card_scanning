@@ -67,7 +67,8 @@ export const themeRuntimeValues = {
       primary: {
         DEFAULT: 'hsl(217, 33%, 17%)',
         lighter: 'hsl(215, 25%, 27%)',
-        darker: 'hsl(222, 47%, 11%)',
+        darker: 'hsl(77, 81.82%, 43.14%)',
+        // darker: 'hsl(222, 47%, 11%)',
       },
       secondary: {
         DEFAULT: 'hsl(221, 83%, 53%)',
@@ -165,7 +166,7 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
     setSnapshotNewTheme(await makeImageFromView(screenshotRef));
 
     transition.value = 0;
-    transition.value = withTiming(1, { duration: 600 }, (finished) => {
+    transition.value = withTiming(1, { duration: 550 }, (finished) => {
       if (finished) {
         runOnJS(setSnapshotOldTheme)(null);
         runOnJS(setSnapshotNewTheme)(null);
