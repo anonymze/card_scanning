@@ -1,10 +1,12 @@
 import { useTheme } from '@/styles/theme';
 import * as DevClient from 'expo-dev-client';
-import { Pressable, Text, TouchableOpacity, View } from 'react-native';
+import React from 'react';
+import { Pressable, Text, View } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 
 const DevMenu = () => {
   const { theme, toggleTheme } = useTheme();
+  const viewRef = React.useRef<View>(null);
 
   DevClient.registerDevMenuItems([
     {
@@ -17,13 +19,17 @@ const DevMenu = () => {
   const gesture = Gesture.Tap()
     .runOnJS(true)
     .onEnd((ev) => {
-      toggleTheme(ev.x, ev.y);
-      // DevClient.openMenu();
+      viewRef.current?.measureInWindow((x, y, _width, _height) => {
+        toggleTheme(x + ev.x, y + ev.y);
+      });
     });
 
   return (
     <GestureDetector gesture={gesture}>
-      <View style={{ position: 'absolute', top: 50, right: 20, zIndex: 9999 }}>
+      <View
+        ref={viewRef}
+        style={{ position: 'absolute', top: 50, right: 20, zIndex: 9999 }}
+      >
         <Pressable
           hitSlop={8}
           // onPress={() => DevClient.openMenu()}
