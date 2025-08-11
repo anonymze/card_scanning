@@ -152,10 +152,12 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
     }
 
     setActive(true);
+
     const r = Math.max(
       ...cornersScreen.map((corner) => dist(corner, { x, y })),
     );
     circle.value = { x, y, radius: r };
+
     setSnapshotOldTheme(await makeImageFromView(screenshotRef));
     await sleepUntilNextFrame();
     await sleepUntilNextFrame();
