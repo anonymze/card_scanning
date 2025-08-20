@@ -1,7 +1,5 @@
 remove worklets/core
 
-
-
   Roboflow 3.0 offers different sizes:
   - Fast - Smallest/lightest (available to all)
   - Accurate - Medium size
@@ -24,3 +22,5 @@ remove worklets/core
 
 
 Photos through : POCHETS + PHONE + BAD LIGHT + GOOD LIGHT + DIFFERENT ANGLES + FAR + CLOSE + FINGER ON IT + DIEFFERENT BACGROUNDS (white page ?) + different languages, UPSIDE DOWN, PORTRAIT,  PAYSAGE
+
+csmarque@orange.fr
