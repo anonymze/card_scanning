@@ -11,12 +11,6 @@
     },
     "plugins": [
       "expo-router",
-      [
-        "expo-dev-launcher",
-        {
-          "launchMode": "most-recent"
-        }
-      ],
       "expo-localization",
       "expo-font",
       "react-native-edge-to-edge",
@@ -31,9 +25,7 @@
     "experiments": {
       "reactCanary": true,
       "reactCompiler": true,
-      "buildCacheProvider": {
-        "plugin": "expo-build-disk-cache"
-      },
+      "buildCacheProvider": "eas",
       "tsconfigPaths": true,
       "typedRoutes": true
     },

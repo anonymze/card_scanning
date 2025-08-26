@@ -21,6 +21,11 @@ remove worklets/core
   - YOLOv8 nano models (~6MB)
 
 
-Photos through : POCHETS + PHONE + BAD LIGHT + GOOD LIGHT + DIFFERENT ANGLES + FAR + CLOSE + FINGER ON IT + DIEFFERENT BACGROUNDS (white page ?) + different languages, UPSIDE DOWN, PORTRAIT,  PAYSAGE
-
-csmarque@orange.fr
+- Creature = monsters/beings
+- Instant = quick spells
+- Sorcery = slow spells
+- Artifact = items/machines
+- Enchantment = ongoing effects
+- Planeswalker = powerful allies
+- Land = mana sources
+- Battle = sieges/conflicts
