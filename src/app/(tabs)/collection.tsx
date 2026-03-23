@@ -10,7 +10,7 @@ export default function Page() {
         <EmptyState
           variant="collection"
           title="Your collection is empty"
-          subtitle="Point your camera at a Magic card to add it."
+          subtitle="Scan cards or add them manually to build your first collection"
         />
       ) : null}
     </BackgroundLayout>

@@ -1,22 +1,36 @@
 import { AnimatedTabIcon } from '@/components/animated-tab-icon';
-import { CollectionIcon, DecksIcon, ScanIcon, SettingsIcon, ShopIcon } from '@/components/icons';
+import {
+  CollectionIcon,
+  DecksIcon,
+  ScanIcon,
+  SettingsIcon,
+  ShopIcon,
+} from '@/components/icons';
 import { LoaderTabs } from '@/components/loader-tabs';
 import { useLoaderGlobal } from '@/lib/loader-store';
 import { Tabs } from 'expo-router';
 import { Text, View } from 'react-native';
-import { useCSSVariable, useResolveClassNames } from 'uniwind';
+import { useCSSVariable } from 'uniwind';
 
 export default function TabLayout() {
-  const tabBarStyle = useResolveClassNames('bg-background-primary-darker border-t-2 border-t-foreground-darker');
-  const tabBarLabelStyle = useResolveClassNames('mt-1 text-[9px]');
-  const [activeTint, inactiveTint] = useCSSVariable(['--color-foreground', '--color-gray']);
+  const [activeTint, inactiveTint, background] = useCSSVariable([
+    '--color-foreground',
+    '--color-gray',
+    '--color-background-primary-darker'
+  ]);
 
   return (
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarStyle,
-        tabBarLabelStyle,
+        tabBarStyle: {
+          backgroundColor: background,
+          borderTopColor: activeTint,
+          borderTopWidth: 2,
+        },
+        tabBarLabelStyle: {
+          marginTop: 4,
+        },
         tabBarActiveTintColor: String(activeTint),
         tabBarInactiveTintColor: String(inactiveTint),
       }}
@@ -25,7 +39,13 @@ export default function TabLayout() {
         name="collection"
         options={{
           title: 'Collection',
-          tabBarIcon: ({ color, focused }: { color: string; focused: boolean }) => {
+          tabBarIcon: ({
+            color,
+            focused,
+          }: {
+            color: string;
+            focused: boolean;
+          }) => {
             return (
               <AnimatedTabIcon focused={focused}>
                 <CollectionIcon width={26} height={26} color={color} />
@@ -39,7 +59,13 @@ export default function TabLayout() {
         options={{
           title: 'Decks',
           tabBarItemStyle: { paddingRight: 20 },
-          tabBarIcon: ({ color, focused }: { color: string; focused: boolean }) => {
+          tabBarIcon: ({
+            color,
+            focused,
+          }: {
+            color: string;
+            focused: boolean;
+          }) => {
             return (
               <AnimatedTabIcon focused={focused}>
                 <DecksIcon width={26} height={26} color={color} />
@@ -58,7 +84,12 @@ export default function TabLayout() {
               <>
                 <LoaderTabs width={92} height={92} loading={loading} />
                 <View className="absolute w-12 items-center justify-center gap-1">
-                  <ScanIcon width={28} height={28} stroke={color} color={"transparent"} />
+                  <ScanIcon
+                    width={28}
+                    height={28}
+                    stroke={color}
+                    color={'transparent'}
+                  />
                   <Text
                     style={{
                       color,
@@ -78,7 +109,13 @@ export default function TabLayout() {
         options={{
           title: 'Shop',
           tabBarItemStyle: { paddingLeft: 20 },
-          tabBarIcon: ({ color, focused }: { color: string; focused: boolean }) => {
+          tabBarIcon: ({
+            color,
+            focused,
+          }: {
+            color: string;
+            focused: boolean;
+          }) => {
             return (
               <AnimatedTabIcon focused={focused}>
                 <ShopIcon width={26} height={26} color={color} />
@@ -91,7 +128,13 @@ export default function TabLayout() {
         name="settings"
         options={{
           title: 'Paramètres',
-          tabBarIcon: ({ color, focused }: { color: string; focused: boolean }) => {
+          tabBarIcon: ({
+            color,
+            focused,
+          }: {
+            color: string;
+            focused: boolean;
+          }) => {
             return (
               <AnimatedTabIcon focused={focused}>
                 <SettingsIcon width={26} height={26} stroke={color} />
