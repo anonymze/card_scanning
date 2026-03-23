@@ -8,6 +8,7 @@
     "dev": "expo start",
     "format": "prettier --write .",
     "ios": "expo run:ios",
+    "postinstall": "node node_modules/@shopify/react-native-skia/scripts/install-skia.mjs",
     "prebuild": "expo prebuild",
     "start": "expo start --dev-client",
     "tsc:check": "tsc",

@@ -1,10 +1,23 @@
 import { useLoaderGlobal } from '@/lib/loader-store';
-import '@/styles/global.css';
+import '@/global.css';
 import { useKeepAwake } from 'expo-keep-awake';
 import { Stack, usePathname } from 'expo-router';
 import React from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
+import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { Uniwind } from 'uniwind';
+
+// Force dark theme — app is dark-only
+// Uniwind.setTheme('dark');
+
+function InsetUpdater() {
+  const insets = useSafeAreaInsets();
+  React.useLayoutEffect(() => {
+    Uniwind.updateInsets(insets);
+  }, [insets]);
+  return null;
+}
 
 export const unstable_settings = {
   initialRouteName: '(tabs)',
@@ -13,21 +26,22 @@ export const unstable_settings = {
 export default function RootLayout() {
   const { stop, loading } = useLoaderGlobal();
   const pathname = usePathname();
-  // TODO
   useKeepAwake();
 
-  // stop loader when we navigate
   React.useEffect(() => {
     if (loading) stop();
   }, [pathname]);
 
   return (
-    <GestureHandlerRootView>
-      <KeyboardProvider>
-        <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        </Stack>
-      </KeyboardProvider>
-    </GestureHandlerRootView>
+    <SafeAreaProvider>
+      <InsetUpdater />
+      <GestureHandlerRootView>
+        <KeyboardProvider>
+          <Stack>
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          </Stack>
+        </KeyboardProvider>
+      </GestureHandlerRootView>
+    </SafeAreaProvider>
   );
 }

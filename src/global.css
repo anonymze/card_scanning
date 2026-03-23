@@ -1,0 +1,46 @@
+@import 'tailwindcss';
+@import 'uniwind';
+
+@theme {
+  /* Fonts */
+  --font-sans: 'SpaceGrotesk-Regular';
+  --font-sans-light: 'SpaceGrotesk-Light';
+  --font-sans-semibold: 'SpaceGrotesk-SemiBold';
+  --font-sans-bold: 'SpaceGrotesk-Bold';
+  --font-cinzel: 'Cinzel-Regular';
+  --font-cinzel-semibold: 'Cinzel-SemiBold';
+  --font-cinzel-bold: 'Cinzel-Bold';
+}
+
+@theme static {
+  --color-primary: #eaeeee;
+}
+
+@layer theme {
+  :root {
+    @variant light {
+      --color-foreground: #ffffff;
+      --color-foreground-lighter: #e8eaed;
+      --color-foreground-darker: #8899aa;
+      --color-gray: #4a5568;
+      --color-background-primary: #0f1826;
+      --color-background-primary-lighter: #111d2e;
+      --color-background-primary-darker: #08091a;
+      --color-background-secondary: #152030;
+      --color-background-secondary-lighter: #1a2840;
+      --color-background-secondary-darker: #0a1520;
+    }
+    @variant dark {
+      --color-foreground: #ffffff;
+      --color-foreground-lighter: #e8eaed;
+      --color-foreground-darker: #8899aa;
+      --color-gray: #4a5568;
+      --color-background-primary: #0f1826;
+      --color-background-primary-lighter: #111d2e;
+      --color-background-primary-darker: #08091a;
+      --color-background-secondary: #152030;
+      --color-background-secondary-lighter: #1a2840;
+      --color-background-secondary-darker: #0a1520;
+    }
+  }
+}
