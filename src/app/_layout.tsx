@@ -1,4 +1,4 @@
-import DevToolMenu from '@/components/dev-tool-menu/dev-tool-menu';
+// import DevToolMenu from '@/components/dev-tool-menu/dev-tool-menu';
 import { useLoaderGlobal } from '@/lib/loader-store';
 import '@/styles/global.css';
 import { ThemeProvider } from '@/styles/theme';
@@ -30,7 +30,7 @@ export default function RootLayout() {
         <Stack>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         </Stack>
-        <DevToolMenu />
+        {/*<DevToolMenu />*/}
         </ThemeProvider>
       </KeyboardProvider>
     </GestureHandlerRootView>

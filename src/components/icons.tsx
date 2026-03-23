@@ -65,4 +65,26 @@ const PlusIcon = (props: SvgProps) => {
   );
 };
 
-export { ScanIcon, SettingsIcon, DecksIcon, CameraOffIcon, CameraIcon , PlusIcon};
+const CollectionIcon = (props: SvgProps) => {
+  return (
+    <Svg width={24} height={24} viewBox="0 0 24 24" {...props}>
+      <Path
+        d="M3 6.25A3.25 3.25 0 0 1 6.25 3h11.5A3.25 3.25 0 0 1 21 6.25v11.5A3.25 3.25 0 0 1 17.75 21H6.25A3.25 3.25 0 0 1 3 17.75zM6.25 4.5A1.75 1.75 0 0 0 4.5 6.25v11.5c0 .966.784 1.75 1.75 1.75H17.75a1.75 1.75 0 0 0 1.75-1.75V6.25a1.75 1.75 0 0 0-1.75-1.75zM7 8.75A.75.75 0 0 1 7.75 8h8.5a.75.75 0 0 1 0 1.5h-8.5A.75.75 0 0 1 7 8.75m0 3.5a.75.75 0 0 1 .75-.75h8.5a.75.75 0 0 1 0 1.5h-8.5a.75.75 0 0 1-.75-.75m0 3.5a.75.75 0 0 1 .75-.75h5.5a.75.75 0 0 1 0 1.5h-5.5a.75.75 0 0 1-.75-.75"
+        fill="currentColor"
+      />
+    </Svg>
+  );
+};
+
+const ShopIcon = (props: SvgProps) => {
+  return (
+    <Svg width={24} height={24} viewBox="0 0 24 24" {...props}>
+      <Path
+        d="M9 2a1 1 0 0 1 .993.883L10 3v1h4V3a1 1 0 0 1 1.993-.117L16 3v1h1a3 3 0 0 1 2.995 2.824L20 7v11a3 3 0 0 1-2.824 2.995L17 21H7a3 3 0 0 1-2.995-2.824L4 18V7a3 3 0 0 1 2.824-2.995L7 4h1V3a1 1 0 0 1 1-1m5 9h-4a1 1 0 0 0 0 2h4a1 1 0 0 0 0-2M9 6H7a1 1 0 0 0-.993.883L6 7v1h12V7a1 1 0 0 0-.883-.993L17 6h-2v1a1 1 0 0 1-1.993.117L13 7V6h-4v1a1 1 0 0 1-1.993.117L7 7V6z"
+        fill="currentColor"
+      />
+    </Svg>
+  );
+};
+
+export { ScanIcon, SettingsIcon, DecksIcon, CameraOffIcon, CameraIcon, PlusIcon, CollectionIcon, ShopIcon };

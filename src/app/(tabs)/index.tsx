@@ -54,7 +54,7 @@ export default function Page() {
           <DecksIcon
             className="left-10 top-20 mx-20"
             color={themeRuntimeValues[theme].foreground.darker}
-          />
+          />Next up.
           <Text className="font-bold text-foreground-dark">0</Text>
         </View>
         <ButtonPrimary

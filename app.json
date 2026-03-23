@@ -23,7 +23,6 @@
       ]
     ],
     "experiments": {
-      "reactCanary": true,
       "reactCompiler": true,
       "buildCacheProvider": "eas",
       "tsconfigPaths": true,
@@ -52,7 +51,6 @@
       },
       "package": "app.default.www"
     },
-    "newArchEnabled": true,
     "extra": {
       "router": {
         "origin": false
