@@ -1,18 +1,67 @@
 {
   "expo": {
-    "name": "default App",
-    "slug": "default-app",
+    "name": "Arcane Lens",
+    "slug": "arcane-lens",
     "version": "1.0.0",
-    "scheme": "default-app",
+    "scheme": "arcane-lens",
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./src/assets/favicon.png"
+      "favicon": "./resources/android-icon.png"
+    },
+    "experiments": {
+      "reactCompiler": true,
+      "buildCacheProvider": "eas",
+      "tsconfigPaths": true,
+      "typedRoutes": true
+    },
+    "orientation": "portrait",
+    "icon": "./resources/app-icon.icon",
+    "userInterfaceStyle": "light",
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.anonymze.guideroutard",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false,
+        "CFBundleDisplayName": "Guide du Routard"
+      }
+    },
+    "android": {
+      "softwareKeyboardLayoutMode": "pan",
+      "adaptiveIcon": {
+        "foregroundImage": "./resources/android-icon.png",
+        "backgroundImage": "./resources/android-icon.png",
+        "monochromeImage": "./resources/android-icon.png"
+      },
+      "package": "com.anonymze.guideroutard"
     },
     "plugins": [
       "expo-router",
       "expo-localization",
-      "expo-font",
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "./src/assets/fonts/cinzel/Cinzel-Regular.ttf",
+            "./src/assets/fonts/cinzel/Cinzel-SemiBold.ttf",
+            "./src/assets/fonts/cinzel/Cinzel-Bold.ttf",
+            "./src/assets/fonts/space_grotesk/SpaceGrotesk-Light.ttf",
+            "./src/assets/fonts/space_grotesk/SpaceGrotesk-Regular.ttf",
+            "./src/assets/fonts/space_grotesk/SpaceGrotesk-SemiBold.ttf",
+            "./src/assets/fonts/space_grotesk/SpaceGrotesk-Bold.ttf"
+          ]
+        }
+      ],
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#08091A",
+          "resizeMode": "contain",
+          "imageWidth": 200,
+          "image": "./resources/splash.png"
+        }
+      ],
       "react-native-edge-to-edge",
       [
         "react-native-vision-camera",
@@ -22,35 +71,6 @@
         }
       ]
     ],
-    "experiments": {
-      "reactCompiler": true,
-      "buildCacheProvider": "eas",
-      "tsconfigPaths": true,
-      "typedRoutes": true
-    },
-    "orientation": "portrait",
-    "icon": "./src/assets/icon.png",
-    "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./src/assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "assetBundlePatterns": ["**/*"],
-    "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "app.default.www",
-      "infoPlist": {
-        "ITSAppUsesNonExemptEncryption": false
-      }
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./src/assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      },
-      "package": "app.default.www"
-    },
     "extra": {
       "router": {
         "origin": false

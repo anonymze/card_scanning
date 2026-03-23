@@ -1,4 +1,3 @@
-import { themeRuntimeValues, useTheme } from '@/styles/theme';
 import {
   ScrollView,
   StyleProp,
@@ -7,6 +6,7 @@ import {
   ViewStyle,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import { useCSSVariable } from 'uniwind';
 
 export default function BackgroundLayout({
   children,
@@ -17,16 +17,17 @@ export default function BackgroundLayout({
   style?: StyleProp<ViewStyle>;
   scrollable?: boolean;
 }) {
-  const { theme } = useTheme();
+  const [bgDarker, bgLighter, bg] = useCSSVariable([
+    '--color-background-primary-darker',
+    '--color-background-primary-lighter',
+    '--color-background-primary',
+  ]);
+
   return (
     <LinearGradient
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 1 }}
-      colors={[
-        themeRuntimeValues[theme].background.primary.darker,
-        themeRuntimeValues[theme].background.primary.lighter,
-        themeRuntimeValues[theme].background.primary.DEFAULT,
-      ]}
+      colors={[String(bgDarker), String(bgLighter), String(bg)]}
       style={[styles.container, style]}
     >
       {scrollable ? (

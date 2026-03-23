@@ -1,10 +1,9 @@
 import { cn } from '@/lib/tailwind';
-import { themeRuntimeValues, useTheme } from '@/styles/theme';
 import React from 'react';
 import { Pressable, StyleSheet, Text } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Animated from 'react-native-reanimated';
-import config from 'tailwind.config';
+import { useCSSVariable } from 'uniwind';
 
 const PressableAnimated = Animated.createAnimatedComponent(Pressable);
 
@@ -79,7 +78,11 @@ const ButtonSecondary = ({
   icon?: React.ReactNode;
   className?: string;
 }) => {
-      const { theme } = useTheme();
+  const [bgSecondary, bgSecondaryDarker] = useCSSVariable([
+    '--color-background-secondary',
+    '--color-background-secondary-darker',
+  ]);
+
   return (
     <Button
       action={action}
@@ -91,10 +94,7 @@ const ButtonSecondary = ({
       <LinearGradient
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
-        colors={[
-          themeRuntimeValues[theme].background.secondary.DEFAULT,
-          themeRuntimeValues[theme].background.secondary.darker,
-        ]}
+        colors={[String(bgSecondary), String(bgSecondaryDarker)]}
         style={StyleSheet.absoluteFill}
       />
       {icon ? icon : null}

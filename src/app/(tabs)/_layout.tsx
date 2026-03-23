@@ -1,34 +1,50 @@
-import { DecksIcon, ScanIcon, SettingsIcon } from '@/components/icons';
+import { AnimatedTabIcon } from '@/components/animated-tab-icon';
+import { CollectionIcon, DecksIcon, ScanIcon, SettingsIcon, ShopIcon } from '@/components/icons';
 import { LoaderTabs } from '@/components/loader-tabs';
 import { useLoaderGlobal } from '@/lib/loader-store';
-import { themeRuntimeValues, useTheme } from '@/styles/theme';
 import { Tabs } from 'expo-router';
 import { Text, View } from 'react-native';
+import { useCSSVariable, useResolveClassNames } from 'uniwind';
 
 export default function TabLayout() {
-  const { theme } = useTheme();
+  const tabBarStyle = useResolveClassNames('bg-background-primary-darker border-t-2 border-t-foreground-darker');
+  const tabBarLabelStyle = useResolveClassNames('mt-1 text-[9px]');
+  const [activeTint, inactiveTint] = useCSSVariable(['--color-foreground', '--color-gray']);
+
   return (
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarStyle: {
-          backgroundColor: themeRuntimeValues[theme].background.primary.darker,
-          borderTopColor: themeRuntimeValues[theme].foreground.darker,
-          borderTopWidth: 2,
-        },
-        tabBarLabelStyle: {
-          marginTop: 4,
-        },
-        tabBarActiveTintColor: themeRuntimeValues[theme].foreground.DEFAULT,
-        tabBarInactiveTintColor: themeRuntimeValues[theme].gray,
+        tabBarStyle,
+        tabBarLabelStyle,
+        tabBarActiveTintColor: String(activeTint),
+        tabBarInactiveTintColor: String(inactiveTint),
       }}
     >
+      <Tabs.Screen
+        name="collection"
+        options={{
+          title: 'Collection',
+          tabBarIcon: ({ color, focused }: { color: string; focused: boolean }) => {
+            return (
+              <AnimatedTabIcon focused={focused}>
+                <CollectionIcon width={26} height={26} color={color} />
+              </AnimatedTabIcon>
+            );
+          },
+        }}
+      />
       <Tabs.Screen
         name="decks"
         options={{
           title: 'Decks',
-          tabBarIcon: ({ color }: { color: string }) => {
-            return <DecksIcon width={26} height={26} color={color} />;
+          tabBarItemStyle: { paddingRight: 20 },
+          tabBarIcon: ({ color, focused }: { color: string; focused: boolean }) => {
+            return (
+              <AnimatedTabIcon focused={focused}>
+                <DecksIcon width={26} height={26} color={color} />
+              </AnimatedTabIcon>
+            );
           },
         }}
       />
@@ -40,7 +56,7 @@ export default function TabLayout() {
             const { loading } = useLoaderGlobal();
             return (
               <>
-                <LoaderTabs width={100} height={100} loading={loading} />
+                <LoaderTabs width={92} height={92} loading={loading} />
                 <View className="absolute w-12 items-center justify-center gap-1">
                   <ScanIcon width={28} height={28} stroke={color} color={"transparent"} />
                   <Text
@@ -58,11 +74,29 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
+        name="shop"
+        options={{
+          title: 'Shop',
+          tabBarItemStyle: { paddingLeft: 20 },
+          tabBarIcon: ({ color, focused }: { color: string; focused: boolean }) => {
+            return (
+              <AnimatedTabIcon focused={focused}>
+                <ShopIcon width={26} height={26} color={color} />
+              </AnimatedTabIcon>
+            );
+          },
+        }}
+      />
+      <Tabs.Screen
         name="settings"
         options={{
           title: 'Paramètres',
-          tabBarIcon: ({ color }: { color: string }) => {
-            return <SettingsIcon width={26} height={26} stroke={color} />;
+          tabBarIcon: ({ color, focused }: { color: string; focused: boolean }) => {
+            return (
+              <AnimatedTabIcon focused={focused}>
+                <SettingsIcon width={26} height={26} stroke={color} />
+              </AnimatedTabIcon>
+            );
           },
         }}
       />

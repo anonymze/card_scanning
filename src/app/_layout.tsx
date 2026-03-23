@@ -1,7 +1,5 @@
-// import DevToolMenu from '@/components/dev-tool-menu/dev-tool-menu';
 import { useLoaderGlobal } from '@/lib/loader-store';
 import '@/styles/global.css';
-import { ThemeProvider } from '@/styles/theme';
 import { useKeepAwake } from 'expo-keep-awake';
 import { Stack, usePathname } from 'expo-router';
 import React from 'react';
@@ -26,12 +24,9 @@ export default function RootLayout() {
   return (
     <GestureHandlerRootView>
       <KeyboardProvider>
-        <ThemeProvider>
         <Stack>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         </Stack>
-        {/*<DevToolMenu />*/}
-        </ThemeProvider>
       </KeyboardProvider>
     </GestureHandlerRootView>
   );

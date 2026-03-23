@@ -1,9 +1,6 @@
 const { getDefaultConfig } = require('expo/metro-config');
-const { withNativeWind } = require('nativewind/metro');
+const { withUniwindConfig } = require('uniwind/metro');
 
-const config = getDefaultConfig(__dirname, {
-  // Disable CSS support.
-  // isCSSEnabled: false,
-});
+const config = getDefaultConfig(__dirname);
 
-module.exports = withNativeWind(config, { input: './src/styles/global.css' });
+module.exports = withUniwindConfig(config, { cssEntryFile: './src/styles/global.css' });

@@ -1,4 +1,3 @@
-import { themeRuntimeValues, useTheme } from '@/styles/theme';
 import {
   BlurMask,
   Canvas,
@@ -8,6 +7,7 @@ import {
   SweepGradient,
 } from '@shopify/react-native-skia';
 import React from 'react';
+import { useCSSVariable } from 'uniwind';
 import Animated, {
   useAnimatedStyle,
   useDerivedValue,
@@ -28,7 +28,7 @@ export const LoaderTabs = ({
   height: number;
   loading: boolean;
 }) => {
-  const { theme } = useTheme();
+  const [fgDarker, fg] = useCSSVariable(['--color-foreground-darker', '--color-foreground']);
   const canvasSize = React.useRef({ width: width, height: height });
   const circleSize = React.useRef(width);
   const progress = useSharedValue(0);
@@ -108,11 +108,7 @@ export const LoaderTabs = ({
               x: canvasSize.current.width / 2 + canvasPadding / 2,
               y: canvasSize.current.height / 2 + canvasPadding / 2,
             }}
-            colors={[
-              themeRuntimeValues[theme].foreground.darker,
-              themeRuntimeValues[theme].foreground.DEFAULT,
-              themeRuntimeValues[theme].foreground.darker,
-            ]}
+            colors={[String(fgDarker), String(fg), String(fgDarker)]}
           />
           <BlurMask blur={3} style="solid" />
         </Path>

@@ -1,28 +1,24 @@
-import { useTheme } from '@/styles/theme';
 import * as DevClient from 'expo-dev-client';
 import React from 'react';
 import { Pressable, Text, View } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
+import { useUniwind } from 'uniwind';
 
 const DevMenu = () => {
-  const { theme, toggleTheme } = useTheme();
+  const { theme } = useUniwind();
   const viewRef = React.useRef<View>(null);
 
   DevClient.registerDevMenuItems([
     {
-      name: `Toggle Theme (actual: ${theme})`,
-      callback: () => toggleTheme(),
+      name: `Theme: ${theme}`,
+      callback: () => {},
       shouldCollapse: true,
     },
   ]);
 
   const gesture = Gesture.Tap()
     .runOnJS(true)
-    .onEnd((ev) => {
-      viewRef.current?.measureInWindow((x, y, _width, _height) => {
-        toggleTheme(x + ev.x, y + ev.y);
-      });
-    });
+    .onEnd(() => {});
 
   return (
     <GestureDetector gesture={gesture}>
