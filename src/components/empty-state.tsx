@@ -49,7 +49,7 @@ export const EmptyState = ({
       rotate.value = 0;
 
       const push = { damping: 5, stiffness: 120, mass: 0.6 };
-      const back = { damping: 10, stiffness: 80 };
+      const back = { damping: 35, stiffness: 550 };
 
       translateX.value = withDelay(50, withSequence(withSpring(5, push), withSpring(0, back)));
       translateY.value = withDelay(50, withSequence(withSpring(4, push), withSpring(0, back)));
