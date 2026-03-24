@@ -21,7 +21,7 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.anonymze.guideroutard",
+      "bundleIdentifier": "com.anonymze.arcanelens",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
         "CFBundleDisplayName": "Guide du Routard"
@@ -34,7 +34,7 @@
         "backgroundImage": "./resources/android-icon.png",
         "monochromeImage": "./resources/android-icon.png"
       },
-      "package": "com.anonymze.guideroutard"
+      "package": "com.anonymze.arcanelens"
     },
     "plugins": [
       "expo-router",
