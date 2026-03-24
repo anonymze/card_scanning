@@ -8,6 +8,7 @@ export default function Page() {
     <BackgroundLayout scrollable={cards.length > 0}>
       {cards.length === 0 ? (
         <EmptyState
+          buttonText="+ Create a collection"
           variant="collection"
           title="Your collection is empty"
           subtitle="Scan cards or add them manually to build your first collection"

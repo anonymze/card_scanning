@@ -1,20 +1,12 @@
-import {
-  ScrollView,
-  StyleProp,
-  StyleSheet,
-  View,
-  ViewStyle,
-} from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
+import React from 'react';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import { useCSSVariable } from 'uniwind';
 
 export default function BackgroundLayout({
   children,
-  style,
   scrollable = true,
 }: {
   children: React.ReactNode;
-  style?: StyleProp<ViewStyle>;
   scrollable?: boolean;
 }) {
   const [bgDarker, bgLighter, bg] = useCSSVariable([
@@ -24,18 +16,25 @@ export default function BackgroundLayout({
   ]);
 
   return (
-    <LinearGradient
-      start={{ x: 0, y: 0 }}
-      end={{ x: 1, y: 1 }}
-      colors={[String(bgDarker), String(bgLighter), String(bg)]}
-      style={[styles.container, style]}
+    <View
+      style={[
+        {
+          experimental_backgroundImage: `linear-gradient(160deg, ${bgDarker}, ${bgLighter}, ${bg})`,
+        },
+      ]}
+      className="p-safe flex-1"
     >
       {scrollable ? (
-        <ScrollView className="p-safe flex-1">{children}</ScrollView>
+        <ScrollView
+          contentInsetAdjustmentBehavior="automatic"
+          className="flex-1"
+        >
+          {children}
+        </ScrollView>
       ) : (
-        <View className="p-safe flex-1">{children}</View>
+        <>{children}</>
       )}
-    </LinearGradient>
+    </View>
   );
 }
 

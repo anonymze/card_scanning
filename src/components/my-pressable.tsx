@@ -15,7 +15,7 @@ const PressableScaleOpacity = createAnimatedPressable((progress) => {
 				scale: 1 - progress * 0.02,
 			},
 		],
-		opacity: 1 - progress * 0.4,
+    opacity: 1 - progress * 0.4,
 	};
 });
 

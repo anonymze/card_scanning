@@ -1,7 +1,6 @@
 import { cn } from '@/lib/tailwind';
 import React from 'react';
 import { Pressable, StyleSheet, Text } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
 import Animated from 'react-native-reanimated';
 import { useCSSVariable } from 'uniwind';
 
@@ -91,12 +90,12 @@ const ButtonSecondary = ({
         className,
       )}
     >
-      <LinearGradient
+      {/*<LinearGradient
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
         colors={[String(bgSecondary), String(bgSecondaryDarker)]}
         style={StyleSheet.absoluteFill}
-      />
+      />*/}
       {icon ? icon : null}
       <Text className="text-xl font-bold text-white">{title}</Text>
     </Button>

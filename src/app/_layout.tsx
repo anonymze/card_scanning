@@ -1,20 +1,23 @@
 import '@/global.css';
 import { useLoaderGlobal } from '@/lib/loader-store';
 import { Stack, usePathname } from 'expo-router';
+import { PressablesConfig } from 'pressto';
 import React from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
 import {
+  initialWindowMetrics,
   SafeAreaProvider,
   useSafeAreaInsets,
 } from 'react-native-safe-area-context';
+import { AnimatedSplashOverlay } from '@/layouts/animated-splash-overlay';
 import { Uniwind } from 'uniwind';
 
 // Force dark theme — app is dark-only
 // Uniwind.setTheme('dark');
 
 export const unstable_settings = {
-  initialRouteName: '(tabs)',
+  initialRouteName: '(tabs)/collection',
 };
 
 export default function RootLayout() {
@@ -27,14 +30,17 @@ export default function RootLayout() {
   }, [pathname]);
 
   return (
-    <SafeAreaProvider>
+    <SafeAreaProvider initialMetrics={initialWindowMetrics}>
       <InsetUpdater />
       <GestureHandlerRootView>
+        <PressablesConfig animationType="timing" animationConfig={{ duration: 100 }}>
         <KeyboardProvider>
           <Stack>
             <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           </Stack>
         </KeyboardProvider>
+        </PressablesConfig>
+        <AnimatedSplashOverlay />
       </GestureHandlerRootView>
     </SafeAreaProvider>
   );
