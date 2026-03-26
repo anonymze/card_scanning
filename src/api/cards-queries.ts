@@ -17,7 +17,12 @@ async function getCards(params: ScryfallSearchParams): Promise<ScryfallSearchRes
   if (params.include_multilingual) url.searchParams.set('include_multilingual', 'true');
   if (params.include_variations) url.searchParams.set('include_variations', 'true');
 
-  const response = await fetch(url.toString());
+  const response = await fetch(url.toString(), {
+    headers: {
+      'User-Agent': 'ArcaneLens/1.0',
+      'Accept': 'application/json',
+    },
+  });
   if (!response.ok) throw new Error(`Scryfall error: ${response.status}`);
   return response.json();
 }

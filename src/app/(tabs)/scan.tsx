@@ -3,34 +3,34 @@ import {
   CameraUnavailable,
   LayoutCamera,
 } from '@/components/camera';
-import { DecksIcon, ScanIcon } from '@/components/icons';
-import { ButtonPrimary } from '@/components/ui/buttons';
-import { useLoaderGlobal } from '@/stores/loader-store';
+import { DecksIcon } from '@/components/icons';
 import { Text, View } from 'react-native';
-import { useCSSVariable } from 'uniwind';
 import {
   Camera,
   useCameraDevice,
   useCameraPermission,
   useFrameProcessor,
 } from 'react-native-vision-camera';
+import { useCSSVariable } from 'uniwind';
 
 export default function Page() {
-  const [foregroundDarker, foreground] = useCSSVariable(['--color-foreground-darker', '--color-foreground']);
-  const { start, stop, loading } = useLoaderGlobal();
+  const [foregroundDarker] = useCSSVariable(['--color-foreground-darker']);
+  // const { start, stop } = useLoaderGlobal();
   const device = useCameraDevice('back');
   const { hasPermission, requestPermission } = useCameraPermission();
 
-  const frameProcessor = useFrameProcessor(
-    (frame) => {
-      'worklet';
-      if (loading) {
-        // Process frame for card detection here
-        console.log(`Processing frame ${frame.width}x${frame.height}`);
-      }
-    },
-    [loading],
-  );
+  // React.useEffect(
+  //   React.useCallback(() => {
+  //     if (device && hasPermission) start();
+  //     return () => stop();
+  //   }, [device, hasPermission]),
+  // );
+
+  const frameProcessor = useFrameProcessor((frame) => {
+    'worklet';
+    // Process frame for card detection here
+    console.log(`Processing frame ${frame.width}x${frame.height}`);
+  }, []);
 
   if (device == null) return <CameraUnavailable />;
   if (!hasPermission) {
@@ -48,26 +48,15 @@ export default function Page() {
           }}
           device={device}
           isActive={true}
-          frameProcessor={loading ? frameProcessor : undefined}
+          frameProcessor={frameProcessor}
         />
-        <View className="flex-row items-center gap-1 pl-5 pt-5">
+        <View className="flex-row items-center gap-1 pt-5 pl-5">
           <DecksIcon
-            className="left-10 top-20 mx-20"
+            className="top-20 left-10 mx-20"
             color={foregroundDarker}
-          />Next up.
-          <Text className="font-bold text-foreground-dark">0</Text>
+          />
+          <Text className="font-sans-bold text-foreground-darker">0</Text>
         </View>
-        <ButtonPrimary
-          action={() => {
-            if (loading) return stop();
-            start();
-          }}
-          title={loading ? 'Arrêter' : 'Scanner'}
-          icon={
-            <ScanIcon color={foreground} />
-          }
-          className="mt-auto rounded-none"
-        />
       </View>
     </LayoutCamera>
   );

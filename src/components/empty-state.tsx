@@ -1,7 +1,7 @@
 import { EmptyCardsIllustration, EmptyStateVariant } from '@/components/icons';
 import { useFocusEffect } from 'expo-router';
 import React from 'react';
-import { View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import Animated, {
   cancelAnimation,
   useAnimatedStyle,
@@ -73,7 +73,7 @@ export const EmptyState = ({
         <EmptyCardsIllustration size={size} variant={variant} />
       </Animated.View>
       <View className="items-center gap-2">
-        <Text className="text-center text-xl font-semibold text-foreground">
+        <Text className="font-sans-semibold text-center text-xl text-foreground">
           {title}
         </Text>
         {subtitle ? (
@@ -82,19 +82,31 @@ export const EmptyState = ({
           </Text>
         ) : null}
 
-        <MyTouchableScaleOpacity
-          hitSlop={10}
-          onPress={onPress}
-          className="mt-4 h-14 flex-row items-center gap-3 rounded-2xl px-10 py-2"
+        <View
           style={{
-            experimental_backgroundImage: `linear-gradient(50deg, ${foregroundLighter}, ${foreground}, ${foregroundDarker})`,
             boxShadow: `0 0 16px 4px ${foregroundDarker}30`,
           }}
+          className="mt-4 rounded-2xl"
         >
-          <Text className="text-lg font-semibold text-background-primary-darker">
-            {buttonText}
-          </Text>
-        </MyTouchableScaleOpacity>
+          <MyTouchableScaleOpacity
+            hitSlop={10}
+            onPress={onPress}
+            className="h-14 flex-row items-center gap-3 overflow-hidden rounded-2xl px-10 py-2"
+          >
+            <View
+            className='rounded-2xl'
+              style={[
+                StyleSheet.absoluteFill,
+                {
+                  experimental_backgroundImage: `linear-gradient(50deg, ${foregroundLighter}, ${foreground}, ${foregroundDarker})`,
+                },
+              ]}
+            />
+            <Text className="font-sans-semibold text-lg text-background-primary-darker">
+              {buttonText}
+            </Text>
+          </MyTouchableScaleOpacity>
+        </View>
       </View>
     </View>
   );

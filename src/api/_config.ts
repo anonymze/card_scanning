@@ -1,6 +1,7 @@
 import { QueryClient } from "@tanstack/react-query";
 import { persistQueryClient } from "@tanstack/query-persist-client-core";
 import { storage } from "@/libs/mmkv";
+import { cardsInfiniteQueryOptions } from "@/api/cards-queries";
 
 export const queryClient = new QueryClient({
 	// queryCache: new QueryCache({
@@ -18,6 +19,9 @@ export const queryClient = new QueryClient({
 		},
 	},
 });
+
+// Prefetch first page of cards at app start
+queryClient.prefetchInfiniteQuery(cardsInfiniteQueryOptions({ q: '*' }));
 
 persistQueryClient({
   maxAge: Infinity,

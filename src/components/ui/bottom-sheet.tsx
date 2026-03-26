@@ -10,6 +10,7 @@ type BottomSheetProps = {
   children: React.ReactNode;
   detents?: React.ComponentProps<typeof TrueSheet>['detents'];
   cornerRadius?: number;
+  scrollable?: boolean;
 };
 
 export function BottomSheet({
@@ -17,6 +18,7 @@ export function BottomSheet({
   children,
   detents = [0.88],
   cornerRadius = 30,
+  scrollable = false,
 }: BottomSheetProps) {
   const [bgDarker, foregroundDarker] = useCSSVariable([
     '--color-background-primary-darker',
@@ -25,13 +27,14 @@ export function BottomSheet({
 
   return (
     <TrueSheet
+      scrollable={scrollable}
       ref={sheetRef}
       detents={detents}
       cornerRadius={cornerRadius}
       backgroundColor={bgDarker}
       grabberOptions={{ topMargin: 14, color: foregroundDarker, adaptive: false }}
     >
-      <View className="flex-1 px-5 py-10">
+      <View className="px-5 py-10">
         {children}
       </View>
     </TrueSheet>

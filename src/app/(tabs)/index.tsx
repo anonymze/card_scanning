@@ -1,7 +1,10 @@
 import { cardsInfiniteQueryOptions } from '@/api/cards-queries';
 import { EmptyState } from '@/components/empty-state';
 import { EyeIcon } from '@/components/icons';
-import { LoadingPlaceholder } from '@/components/loading-placeholder';
+import {
+  LoadingPlaceholder,
+  NotFoundPlaceholder,
+} from '@/components/loading-placeholder';
 import { MyTouchableOpacity } from '@/components/my-pressable';
 import { BottomSheet, BottomSheetRef } from '@/components/ui/bottom-sheet';
 import { Text, TextTitle } from '@/components/ui/texts';
@@ -13,32 +16,16 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import React from 'react';
 import { ActivityIndicator, View } from 'react-native';
 
-const MTG_COLORS: Record<string, string> = {
-  W: '#F9FAF4',
-  U: '#0E68AB',
-  B: '#150B00',
-  R: '#D3202A',
-  G: '#00733E',
-};
-
-function getCardColor(card: ScryfallCard): string {
-  const colors = card.colors ?? card.color_identity;
-  if (!colors || colors.length === 0) return '#9CA3AF';
-  if (colors.length > 1) return '#E5A020';
-  return MTG_COLORS[colors[0]] ?? '#9CA3AF';
-}
 
 function CardRow({ item }: { item: ScryfallCard }) {
   const typeLine = item.type_line?.split('—')[0]?.trim() ?? '';
   const subtitle = [typeLine, item.set_name].filter(Boolean).join(' · ');
 
   return (
-    <View
-      className="h-14 border-background-primary-lighter bg-background-primary overflow-hidden rounded-2xl border border-b-0 mb-2"
-    >
+    <View className="border-background-primary-lighter bg-background-primary mb-2 h-16 overflow-hidden rounded-2xl border border-b-0">
       <View className="flex-row items-center px-3 py-3">
         <View className="flex-1">
-          <Text className="text-sm font-semibold text-white" numberOfLines={1}>
+          <Text className="font-sans-semibold text-sm text-white" numberOfLines={1}>
             {item.name}
           </Text>
           <Text className="text-gray text-xs" numberOfLines={1}>
@@ -50,8 +37,8 @@ function CardRow({ item }: { item: ScryfallCard }) {
         </MyTouchableOpacity>
       </View>
       <View
-        className="h-0.5 pt-1"
-        style={{ backgroundColor: getCardColor(item) }}
+        className="h-1"
+        style={{ backgroundColor: "red" }}
       />
     </View>
   );
@@ -61,8 +48,14 @@ export default function Page() {
   const sheetRef = React.useRef<BottomSheetRef>(null);
   const collections = useCollections((s) => s.collections);
 
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useInfiniteQuery(cardsInfiniteQueryOptions({ q: 'lol' }));
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isFetching,
+    isLoading,
+  } = useInfiniteQuery(cardsInfiniteQueryOptions({ q: '*' }));
 
   const cards = React.useMemo(
     () => data?.pages.flatMap((page) => page.data) ?? [],
@@ -84,21 +77,29 @@ export default function Page() {
           onPress={handleCreateCollection}
         />
       ) : null}
-      <BottomSheet sheetRef={sheetRef}>
+      <BottomSheet sheetRef={sheetRef} scrollable>
         <TextTitle className="pb-4">New Collection</TextTitle>
         <LegendList
-          data={[]}
+          data={cards}
           renderItem={({ item }) => <CardRow item={item} />}
           keyExtractor={(item) => item.id}
-          estimatedItemSize={64}
+          estimatedItemSize={72}
           recycleItems
           drawDistance={350}
-          onEndReachedThreshold={0.2}
-          contentContainerStyle={{ paddingBottom: 180 }}
+          onEndReachedThreshold={0.1}
+          // contentContainerStyle={{ paddingBottom: 80 }}
           decelerationRate="fast"
           showsVerticalScrollIndicator={false}
+          nestedScrollEnabled
           ListEmptyComponent={
-            <LoadingPlaceholder title="Loading the cards..." size={180} />
+            isLoading || isFetching ? (
+              <LoadingPlaceholder title="Loading the cards..." size={180} />
+            ) : (
+              <NotFoundPlaceholder
+                title="No cards found"
+                size={180}
+              />
+            )
           }
           onEndReached={() => {
             if (hasNextPage && !isFetchingNextPage) {

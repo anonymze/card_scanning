@@ -61,7 +61,7 @@ const ButtonPrimary = ({
       )}
     >
       {icon ? icon : null}
-      <Text className="text-xl font-bold text-foreground">{title}</Text>
+      <Text className="font-sans-bold text-xl text-foreground">{title}</Text>
     </Button>
   );
 };
@@ -97,7 +97,7 @@ const ButtonSecondary = ({
         style={StyleSheet.absoluteFill}
       />*/}
       {icon ? icon : null}
-      <Text className="text-xl font-bold text-white">{title}</Text>
+      <Text className="font-sans-bold text-xl text-white">{title}</Text>
     </Button>
   );
 };
