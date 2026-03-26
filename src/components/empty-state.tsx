@@ -83,6 +83,7 @@ export const EmptyState = ({
         ) : null}
 
         <MyTouchableScaleOpacity
+          hitSlop={10}
           onPress={onPress}
           className="mt-4 h-14 flex-row items-center gap-3 rounded-2xl px-10 py-2"
           style={{

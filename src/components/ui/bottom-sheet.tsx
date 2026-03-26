@@ -31,7 +31,7 @@ export function BottomSheet({
       backgroundColor={bgDarker}
       grabberOptions={{ topMargin: 14, color: foregroundDarker, adaptive: false }}
     >
-      <View className="px-5 py-10">
+      <View className="flex-1 px-5 py-10">
         {children}
       </View>
     </TrueSheet>

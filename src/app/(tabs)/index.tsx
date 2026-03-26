@@ -1,6 +1,7 @@
 import { cardsInfiniteQueryOptions } from '@/api/cards-queries';
 import { EmptyState } from '@/components/empty-state';
 import { EyeIcon } from '@/components/icons';
+import { LoadingPlaceholder } from '@/components/loading-placeholder';
 import { MyTouchableOpacity } from '@/components/my-pressable';
 import { BottomSheet, BottomSheetRef } from '@/components/ui/bottom-sheet';
 import { Text, TextTitle } from '@/components/ui/texts';
@@ -33,7 +34,7 @@ function CardRow({ item }: { item: ScryfallCard }) {
 
   return (
     <View
-      className="border-background-primary-lighter bg-background-primary mb-2 overflow-hidden rounded-2xl border"
+      className="h-14 border-background-primary-lighter bg-background-primary overflow-hidden rounded-2xl border border-b-0 mb-2"
     >
       <View className="flex-row items-center px-3 py-3">
         <View className="flex-1">
@@ -61,7 +62,7 @@ export default function Page() {
   const collections = useCollections((s) => s.collections);
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useInfiniteQuery(cardsInfiniteQueryOptions({ q: '*' }));
+    useInfiniteQuery(cardsInfiniteQueryOptions({ q: 'lol' }));
 
   const cards = React.useMemo(
     () => data?.pages.flatMap((page) => page.data) ?? [],
@@ -86,26 +87,31 @@ export default function Page() {
       <BottomSheet sheetRef={sheetRef}>
         <TextTitle className="pb-4">New Collection</TextTitle>
         <LegendList
-          data={cards}
+          data={[]}
           renderItem={({ item }) => <CardRow item={item} />}
           keyExtractor={(item) => item.id}
-          estimatedItemSize={56}
+          estimatedItemSize={64}
           recycleItems
-          decelerationRate="fast"
-          drawDistance={400}
-          showsVerticalScrollIndicator={false}
+          drawDistance={350}
+          onEndReachedThreshold={0.2}
           contentContainerStyle={{ paddingBottom: 180 }}
+          decelerationRate="fast"
+          showsVerticalScrollIndicator={false}
+          ListEmptyComponent={
+            <LoadingPlaceholder title="Loading the cards..." size={180} />
+          }
           onEndReached={() => {
             if (hasNextPage && !isFetchingNextPage) {
               fetchNextPage();
             }
           }}
-          onEndReachedThreshold={0.2}
           ListFooterComponent={
-            <ActivityIndicator
-              colorClassName="accent-foreground-darker"
-              className="py-5"
-            />
+            isFetchingNextPage ? (
+              <ActivityIndicator
+                colorClassName="accent-foreground-darker"
+                className="py-5"
+              />
+            ) : null
           }
         />
       </BottomSheet>
