@@ -98,7 +98,7 @@ export default function Page() {
           onEndReached={() => {
             if (hasNextPage && !isFetchingNextPage) fetchNextPage();
           }}
-          ListFooterComponent={() =>
+          ListFooterComponent={
             isFetchingNextPage ? (
               <ActivityIndicator
                 colorClassName="accent-foreground-darker"
