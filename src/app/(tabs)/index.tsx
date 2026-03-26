@@ -16,7 +16,6 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import React from 'react';
 import { ActivityIndicator, View } from 'react-native';
 
-
 function CardRow({ item }: { item: ScryfallCard }) {
   const typeLine = item.type_line?.split('—')[0]?.trim() ?? '';
   const subtitle = [typeLine, item.set_name].filter(Boolean).join(' · ');
@@ -25,7 +24,10 @@ function CardRow({ item }: { item: ScryfallCard }) {
     <View className="border-background-primary-lighter bg-background-primary mb-2 h-16 overflow-hidden rounded-2xl border border-b-0">
       <View className="flex-row items-center px-3 py-3">
         <View className="flex-1">
-          <Text className="font-sans-semibold text-sm text-white" numberOfLines={1}>
+          <Text
+            className="font-sans-semibold text-sm text-white"
+            numberOfLines={1}
+          >
             {item.name}
           </Text>
           <Text className="text-gray text-xs" numberOfLines={1}>
@@ -36,10 +38,7 @@ function CardRow({ item }: { item: ScryfallCard }) {
           <EyeIcon color="hsl(215, 20%, 65%)" width={18} height={18} />
         </MyTouchableOpacity>
       </View>
-      <View
-        className="h-1"
-        style={{ backgroundColor: "red" }}
-      />
+      <View className="h-1" style={{ backgroundColor: 'red' }} />
     </View>
   );
 }
@@ -62,10 +61,6 @@ export default function Page() {
     [data],
   );
 
-  const handleCreateCollection = React.useCallback(() => {
-    sheetRef.current?.present();
-  }, []);
-
   return (
     <BackgroundLayout scrollable={collections.length > 0}>
       {collections.length === 0 ? (
@@ -74,7 +69,9 @@ export default function Page() {
           variant="collection"
           title="Your collection is empty"
           subtitle="Scan cards or add them manually to build your first collection"
-          onPress={handleCreateCollection}
+          onPress={() => {
+            sheetRef.current?.present();
+          }}
         />
       ) : null}
       <BottomSheet sheetRef={sheetRef} scrollable>
@@ -86,7 +83,7 @@ export default function Page() {
           estimatedItemSize={72}
           recycleItems
           drawDistance={350}
-          onEndReachedThreshold={0.1}
+          onEndReachedThreshold={0.2}
           // contentContainerStyle={{ paddingBottom: 80 }}
           decelerationRate="fast"
           showsVerticalScrollIndicator={false}
@@ -95,18 +92,13 @@ export default function Page() {
             isLoading || isFetching ? (
               <LoadingPlaceholder title="Loading the cards..." size={180} />
             ) : (
-              <NotFoundPlaceholder
-                title="No cards found"
-                size={180}
-              />
+              <NotFoundPlaceholder title="No cards found" size={180} />
             )
           }
           onEndReached={() => {
-            if (hasNextPage && !isFetchingNextPage) {
-              fetchNextPage();
-            }
+            if (hasNextPage && !isFetchingNextPage) fetchNextPage();
           }}
-          ListFooterComponent={
+          ListFooterComponent={() =>
             isFetchingNextPage ? (
               <ActivityIndicator
                 colorClassName="accent-foreground-darker"
