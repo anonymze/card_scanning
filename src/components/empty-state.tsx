@@ -20,6 +20,7 @@ type EmptyStateProps = {
   buttonText: string;
   subtitle?: string;
   size?: number;
+  onPress?: () => void;
 };
 
 export const EmptyState = ({
@@ -28,6 +29,7 @@ export const EmptyState = ({
   subtitle,
   buttonText,
   size = 280,
+  onPress,
 }: EmptyStateProps) => {
   const [foreground, foregroundLighter, foregroundDarker] = useCSSVariable([
     '--color-foreground',
@@ -81,7 +83,7 @@ export const EmptyState = ({
         ) : null}
 
         <MyTouchableScaleOpacity
-          onPress={() => {}}
+          onPress={onPress}
           className="mt-4 h-14 flex-row items-center gap-3 rounded-2xl px-10 py-2"
           style={{
             experimental_backgroundImage: `linear-gradient(50deg, ${foregroundLighter}, ${foreground}, ${foregroundDarker})`,

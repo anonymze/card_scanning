@@ -7,10 +7,14 @@ import {
   ShopIcon,
 } from '@/components/icons';
 import { LoaderTabs } from '@/components/loader-tabs';
-import { useLoaderGlobal } from '@/lib/loader-store';
+import { useLoaderGlobal } from '@/stores/loader-store';
 import { Tabs } from 'expo-router';
 import { Text, View } from 'react-native';
 import { useCSSVariable } from 'uniwind';
+
+export const unstable_settings = {
+  initialRouteName: 'index',
+};
 
 export default function TabLayout() {
   const [activeTint, inactiveTint, background] = useCSSVariable([
@@ -36,7 +40,7 @@ export default function TabLayout() {
       }}
     >
       <Tabs.Screen
-        name="collection"
+        name="index"
         options={{
           title: 'Collection',
           tabBarIcon: ({
@@ -75,7 +79,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="index"
+        name="scan"
         options={{
           title: '',
           tabBarIcon: ({ color }: { color: string }) => {

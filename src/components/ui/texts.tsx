@@ -1,4 +1,4 @@
-import { cn } from '@/lib/tailwind';
+import { cn } from '@/libs/tailwind';
 import { Text as RNText, TextProps } from 'react-native';
 
 const Text = ({ className, ...props }: TextProps) => {

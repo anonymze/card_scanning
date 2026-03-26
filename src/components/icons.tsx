@@ -143,5 +143,26 @@ const ShopIcon = (props: SvgProps) => {
   );
 };
 
-export { ScanIcon, SettingsIcon, DecksIcon, CameraOffIcon, CameraIcon, PlusIcon, CollectionIcon, ShopIcon, EmptyCardsIllustration };
+const EyeIcon = ({ color = 'currentColor', width = 20, height = 20, ...props }: SvgProps) => {
+  return (
+    <Svg width={width} height={height} viewBox="0 0 24 24" fill="none" {...props}>
+      <Path
+        d="M12 5C7 5 2.73 8.11 1 12.5 2.73 16.89 7 20 12 20s9.27-3.11 11-7.5C21.27 8.11 17 5 12 5Z"
+        stroke={color}
+        strokeWidth={1.5}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <Circle
+        cx={12}
+        cy={12.5}
+        r={3}
+        stroke={color}
+        strokeWidth={1.5}
+      />
+    </Svg>
+  );
+};
+
+export { ScanIcon, SettingsIcon, DecksIcon, CameraOffIcon, CameraIcon, PlusIcon, CollectionIcon, ShopIcon, EyeIcon, EmptyCardsIllustration };
 export type { EmptyStateVariant };

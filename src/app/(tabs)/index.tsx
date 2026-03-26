@@ -1,74 +1,114 @@
-import {
-  CameraNoPermissions,
-  CameraUnavailable,
-  LayoutCamera,
-} from '@/components/camera';
-import { DecksIcon, ScanIcon } from '@/components/icons';
-import { ButtonPrimary } from '@/components/ui/buttons';
-import { useLoaderGlobal } from '@/lib/loader-store';
-import { Text, View } from 'react-native';
-import { useCSSVariable } from 'uniwind';
-import {
-  Camera,
-  useCameraDevice,
-  useCameraPermission,
-  useFrameProcessor,
-} from 'react-native-vision-camera';
+import { cardsInfiniteQueryOptions } from '@/api/cards-queries';
+import { EmptyState } from '@/components/empty-state';
+import { EyeIcon } from '@/components/icons';
+import { MyTouchableOpacity } from '@/components/my-pressable';
+import { BottomSheet, BottomSheetRef } from '@/components/ui/bottom-sheet';
+import { Text, TextTitle } from '@/components/ui/texts';
+import BackgroundLayout from '@/layouts/background-layout';
+import { useCollections } from '@/stores/collections-store';
+import type { ScryfallCard } from '@/types/cards';
+import { LegendList } from '@legendapp/list/react-native';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import React from 'react';
+import { ActivityIndicator, View } from 'react-native';
 
-export default function Page() {
-  const [foregroundDarker, foreground] = useCSSVariable(['--color-foreground-darker', '--color-foreground']);
-  const { start, stop, loading } = useLoaderGlobal();
-  const device = useCameraDevice('back');
-  const { hasPermission, requestPermission } = useCameraPermission();
+const MTG_COLORS: Record<string, string> = {
+  W: '#F9FAF4',
+  U: '#0E68AB',
+  B: '#150B00',
+  R: '#D3202A',
+  G: '#00733E',
+};
 
-  const frameProcessor = useFrameProcessor(
-    (frame) => {
-      'worklet';
-      if (loading) {
-        // Process frame for card detection here
-        console.log(`Processing frame ${frame.width}x${frame.height}`);
-      }
-    },
-    [loading],
-  );
+function getCardColor(card: ScryfallCard): string {
+  const colors = card.colors ?? card.color_identity;
+  if (!colors || colors.length === 0) return '#9CA3AF';
+  if (colors.length > 1) return '#E5A020';
+  return MTG_COLORS[colors[0]] ?? '#9CA3AF';
+}
 
-  if (device == null) return <CameraUnavailable />;
-  if (!hasPermission) {
-    requestPermission();
-    return <CameraNoPermissions />;
-  }
+function CardRow({ item }: { item: ScryfallCard }) {
+  const typeLine = item.type_line?.split('—')[0]?.trim() ?? '';
+  const subtitle = [typeLine, item.set_name].filter(Boolean).join(' · ');
 
   return (
-    <LayoutCamera>
-      <View className="w-full flex-1 overflow-hidden rounded-3xl">
-        <Camera
-          style={{
-            position: 'absolute',
-            inset: 0,
-          }}
-          device={device}
-          isActive={true}
-          frameProcessor={loading ? frameProcessor : undefined}
-        />
-        <View className="flex-row items-center gap-1 pl-5 pt-5">
-          <DecksIcon
-            className="left-10 top-20 mx-20"
-            color={foregroundDarker}
-          />Next up.
-          <Text className="font-bold text-foreground-dark">0</Text>
+    <View
+      className="border-background-primary-lighter bg-background-primary mb-2 overflow-hidden rounded-2xl border"
+    >
+      <View className="flex-row items-center px-3 py-3">
+        <View className="flex-1">
+          <Text className="text-sm font-semibold text-white" numberOfLines={1}>
+            {item.name}
+          </Text>
+          <Text className="text-gray text-xs" numberOfLines={1}>
+            {subtitle || '—'}
+          </Text>
         </View>
-        <ButtonPrimary
-          action={() => {
-            if (loading) return stop();
-            start();
-          }}
-          title={loading ? 'Arrêter' : 'Scanner'}
-          icon={
-            <ScanIcon color={foreground} />
-          }
-          className="mt-auto rounded-none"
-        />
+        <MyTouchableOpacity onPress={() => {}} className="pl-3">
+          <EyeIcon color="hsl(215, 20%, 65%)" width={18} height={18} />
+        </MyTouchableOpacity>
       </View>
-    </LayoutCamera>
+      <View
+        className="h-0.5 pt-1"
+        style={{ backgroundColor: getCardColor(item) }}
+      />
+    </View>
+  );
+}
+
+export default function Page() {
+  const sheetRef = React.useRef<BottomSheetRef>(null);
+  const collections = useCollections((s) => s.collections);
+
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useInfiniteQuery(cardsInfiniteQueryOptions({ q: '*' }));
+
+  const cards = React.useMemo(
+    () => data?.pages.flatMap((page) => page.data) ?? [],
+    [data],
+  );
+
+  const handleCreateCollection = React.useCallback(() => {
+    sheetRef.current?.present();
+  }, []);
+
+  return (
+    <BackgroundLayout scrollable={collections.length > 0}>
+      {collections.length === 0 ? (
+        <EmptyState
+          buttonText="+ Create a collection"
+          variant="collection"
+          title="Your collection is empty"
+          subtitle="Scan cards or add them manually to build your first collection"
+          onPress={handleCreateCollection}
+        />
+      ) : null}
+      <BottomSheet sheetRef={sheetRef}>
+        <TextTitle className="pb-4">New Collection</TextTitle>
+        <LegendList
+          data={cards}
+          renderItem={({ item }) => <CardRow item={item} />}
+          keyExtractor={(item) => item.id}
+          estimatedItemSize={56}
+          recycleItems
+          decelerationRate="fast"
+          drawDistance={400}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ paddingBottom: 180 }}
+          onEndReached={() => {
+            if (hasNextPage && !isFetchingNextPage) {
+              fetchNextPage();
+            }
+          }}
+          onEndReachedThreshold={0.2}
+          ListFooterComponent={
+            <ActivityIndicator
+              colorClassName="accent-foreground-darker"
+              className="py-5"
+            />
+          }
+        />
+      </BottomSheet>
+    </BackgroundLayout>
   );
 }
