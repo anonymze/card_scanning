@@ -89,8 +89,7 @@ export default function Page() {
           estimatedItemSize={72}
           recycleItems
           drawDistance={350}
-          onEndReachedThreshold={0.2}
-          // contentContainerStyle={{ paddingBottom: 80 }}
+          onEndReachedThreshold={0.3}
           decelerationRate="fast"
           showsVerticalScrollIndicator={false}
           nestedScrollEnabled
