@@ -101,6 +101,9 @@ importers:
       react-native-mmkv:
         specifier: ^4.3.0
         version: 4.3.0(react-native-nitro-modules@0.35.2(react-native@0.83.2(@babel/core@7.28.0)(@react-native/metro-config@0.81.0(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.0))(react@19.2.0))(react-native@0.83.2(@babel/core@7.28.0)(@react-native/metro-config@0.81.0(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.0))(react@19.2.0)
+      react-native-morph-card:
+        specifier: ^0.4.0
+        version: 0.4.0(react-native@0.83.2(@babel/core@7.28.0)(@react-native/metro-config@0.81.0(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.0))(react@19.2.0)
       react-native-nitro-fetch:
         specifier: ^0.2.1
         version: 0.2.1(react-native-nitro-modules@0.35.2(react-native@0.83.2(@babel/core@7.28.0)(@react-native/metro-config@0.81.0(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.0))(react@19.2.0))(react-native-worklets-core@1.6.2(react-native@0.83.2(@babel/core@7.28.0)(@react-native/metro-config@0.81.0(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.0))(react@19.2.0))(react-native@0.83.2(@babel/core@7.28.0)(@react-native/metro-config@0.81.0(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.0))(react@19.2.0)
@@ -4414,6 +4417,12 @@ packages:
       react-native: '*'
       react-native-nitro-modules: '*'
 
+  react-native-morph-card@0.4.0:
+    resolution: {integrity: sha512-Ez7HpRNTSflPXjKLWZhpIB3JIB0BEsYW1Sk+vcmCMKLmSJsHhv9WczMPIe4wa3we8w6UEUheBooxnx3Ou4Udng==}
+    peerDependencies:
+      react: '*'
+      react-native: '*'
+
   react-native-nitro-fetch@0.2.1:
     resolution: {integrity: sha512-Vgcy1eHBclTFqAAIfTXUA+rtHTCaU8kY/pObTZbLDO/KaOajiK0ovtq8dR8eJT2iSe4IKJ8k0g2oaZO/mNergQ==}
     peerDependencies:
@@ -7329,7 +7338,9 @@ snapshots:
       metro-runtime: 0.83.3
     transitivePeerDependencies:
       - '@babel/core'
+      - bufferutil
       - supports-color
+      - utf-8-validate
     optional: true
 
   '@react-native/normalize-colors@0.74.89': {}
@@ -10034,6 +10045,11 @@ snapshots:
       react: 19.2.0
       react-native: 0.83.2(@babel/core@7.28.0)(@react-native/metro-config@0.81.0(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.0)
       react-native-nitro-modules: 0.35.2(react-native@0.83.2(@babel/core@7.28.0)(@react-native/metro-config@0.81.0(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.0))(react@19.2.0)
+
+  react-native-morph-card@0.4.0(react-native@0.83.2(@babel/core@7.28.0)(@react-native/metro-config@0.81.0(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.0))(react@19.2.0):
+    dependencies:
+      react: 19.2.0
+      react-native: 0.83.2(@babel/core@7.28.0)(@react-native/metro-config@0.81.0(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.0)
 
   react-native-nitro-fetch@0.2.1(react-native-nitro-modules@0.35.2(react-native@0.83.2(@babel/core@7.28.0)(@react-native/metro-config@0.81.0(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.0))(react@19.2.0))(react-native-worklets-core@1.6.2(react-native@0.83.2(@babel/core@7.28.0)(@react-native/metro-config@0.81.0(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.0))(react@19.2.0))(react-native@0.83.2(@babel/core@7.28.0)(@react-native/metro-config@0.81.0(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.0))(react@19.2.0):
     dependencies:

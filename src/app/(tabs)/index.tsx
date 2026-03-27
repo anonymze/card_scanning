@@ -14,7 +14,7 @@ import type { ScryfallCard } from '@/types/cards';
 import { LegendList } from '@legendapp/list/react-native';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import React from 'react';
-import { ActivityIndicator, View } from 'react-native';
+import { ActivityIndicator, TextInput, View } from 'react-native';
 
 function CardRow({ item }: { item: ScryfallCard }) {
   const typeLine = item.type_line?.split('—')[0]?.trim() ?? '';
@@ -76,6 +76,12 @@ export default function Page() {
       ) : null}
       <BottomSheet sheetRef={sheetRef} scrollable>
         <TextTitle className="pb-4">New Collection</TextTitle>
+        <Text className="font-sans-semibold text-gray mb-1 text-xs">Title</Text>
+        <TextInput
+          className="border-background-primary-lighter bg-background-primary font-sans text-foreground mb-4 rounded-xl border px-3 py-3"
+          placeholderTextColor="hsl(215, 20%, 45%)"
+          placeholder="My collection name"
+        />
         <LegendList
           data={cards}
           renderItem={({ item }) => <CardRow item={item} />}
