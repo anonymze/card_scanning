@@ -78,7 +78,7 @@ export default function Page() {
         <TextTitle className="pb-4">New Collection</TextTitle>
         <Text className="font-sans-semibold text-gray mb-1 text-xs">Title</Text>
         <TextInput
-          className="border-background-primary-lighter bg-background-primary font-sans text-foreground mb-4 rounded-xl border px-3 py-3"
+          className="border-background-primary-lighter bg-background-primary text-foreground mb-4 rounded-xl border px-3 py-3 font-sans"
           placeholderTextColor="hsl(215, 20%, 45%)"
           placeholder="My collection name"
         />
@@ -86,7 +86,7 @@ export default function Page() {
           data={cards}
           renderItem={({ item }) => <CardRow item={item} />}
           keyExtractor={(item) => item.id}
-          estimatedItemSize={72}
+          estimatedItemSize={64}
           recycleItems
           drawDistance={350}
           onEndReachedThreshold={0.4}
@@ -104,12 +104,10 @@ export default function Page() {
             if (hasNextPage && !isFetchingNextPage) fetchNextPage();
           }}
           ListFooterComponent={
-            isFetchingNextPage ? (
-              <ActivityIndicator
-                colorClassName="accent-foreground-darker"
-                className="py-5"
-              />
-            ) : null
+            <ActivityIndicator
+              colorClassName="accent-foreground-darker"
+              className="pt-3"
+            />
           }
         />
       </BottomSheet>
