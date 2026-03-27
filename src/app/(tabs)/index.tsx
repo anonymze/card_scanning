@@ -1,20 +1,15 @@
 import { cardsInfiniteQueryOptions } from '@/api/cards-queries';
 import { EmptyState } from '@/components/empty-state';
 import { EyeIcon } from '@/components/icons';
-import {
-  LoadingPlaceholder,
-  NotFoundPlaceholder,
-} from '@/components/loading-placeholder';
 import { MyTouchableOpacity } from '@/components/my-pressable';
 import { BottomSheet, BottomSheetRef } from '@/components/ui/bottom-sheet';
 import { Text, TextTitle } from '@/components/ui/texts';
 import BackgroundLayout from '@/layouts/background-layout';
 import { useCollections } from '@/stores/collections-store';
 import type { ScryfallCard } from '@/types/cards';
-import { LegendList } from '@legendapp/list/react-native';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import React from 'react';
-import { ActivityIndicator, TextInput, View } from 'react-native';
+import { TextInput, View } from 'react-native';
 
 function CardRow({ item }: { item: ScryfallCard }) {
   const typeLine = item.type_line?.split('—')[0]?.trim() ?? '';
@@ -82,7 +77,7 @@ export default function Page() {
           placeholderTextColor="hsl(215, 20%, 45%)"
           placeholder="My collection name"
         />
-        <LegendList
+        {/*<LegendList
           data={cards}
           renderItem={({ item }) => <CardRow item={item} />}
           keyExtractor={(item) => item.id}
@@ -104,12 +99,14 @@ export default function Page() {
             if (hasNextPage && !isFetchingNextPage) fetchNextPage();
           }}
           ListFooterComponent={
-            <ActivityIndicator
-              colorClassName="accent-foreground-darker"
-              className="pt-3"
-            />
+            isFetchingNextPage ? (
+              <ActivityIndicator
+                colorClassName="accent-foreground-darker"
+                className="pt-3"
+              />
+            ) : null
           }
-        />
+        />*/}
       </BottomSheet>
     </BackgroundLayout>
   );
