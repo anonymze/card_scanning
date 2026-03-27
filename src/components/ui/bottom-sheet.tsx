@@ -27,6 +27,7 @@ export function BottomSheet({
 
   return (
     <TrueSheet
+
       scrollable={scrollable}
       ref={sheetRef}
       detents={detents}

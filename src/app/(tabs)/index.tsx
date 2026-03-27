@@ -57,7 +57,7 @@ export default function Page() {
   } = useInfiniteQuery(cardsInfiniteQueryOptions({ q: '*' }));
 
   const cards = React.useMemo(
-    () => data?.pages.flatMap((page) => page.data) ?? [],
+    () => data?.pages.flatMap((page) => page.data).slice(0, 90) ?? [],
     [data],
   );
 
@@ -89,7 +89,7 @@ export default function Page() {
           estimatedItemSize={72}
           recycleItems
           drawDistance={350}
-          onEndReachedThreshold={0.3}
+          onEndReachedThreshold={0.4}
           decelerationRate="fast"
           showsVerticalScrollIndicator={false}
           nestedScrollEnabled
