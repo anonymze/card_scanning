@@ -4,101 +4,39 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Development Commands
 
-### Core Development
-
 - `pnpm dev` - Start Expo development server
 - `pnpm start` - Start with dev client
-- `pnpm ios` - Run on iOS device (iPhone 16 Pro)
+- `pnpm ios` - Run on iOS device
 - `pnpm android` - Run on Android
-- `pnpm web` - Run on web
-
-### Building & Prebuild
-
-- `pnpm prebuild` - Generate native directories
-
-### Code Quality
-
+- `pnpm prebuild` - Generate native directories (run after changing native config)
 - `pnpm tsc:check` - TypeScript type checking
-- `pnpm format` - Format code with Prettier
+- `pnpm format` - Format with Prettier
 - `pnpm vitest:run` - Run tests with Vitest
 
-## Architecture Overview
+## Architecture
 
-This is a modern Expo app template with React Native New Architecture enabled and React Compiler support.
+**App**: "Arcane Lens" — MTG/Pokemon/YuGiOh card scanner. Expo SDK 55, React Native 0.83, New Architecture enabled, React 19 with React Compiler.
 
-### Tech Stack
+**Routing**: Expo Router file-based. Tab layout at `src/app/(tabs)/` with 5 tabs: Collection (index), Decks, Scan (center, has camera), Shop, Settings.
 
-- **Framework**: Expo SDK 53 with React Native 0.79
-- **Router**: Expo Router (file-based routing)
-- **Styling**: NativeWind (Tailwind CSS for React Native)
-- **State**: React 19 with React Compiler
-- **Testing**: Vitest with React Native support
-- **Storage**: MMKV for fast key-value storage
-- **Animations**: React Native Reanimated v4 + Worklets
-- **Gestures**: React Native Gesture Handler
-- **UI Libraries**: @gorhom/bottom-sheet, @legendapp/list
+**Styling**: Uniwind (NativeWind/Tailwind CSS for RN). Global styles in `src/global.css`. CSS variables for theming (dark-first). Font-weight utilities disabled for Android compat.
 
-### Project Structure
+**State**:
+- Zustand + MMKV persistence for local state (`src/stores/`)
+- TanStack Query + MMKV cache persistence for server state (`src/api/`)
+- Query cache persisted to MMKV under key `rq-cache`, staleTime=4h, gcTime=Infinity
 
-- `src/app/` - Expo Router pages (file-based routing)
-- `src/components/ui/` - Reusable UI components
-- `src/styles/global.css` - Global Tailwind CSS styles
-- `src/assets/` - App icons, splash screens, images
-- `src/lib/` - Utility functions and configurations
+**API**: Scryfall API (`api.scryfall.com`) for card search. Uses `react-native-nitro-fetch` (not standard fetch). Infinite query pagination pattern.
 
-### Key Configuration
+**Key libs**: Vision Camera (card scanning), Reanimated v4 + Worklets (animations), Gesture Handler, @gorhom/bottom-sheet, @legendapp/list, Skia, pressto (pressables).
 
-- **Metro**: Configured with NativeWind integration
-- **Tailwind**: Custom color palette, disabled font-weight for Android compatibility
-- **Expo Plugins**: dev-launcher, router, localization, font, web-browser, edge-to-edge
-- **Experiments**: React Canary, React Compiler, typed routes, build cache, tsconfig paths
-- **New Architecture**: Enabled for both iOS and Android
+**Path alias**: `@/*` → `./src/*`
 
+## Instructions
 
-### Testing
-
-Uses Vitest with `vitest-react-native` for React Native testing support.
-
-### Package Manager
-
-Uses pnpm as the package manager (specified in packageManager field).
-
-# Instructions
-
-- Use React. something when calling a a hook like useEffect or callback or memo etc... ex: React.useEffect
-
-## Card Detection Project Progress
-
-### Current Goal
-Building a real-time MTG/Pokemon/YuGiOh card scanner using React Native Vision Camera with AI detection.
-
-### Technology Decisions Made
-- **Model Choice**: YOLOv11 (recommended) - 2.4ms inference, fastest performance
-- **Alternative**: YOLOv12 (newer, 4.6ms inference, attention mechanisms)
-- **Training**: Local training with ~500 labeled images per card type
-- **Labeling Tool**: LabelImg for bounding box annotation
-- **Integration**: React Native ExecuTorch for on-device inference
-- **Frame Processing**: useFrameProcessor
-
-### Card Dimensions Research
-- **MTG**: 63mm × 88mm (aspect ratio: ~1.397)
-- **Pokemon**: 63mm × 88mm (aspect ratio: ~1.397)
-- **YuGiOh**: 59mm × 86mm (aspect ratio: ~1.458)
-
-### Architecture Plan
-1. **Detection Phase**: YOLOv12 detects card regions and types
-2. **OCR Phase**: Extract text from detected card regions (future)
-3. **Recognition Phase**: Match extracted text to card database (future)
-
-### Key Insights
-- Delver Lens (Android-only) proves real-time, offline detection is possible
-- iOS market gap exists for high-quality MTG scanning
-- Multi-class training (MTG/Pokemon/YuGiOh) recommended over single-class
-- Perspective correction can be added later, focus on detection accuracy first
-
-### Next Steps
-1. Set up YOLOv12 training environment
-2. Collect and label 500+ card images with LabelImg
-3. Train multi-class detection model
-4. Integrate with React Native ExecuTorch
-5. Implement frame processor with detection boxes
+- Use `React.useEffect`, `React.useCallback`, `React.useMemo` etc — always prefix hooks with `React.`
+- Never typecast. Never use `as`.
+- JS/TS only — no other languages unless explicitly asked.
+- Ask before adding/modifying packages.
+- React 19+ so no forwardRef
+- Snake_case for variables names
