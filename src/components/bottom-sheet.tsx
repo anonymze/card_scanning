@@ -39,10 +39,8 @@ export function BottomSheet({
       onDidDismiss={onDidDismiss}
       grabberOptions={{ topMargin: 14, color: foregroundDarker, adaptive: false }}
     >
-      <GestureHandlerRootView style={{ flexGrow: 1, width }}>
-        <View className="px-5 pt-10">
+      <GestureHandlerRootView style={{ flexGrow: 1, width }} className="px-5 pt-10">
           {children}
-        </View>
       </GestureHandlerRootView>
     </TrueSheet>
   );
