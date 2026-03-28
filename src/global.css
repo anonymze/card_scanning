@@ -27,6 +27,10 @@
       --color-background-secondary: hsl(221, 83%, 53%);
       --color-background-secondary-lighter: hsl(217, 91%, 60%);
       --color-background-secondary-darker: hsl(192, 91%, 36%);
+      --color-card-collection: hsl(280, 40%, 18%);
+      --color-card-collection-lighter: hsl(280, 35%, 25%);
+      --color-card-deck: hsl(0, 45%, 18%);
+      --color-card-deck-lighter: hsl(0, 40%, 25%);
     }
     @variant dark {
       --color-foreground: hsl(43, 96%, 56%);
@@ -41,6 +45,10 @@
       --color-background-secondary: hsl(221, 83%, 53%);
       --color-background-secondary-lighter: hsl(217, 91%, 60%);
       --color-background-secondary-darker: hsl(192, 91%, 36%);
+      --color-card-collection: hsl(280, 40%, 18%);
+      --color-card-collection-lighter: hsl(280, 35%, 25%);
+      --color-card-deck: hsl(0, 45%, 18%);
+      --color-card-deck-lighter: hsl(0, 40%, 25%);
     }
   }
 }

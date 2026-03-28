@@ -11,6 +11,7 @@ type BottomSheetProps = {
   detents?: React.ComponentProps<typeof TrueSheet>['detents'];
   cornerRadius?: number;
   scrollable?: boolean;
+  onDidDismiss?: () => void;
 };
 
 export function BottomSheet({
@@ -19,6 +20,7 @@ export function BottomSheet({
   detents = ['auto'],
   cornerRadius = 30,
   scrollable = false,
+  onDidDismiss,
 }: BottomSheetProps) {
   const [bgDarker, foregroundDarker] = useCSSVariable([
     '--color-background-primary-darker',
@@ -32,6 +34,7 @@ export function BottomSheet({
       detents={detents}
       cornerRadius={cornerRadius}
       backgroundColor={bgDarker}
+      onDidDismiss={onDidDismiss}
       grabberOptions={{ topMargin: 14, color: foregroundDarker, adaptive: false }}
     >
       <View className="px-5 pt-10">

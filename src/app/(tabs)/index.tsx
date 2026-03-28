@@ -1,4 +1,3 @@
-import { cardsInfiniteQueryOptions } from '@/api/cards-queries';
 import { BottomSheet, BottomSheetRef } from '@/components/bottom-sheet';
 import { CardFrame } from '@/components/card-frame';
 import { EmptyState } from '@/components/empty-state';
@@ -7,57 +6,104 @@ import { TextInput, TextInputRef } from '@/components/ui/text-inputs';
 import { Text } from '@/components/ui/texts';
 import BackgroundLayout from '@/layouts/background-layout';
 import { useCollections } from '@/stores/collections-store';
-import { useInfiniteQuery } from '@tanstack/react-query';
+import type { Collection } from '@/types/collection';
+import { LegendList } from '@legendapp/list/react-native';
 import React from 'react';
+import { View } from 'react-native';
+import Animated, { Easing, FadeInDown } from 'react-native-reanimated';
 
-// function CardRow({ item }: { item: ScryfallCard }) {
-//   const typeLine = item.type_line?.split('—')[0]?.trim() ?? '';
-//   const subtitle = [typeLine, item.set_name].filter(Boolean).join(' · ');
+const CARD_TYPES = [
+  'Creature',
+  'Instant',
+  'Sorcery',
+  'Enchantment',
+  'Artifact',
+  'Land',
+  'Planeswalker',
+  'Battle',
+] as const;
 
-//   return (
-//     <View className="border-background-primary-lighter bg-background-primary mb-2 h-16 overflow-hidden rounded-2xl border border-b-0">
-//       <View className="flex-row items-center px-3 py-3">
-//         <View className="flex-1">
-//           <Text
-//             className="font-sans-semibold text-sm text-white"
-//             numberOfLines={1}
-//           >
-//             {item.name}
-//           </Text>
-//           <Text className="text-gray text-xs" numberOfLines={1}>
-//             {subtitle || '—'}
-//           </Text>
-//         </View>
-//         <MyTouchableOpacity onPress={() => {}} className="pl-3">
-//           <EyeIcon color="hsl(215, 20%, 65%)" width={18} height={18} />
-//         </MyTouchableOpacity>
-//       </View>
-//       <View className="h-1" style={{ backgroundColor: 'red' }} />
-//     </View>
-//   );
-// }
+function get_type_breakdown(collection: Collection) {
+  const counts: Record<string, number> = {};
 
-export default function Page() {
-  const sheetRef = React.useRef<BottomSheetRef>(null);
-  const inputRef = React.useRef<TextInputRef>(null);
-  const collections = useCollections((s) => s.collections);
+  for (const entry of collection.cards) {
+    const raw_type = entry.card.type_line.split('—')[0]?.trim() ?? '';
+    const matched_type = CARD_TYPES.find((t) => raw_type.includes(t));
+    const label = matched_type ?? 'Other';
+    counts[label] = (counts[label] ?? 0) + entry.quantity;
+  }
 
-  const {
-    data,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    isFetching,
-    isLoading,
-  } = useInfiniteQuery(cardsInfiniteQueryOptions({ q: '*' }));
+  return Object.entries(counts).sort((a, b) => b[1] - a[1]);
+}
 
-  const cards = React.useMemo(
-    () => data?.pages.flatMap((page) => page.data).slice(0, 90) ?? [],
-    [data],
-  );
+function CollectionCard({
+  collection,
+  on_delete,
+}: {
+  collection: Collection;
+  on_delete: () => void;
+}) {
+  const total_cards = collection.cards.reduce((sum, c) => sum + c.quantity, 0);
+  const type_breakdown = get_type_breakdown(collection);
 
   return (
-    <BackgroundLayout scrollable={collections.length > 0}>
+    <Animated.View
+      entering={FadeInDown.duration(400).easing(Easing.bezier(0.16, 1, 0.3, 1))}
+      className="mb-4"
+    >
+      <CardFrame title={collection.name} onDelete={on_delete}>
+        <View className="mb-3 flex-row items-center justify-between">
+          <Text className="text-foreground font-sans-semibold text-sm ml-auto">
+            {total_cards} {total_cards === 1 ? 'card' : 'cards'}
+          </Text>
+        </View>
+
+        {type_breakdown.length > 0 ? (
+          <View className="border-foreground-darker/20 border-t pt-3">
+            {type_breakdown.map(([type, count]) => (
+              <View
+                key={type}
+                className="flex-row items-center justify-between py-1"
+              >
+                <Text className="text-gray text-xs">{type}</Text>
+                <Text className="text-gray text-xs">{count}</Text>
+              </View>
+            ))}
+          </View>
+        ) : (
+          <Text className="text-gray text-center text-xs italic">
+            No cards yet
+          </Text>
+        )}
+      </CardFrame>
+    </Animated.View>
+  );
+}
+
+export default function Page() {
+  const sheet_ref = React.useRef<BottomSheetRef>(null);
+  const input_ref = React.useRef<TextInputRef>(null);
+  const collections = useCollections((s) => s.collections);
+  const create_collection = useCollections((s) => s.createCollection);
+  const delete_collection = useCollections((s) => s.deleteCollection);
+  const [sheet_title, set_sheet_title] = React.useState('New Collection');
+
+  const handle_create = React.useCallback(() => {
+    const value = input_ref.current?.getValue()?.trim() ?? '';
+
+    if (!value) {
+      input_ref.current?.shake();
+      return;
+    }
+
+    create_collection(value, '');
+    input_ref.current?.clear();
+    set_sheet_title('New Collection');
+    sheet_ref.current?.dismiss();
+  }, [create_collection]);
+
+  return (
+    <BackgroundLayout>
       {collections.length === 0 ? (
         <EmptyState
           buttonText="+ Create a collection"
@@ -65,52 +111,57 @@ export default function Page() {
           title="Your collection is empty"
           subtitle="Scan cards or add them manually to build your first collection"
           onPress={() => {
-            sheetRef.current?.present();
+            sheet_ref.current?.present();
           }}
         />
-      ) : null}
-      <BottomSheet sheetRef={sheetRef}>
-        <CardFrame title="New Collection">
+      ) : (
+        <>
+          <View className="flex-row items-center justify-between pb-5">
+            <Text className="font-cinzel-semibold text-foreground text-2xl">
+              Collections
+            </Text>
+            <Button
+              title="+ New"
+              onPress={() => sheet_ref.current?.present()}
+              className="h-11 px-5"
+            />
+          </View>
+          <LegendList
+            data={collections}
+            extraData={collections.length}
+            keyExtractor={(item) => item.id}
+            estimatedItemSize={180}
+            showsVerticalScrollIndicator={false}
+            recycleItems
+            renderItem={({ item }) => (
+              <CollectionCard
+                collection={item}
+                on_delete={() => delete_collection(item.id)}
+              />
+            )}
+          />
+        </>
+      )}
+      <BottomSheet
+        sheetRef={sheet_ref}
+        onDidDismiss={() => {
+          set_sheet_title('New Collection');
+          input_ref.current?.clear();
+        }}
+      >
+        <CardFrame title={sheet_title}>
           <Text className="font-sans-semibold text-gray mb-2 text-sm">
             Title
           </Text>
-          <TextInput ref={inputRef} placeholder="My collection name" />
-          <Button
-            title="Create collection"
-            onPress={() => inputRef.current?.shake()}
+          <TextInput
+            ref={input_ref}
+            placeholder="My collection name"
+            onChangeText={(text) => {
+              set_sheet_title(text.trim() || 'New Collection');
+            }}
           />
+          <Button title="Create collection" onPress={handle_create} />
         </CardFrame>
-
-        {/*<LegendList
-          data={cards}
-          renderItem={({ item }) => <CardRow item={item} />}
-          keyExtractor={(item) => item.id}
-          estimatedItemSize={64}
-          recycleItems
-          drawDistance={350}
-          onEndReachedThreshold={0.4}
-          decelerationRate="fast"
-          showsVerticalScrollIndicator={false}
-          nestedScrollEnabled
-          ListEmptyComponent={
-            isLoading || isFetching ? (
-              <LoadingPlaceholder title="Loading the cards..." size={180} />
-            ) : (
-              <NotFoundPlaceholder title="No cards found" size={180} />
-            )
-          }
-          onEndReached={() => {
-            if (hasNextPage && !isFetchingNextPage) fetchNextPage();
-          }}
-          ListFooterComponent={
-            isFetchingNextPage ? (
-              <ActivityIndicator
-                colorClassName="accent-foreground-darker"
-                className="pt-3"
-              />
-            ) : null
-          }
-        />*/}
       </BottomSheet>
     </BackgroundLayout>
   );

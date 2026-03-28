@@ -1,7 +1,8 @@
 import { cn } from '@/libs/tailwind';
+import { MyTouchableOpacity } from '@/components/my-pressable';
 import * as Haptics from 'expo-haptics';
 import React from 'react';
-import { TextInput as RNTextInput, TextInputProps } from 'react-native';
+import { Text, TextInput as RNTextInput, TextInputProps, View } from 'react-native';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -16,8 +17,8 @@ const SHAKE_OFFSET = 5;
 
 export type TextInputRef = {
   shake: () => void;
-  // focus: () => void;
-  // blur: () => void;
+  getValue: () => string;
+  clear: () => void;
 };
 
 const TextInput = ({
@@ -32,6 +33,10 @@ const TextInput = ({
   const [grayLight] = useCSSVariable(['--color-gray-lighter']);
   const shakeOffset = useSharedValue(0);
   const inputRef = React.useRef<RNTextInput>(null);
+  const valueRef = React.useRef('');
+  const on_change_ref = React.useRef(props.onChangeText);
+  on_change_ref.current = props.onChangeText;
+  const [has_value, set_has_value] = React.useState(false);
 
   React.useImperativeHandle(ref, () => ({
     shake: () => {
@@ -42,28 +47,61 @@ const TextInput = ({
       );
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
     },
-    // focus: () => inputRef.current?.focus(),
-    // blur: () => inputRef.current?.blur(),
+    getValue: () => valueRef.current,
+    clear: () => {
+      valueRef.current = '';
+      set_has_value(false);
+      inputRef.current?.clear();
+      on_change_ref.current?.('');
+    },
   }));
 
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [{ translateX: shakeOffset.value }],
   }));
 
+  const handle_change = React.useCallback((text: string) => {
+    valueRef.current = text;
+    set_has_value(text.length > 0);
+    on_change_ref.current?.(text);
+  }, []);
+
+  const handle_clear = React.useCallback(() => {
+    valueRef.current = '';
+    set_has_value(false);
+    inputRef.current?.clear();
+    on_change_ref.current?.('');
+  }, []);
+
   return (
     <Animated.View style={animatedStyle}>
-      <RNTextInput
-        ref={inputRef}
-        hitSlop={5}
-        className={cn(
-          'border-foreground-darker/30 bg-background-primary-darker text-foreground mb-6 rounded-lg border px-4 py-4 font-sans text-sm',
-          className,
-        )}
-        maxLength={20}
-        placeholderTextColor={grayLight}
-        placeholder={placeholder}
-        {...props}
-      />
+      <View className="mb-6 justify-center">
+        <RNTextInput
+          autoCorrect={false}
+          autoComplete="off"
+          spellCheck={false}
+          ref={inputRef}
+          hitSlop={5}
+          className={cn(
+            'border-foreground-darker/30 bg-background-primary-darker text-foreground rounded-lg border px-4 py-4 pr-10 font-sans text-sm',
+            className,
+          )}
+          maxLength={24}
+          placeholderTextColor={grayLight}
+          placeholder={placeholder}
+          {...props}
+          onChangeText={handle_change}
+        />
+        {has_value ? (
+          <MyTouchableOpacity
+            onPress={handle_clear}
+            hitSlop={10}
+            className="bg-foreground-darker/30 absolute right-3 h-6 w-6 items-center justify-center rounded-full"
+          >
+            <Text className="text-foreground text-xs font-bold leading-none">✕</Text>
+          </MyTouchableOpacity>
+        ) : null}
+      </View>
     </Animated.View>
   );
 };

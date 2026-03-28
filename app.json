@@ -17,6 +17,7 @@
     },
     "orientation": "portrait",
     "icon": "./resources/app-icon.icon",
+    "backgroundColor": "#08091A",
     "userInterfaceStyle": "dark",
     "assetBundlePatterns": ["**/*"],
     "ios": {

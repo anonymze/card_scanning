@@ -1,30 +1,58 @@
+import { MyTouchableOpacity } from '@/components/my-pressable';
 import React from 'react';
 import { View } from 'react-native';
 import { TextTitle } from './ui/texts';
+import { Text } from 'react-native';
+import { useCSSVariable } from 'uniwind';
+
+type CardFrameVariant = 'collection' | 'deck';
+
+const GRADIENT_VARS: Record<CardFrameVariant, [string, string]> = {
+  collection: ['--color-card-collection', '--color-card-collection-lighter'],
+  deck: ['--color-card-deck', '--color-card-deck-lighter'],
+};
 
 const CardFrame = ({
   title,
   children,
+  onDelete,
+  variant = 'collection',
 }: {
   title: string;
   children: React.ReactNode;
+  onDelete?: () => void;
+  variant?: CardFrameVariant;
 }) => {
+  const vars = GRADIENT_VARS[variant];
+  const [base, lighter] = useCSSVariable(vars);
   return (
     <View className="border-foreground-darker rounded-xl border-2 p-1.5">
-      <View className="border-foreground-darker/40 rounded-lg border">
-        {/* Title bar */}
+      <View className={`border-foreground-darker/40 rounded-lg border ${variant === 'deck' ? 'border-dashed' : ''}`}>
         <View className="bg-background-primary-lighter mx-2 mt-2 mb-2 overflow-hidden rounded-md">
           <View
             style={{
-              experimental_backgroundImage:
-                'linear-gradient(90deg, hsl(38,50%,20%), hsl(38,40%,28%), hsl(38,50%,20%))',
+              experimental_backgroundImage: `linear-gradient(90deg, ${base}, ${lighter}, ${base})`,
             }}
-            className="flex-row items-center justify-between px-4 py-2.5"
+            className="flex-row items-center justify-between px-4 py-2.5 gap-3 w-full"
           >
-            <TextTitle className="text-foreground text-lg">{title}</TextTitle>
-            <View className="flex-row items-center gap-1.5">
-              <View className="bg-foreground-darker h-2.5 w-2.5 rounded-full" />
-            </View>
+            <TextTitle className="text-foreground text-lg shrink">{title}</TextTitle>
+            {onDelete ? (
+              <MyTouchableOpacity
+                onPress={onDelete}
+                hitSlop={15}
+                className="bg-foreground-darker/30 h-6 w-6 items-center justify-center rounded-full"
+              >
+                <Text className="text-foreground text-xs font-bold leading-none">✕</Text>
+              </MyTouchableOpacity>
+            ) : (
+              <View className="flex-row items-center gap-1.5">
+                {variant === 'deck' ? (
+                  <View className="bg-foreground-darker h-3 w-3 rotate-45 rounded-sm" />
+                ) : (
+                  <View className="bg-foreground-darker h-2.5 w-2.5 rounded-full" />
+                )}
+              </View>
+            )}
           </View>
         </View>
 
