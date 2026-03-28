@@ -59,6 +59,9 @@ importers:
       expo-font:
         specifier: ^55.0.4
         version: 55.0.4(expo@55.0.8)(react-native@0.83.2(@babel/core@7.28.0)(@react-native/metro-config@0.81.0(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.0))(react@19.2.0)
+      expo-haptics:
+        specifier: ~55.0.9
+        version: 55.0.9(expo@55.0.8)
       expo-keep-awake:
         specifier: ~55.0.4
         version: 55.0.4(expo@55.0.8)(react@19.2.0)
@@ -107,6 +110,9 @@ importers:
       react-native-mmkv:
         specifier: ^4.3.0
         version: 4.3.0(react-native-nitro-modules@0.35.2(react-native@0.83.2(@babel/core@7.28.0)(@react-native/metro-config@0.81.0(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.0))(react@19.2.0))(react-native@0.83.2(@babel/core@7.28.0)(@react-native/metro-config@0.81.0(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.0))(react@19.2.0)
+      react-native-morph-card:
+        specifier: ^0.4.0
+        version: 0.4.0(react-native@0.83.2(@babel/core@7.28.0)(@react-native/metro-config@0.81.0(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.0))(react@19.2.0)
       react-native-nitro-fetch:
         specifier: ^0.2.1
         version: 0.2.1(react-native-nitro-modules@0.35.2(react-native@0.83.2(@babel/core@7.28.0)(@react-native/metro-config@0.81.0(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.0))(react@19.2.0))(react-native-worklets-core@1.6.2(react-native@0.83.2(@babel/core@7.28.0)(@react-native/metro-config@0.81.0(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.0))(react@19.2.0))(react-native@0.83.2(@babel/core@7.28.0)(@react-native/metro-config@0.81.0(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.0))(react@19.2.0)
@@ -3308,6 +3314,11 @@ packages:
       react: '*'
       react-native: '*'
 
+  expo-haptics@55.0.9:
+    resolution: {integrity: sha512-KCRyHr/uu4syXmoq3aIQ6ahuaX6FGtlPkWGlLlHJ836WF3nG+5+oCaCQiI7qMTpml+Tp/V/zP4ZaowM2KHgLNA==}
+    peerDependencies:
+      expo: '*'
+
   expo-image@55.0.6:
     resolution: {integrity: sha512-TKuu0uBmgTZlhd91Glv+V4vSBMlfl0bdQxfl97oKKZUo3OBC13l3eLik7v3VNLJN7PZbiwOAiXkZkqSOBx/Xsw==}
     peerDependencies:
@@ -4778,6 +4789,12 @@ packages:
       react: '*'
       react-native: '*'
       react-native-nitro-modules: '*'
+
+  react-native-morph-card@0.4.0:
+    resolution: {integrity: sha512-Ez7HpRNTSflPXjKLWZhpIB3JIB0BEsYW1Sk+vcmCMKLmSJsHhv9WczMPIe4wa3we8w6UEUheBooxnx3Ou4Udng==}
+    peerDependencies:
+      react: '*'
+      react-native: '*'
 
   react-native-nitro-fetch@0.2.1:
     resolution: {integrity: sha512-Vgcy1eHBclTFqAAIfTXUA+rtHTCaU8kY/pObTZbLDO/KaOajiK0ovtq8dR8eJT2iSe4IKJ8k0g2oaZO/mNergQ==}
@@ -9397,6 +9414,10 @@ snapshots:
       react: 19.2.0
       react-native: 0.83.2(@babel/core@7.28.0)(@react-native/metro-config@0.81.0(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.0)
 
+  expo-haptics@55.0.9(expo@55.0.8):
+    dependencies:
+      expo: 55.0.8(@babel/core@7.28.0)(@expo/dom-webview@55.0.3)(@expo/metro-runtime@55.0.6)(expo-router@55.0.7)(react-dom@19.2.0(react@19.2.0))(react-native@0.83.2(@babel/core@7.28.0)(@react-native/metro-config@0.81.0(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.0))(react@19.2.0)(typescript@5.9.2)
+
   expo-image@55.0.6(expo@55.0.8)(react-native-web@0.21.0(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react-native@0.83.2(@babel/core@7.28.0)(@react-native/metro-config@0.81.0(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.0))(react@19.2.0):
     dependencies:
       expo: 55.0.8(@babel/core@7.28.0)(@expo/dom-webview@55.0.3)(@expo/metro-runtime@55.0.6)(expo-router@55.0.7)(react-dom@19.2.0(react@19.2.0))(react-native@0.83.2(@babel/core@7.28.0)(@react-native/metro-config@0.81.0(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.0))(react@19.2.0)(typescript@5.9.2)
@@ -11047,6 +11068,11 @@ snapshots:
       react: 19.2.0
       react-native: 0.83.2(@babel/core@7.28.0)(@react-native/metro-config@0.81.0(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.0)
       react-native-nitro-modules: 0.35.2(react-native@0.83.2(@babel/core@7.28.0)(@react-native/metro-config@0.81.0(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.0))(react@19.2.0)
+
+  react-native-morph-card@0.4.0(react-native@0.83.2(@babel/core@7.28.0)(@react-native/metro-config@0.81.0(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.0))(react@19.2.0):
+    dependencies:
+      react: 19.2.0
+      react-native: 0.83.2(@babel/core@7.28.0)(@react-native/metro-config@0.81.0(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.0)
 
   react-native-nitro-fetch@0.2.1(react-native-nitro-modules@0.35.2(react-native@0.83.2(@babel/core@7.28.0)(@react-native/metro-config@0.81.0(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.0))(react@19.2.0))(react-native-worklets-core@1.6.2(react-native@0.83.2(@babel/core@7.28.0)(@react-native/metro-config@0.81.0(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.0))(react@19.2.0))(react-native@0.83.2(@babel/core@7.28.0)(@react-native/metro-config@0.81.0(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.0))(react@19.2.0):
     dependencies:

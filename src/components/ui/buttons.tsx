@@ -1,105 +1,53 @@
 import { cn } from '@/libs/tailwind';
-import React from 'react';
-import { Pressable, StyleSheet, Text } from 'react-native';
-import Animated from 'react-native-reanimated';
+import { StyleSheet, Text, View } from 'react-native';
 import { useCSSVariable } from 'uniwind';
-
-const PressableAnimated = Animated.createAnimatedComponent(Pressable);
+import { MyTouchableScaleOpacity } from '../my-pressable';
 
 const Button = ({
-  children,
-  action,
-  className,
-}: {
-  children: React.ReactNode;
-  action?: () => void;
-  className?: string;
-}) => {
-  const [scale, setScale] = React.useState(false);
-
-  return (
-    <PressableAnimated
-      onPressIn={() => {
-        setScale(true);
-      }}
-      onPressOut={() => {
-        setScale(false);
-      }}
-      onPress={action}
-      style={{
-        transitionProperty: 'transform',
-        transitionDuration: 180,
-        transform: scale ? [{ scale: 0.97 }] : [{ scale: 1 }],
-      }}
-      className={cn(
-        'w-full flex-row items-center justify-center gap-x-4 rounded-2xl',
-        className,
-      )}
-    >
-      {children}
-    </PressableAnimated>
-  );
-};
-
-const ButtonPrimary = ({
   title,
-  icon,
-  action,
+  onPress,
+  variant = 'primary',
   className,
 }: {
   title: string;
-  action?: () => void;
-  icon?: React.ReactNode;
+  onPress?: () => void;
+  variant?: 'primary' | 'secondary';
   className?: string;
 }) => {
-  return (
-    <Button
-      action={action}
-      className={cn(
-        'border border-foreground-lighter/50 bg-background-primary p-5',
-        className,
-      )}
-    >
-      {icon ? icon : null}
-      <Text className="font-sans-bold text-xl text-foreground">{title}</Text>
-    </Button>
-  );
-};
-
-const ButtonSecondary = ({
-  title,
-  action,
-  icon,
-  className,
-}: {
-  title: string;
-  action?: () => void;
-  icon?: React.ReactNode;
-  className?: string;
-}) => {
-  const [bgSecondary, bgSecondaryDarker] = useCSSVariable([
-    '--color-background-secondary',
-    '--color-background-secondary-darker',
+  const [foreground, foregroundLighter, foregroundDarker] = useCSSVariable([
+    '--color-foreground',
+    '--color-foreground-lighter',
+    '--color-foreground-darker',
   ]);
 
   return (
-    <Button
-      action={action}
+    <MyTouchableScaleOpacity
       className={cn(
-        'overflow-hidden border border-white bg-background-secondary-lighter p-5',
+        'h-14 flex-row items-center justify-center gap-3 overflow-hidden rounded-2xl px-10 py-2',
+
         className,
       )}
+      style={{
+        boxShadow: `0 0 16px 4px ${foregroundDarker}30`,
+      }}
+      onPress={onPress}
+      hitSlop={10}
     >
-      {/*<LinearGradient
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-        colors={[String(bgSecondary), String(bgSecondaryDarker)]}
-        style={StyleSheet.absoluteFill}
-      />*/}
-      {icon ? icon : null}
-      <Text className="font-sans-bold text-xl text-white">{title}</Text>
-    </Button>
+      <View
+        pointerEvents="none"
+        className="rounded-2xl"
+        style={[
+          StyleSheet.absoluteFill,
+          {
+            experimental_backgroundImage: `linear-gradient(50deg, ${foregroundLighter}, ${foreground}, ${foregroundDarker})`,
+          },
+        ]}
+      />
+      <Text className="font-sans-semibold text-background-primary-darker text-lg">
+        {title}
+      </Text>
+    </MyTouchableScaleOpacity>
   );
 };
 
-export { ButtonPrimary, ButtonSecondary };
+export { Button };

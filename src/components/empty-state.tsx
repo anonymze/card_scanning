@@ -1,7 +1,7 @@
 import { EmptyCardsIllustration, EmptyStateVariant } from '@/components/icons';
 import { useFocusEffect } from 'expo-router';
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 import Animated, {
   cancelAnimation,
   useAnimatedStyle,
@@ -11,7 +11,7 @@ import Animated, {
   withSpring,
 } from 'react-native-reanimated';
 import { useCSSVariable } from 'uniwind';
-import { MyTouchableScaleOpacity } from './my-pressable';
+import { Button } from './ui/buttons';
 import { Text } from './ui/texts';
 
 type EmptyStateProps = {
@@ -31,12 +31,6 @@ export const EmptyState = ({
   size = 280,
   onPress,
 }: EmptyStateProps) => {
-  const [foreground, foregroundLighter, foregroundDarker] = useCSSVariable([
-    '--color-foreground',
-    '--color-foreground-lighter',
-    '--color-foreground-darker',
-  ]);
-
   const translateX = useSharedValue(0);
   const translateY = useSharedValue(0);
   const rotate = useSharedValue(0);
@@ -53,9 +47,18 @@ export const EmptyState = ({
       const push = { damping: 5, stiffness: 120, mass: 0.6 };
       const back = { damping: 35, stiffness: 550 };
 
-      translateX.value = withDelay(50, withSequence(withSpring(5, push), withSpring(0, back)));
-      translateY.value = withDelay(50, withSequence(withSpring(4, push), withSpring(0, back)));
-      rotate.value = withDelay(50, withSequence(withSpring(2.5, push), withSpring(0, back)));
+      translateX.value = withDelay(
+        50,
+        withSequence(withSpring(5, push), withSpring(0, back)),
+      );
+      translateY.value = withDelay(
+        50,
+        withSequence(withSpring(4, push), withSpring(0, back)),
+      );
+      rotate.value = withDelay(
+        50,
+        withSequence(withSpring(2.5, push), withSpring(0, back)),
+      );
     }, []),
   );
 
@@ -73,40 +76,15 @@ export const EmptyState = ({
         <EmptyCardsIllustration size={size} variant={variant} />
       </Animated.View>
       <View className="items-center gap-2">
-        <Text className="font-sans-semibold text-center text-xl text-foreground">
+        <Text className="font-sans-semibold text-foreground text-center text-xl">
           {title}
         </Text>
         {subtitle ? (
-          <Text className="max-w-72 text-center text-foreground-darker">
+          <Text className="text-foreground-darker max-w-72 text-center">
             {subtitle}
           </Text>
         ) : null}
-
-        <View
-          style={{
-            boxShadow: `0 0 16px 4px ${foregroundDarker}30`,
-          }}
-          className="mt-4 rounded-2xl"
-        >
-          <MyTouchableScaleOpacity
-            hitSlop={10}
-            onPress={onPress}
-            className="h-14 flex-row items-center gap-3 overflow-hidden rounded-2xl px-10 py-2"
-          >
-            <View
-            className='rounded-2xl'
-              style={[
-                StyleSheet.absoluteFill,
-                {
-                  experimental_backgroundImage: `linear-gradient(50deg, ${foregroundLighter}, ${foreground}, ${foregroundDarker})`,
-                },
-              ]}
-            />
-            <Text className="font-sans-semibold text-lg text-background-primary-darker">
-              {buttonText}
-            </Text>
-          </MyTouchableScaleOpacity>
-        </View>
+          <Button title={buttonText} onPress={onPress} className='mt-4' />
       </View>
     </View>
   );

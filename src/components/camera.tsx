@@ -1,10 +1,9 @@
 import * as Linking from 'expo-linking';
 import { View } from 'react-native';
 import { useCSSVariable } from 'uniwind';
-import { CameraOffIcon, PlusIcon } from './icons';
-import { ButtonPrimary } from './ui/buttons';
+import { CameraOffIcon } from './icons';
+import { Button } from './ui/buttons';
 import { Text } from './ui/texts';
-
 
 const LayoutCamera = ({ children }: { children: React.ReactNode }) => {
   const [bgDarker, bgLighter] = useCSSVariable([
@@ -29,7 +28,10 @@ const LayoutCamera = ({ children }: { children: React.ReactNode }) => {
 };
 
 const CameraNoPermissions = () => {
-  const [gray, fg] = useCSSVariable(['--color-gray', '--color-foreground']);
+  const [gray, foreground] = useCSSVariable([
+    '--color-gray',
+    '--color-foreground',
+  ]);
 
   return (
     <LayoutCamera>
@@ -38,12 +40,11 @@ const CameraNoPermissions = () => {
         <Text className="text-gray max-w-72 text-center">
           Vous n'avez pas autorisé la permission de la caméra
         </Text>
-        <ButtonPrimary
+        <Button
           title="Activer la permission"
-          icon={<PlusIcon color={String(fg)} />}
-          action={() => {
+          // icon={<PlusIcon color={String(foreground)} />}
+          onPress={() => {
             Linking.openURL('app-settings:');
-
           }}
         />
       </View>

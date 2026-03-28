@@ -16,7 +16,7 @@ type BottomSheetProps = {
 export function BottomSheet({
   sheetRef,
   children,
-  detents = [0.88],
+  detents = ['auto'],
   cornerRadius = 30,
   scrollable = false,
 }: BottomSheetProps) {
@@ -27,7 +27,6 @@ export function BottomSheet({
 
   return (
     <TrueSheet
-
       scrollable={scrollable}
       ref={sheetRef}
       detents={detents}

@@ -25,15 +25,15 @@ const StyledPressableOpacity = withUniwind(PressableOpacity);
 const StyledPressableScale = withUniwind(PressableScale);
 
 const MyTouchableScaleOpacity = ({ children, ...props }: CustomPressablePropsWithClassName) => {
-	return <StyledPressableScaleOpacity {...props}>{children}</StyledPressableScaleOpacity>;
+	return <StyledPressableScaleOpacity hitSlop={10} {...props}>{children}</StyledPressableScaleOpacity>;
 };
 
 const MyTouchableOpacity = ({ children, ...props }: CustomPressablePropsWithClassName) => {
-	return <StyledPressableOpacity {...props}>{children}</StyledPressableOpacity>;
+	return <StyledPressableOpacity hitSlop={10} {...props}>{children}</StyledPressableOpacity>;
 };
 
 const MyTouchableScale = ({ children, ...props }: CustomPressablePropsWithClassName) => {
-	return <StyledPressableScale {...props}>{children}</StyledPressableScale>;
+	return <StyledPressableScale hitSlop={10} {...props}>{children}</StyledPressableScale>;
 };
 
 

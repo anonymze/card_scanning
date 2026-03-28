@@ -1,5 +1,5 @@
+import { BottomSheet, BottomSheetRef } from '@/components/bottom-sheet';
 import { EmptyState } from '@/components/empty-state';
-import { BottomSheet, BottomSheetRef } from '@/components/ui/bottom-sheet';
 import { TextTitle } from '@/components/ui/texts';
 import BackgroundLayout from '@/layouts/background-layout';
 import React from 'react';
