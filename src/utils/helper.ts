@@ -1,3 +1,10 @@
+import { Dimensions } from 'react-native';
+
+export const SCREEN_DIMENSIONS = {
+	width: Dimensions.get('window').width,
+	height: Dimensions.get('window').height,
+};
+
 /**
  * @description pause the thread for a given time
  */

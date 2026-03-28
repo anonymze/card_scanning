@@ -35,7 +35,7 @@ const CardFrame = ({
             }}
             className="flex-row items-center justify-between px-4 py-2.5 gap-3 w-full"
           >
-            <TextTitle className="text-foreground text-lg shrink">{title}</TextTitle>
+            <TextTitle className="text-foreground text-lg flex-1">{title}</TextTitle>
             {onDelete ? (
               <MyTouchableOpacity
                 onPress={onDelete}

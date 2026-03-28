@@ -1,6 +1,7 @@
 import { TrueSheet } from '@lodev09/react-native-true-sheet';
 import React from 'react';
-import { View } from 'react-native';
+import { useWindowDimensions, View } from 'react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useCSSVariable } from 'uniwind';
 
 export type BottomSheetRef = TrueSheet;
@@ -22,6 +23,7 @@ export function BottomSheet({
   scrollable = false,
   onDidDismiss,
 }: BottomSheetProps) {
+  const { width } = useWindowDimensions();
   const [bgDarker, foregroundDarker] = useCSSVariable([
     '--color-background-primary-darker',
     '--color-foreground-darker',
@@ -37,9 +39,11 @@ export function BottomSheet({
       onDidDismiss={onDidDismiss}
       grabberOptions={{ topMargin: 14, color: foregroundDarker, adaptive: false }}
     >
-      <View className="px-5 pt-10">
-        {children}
-      </View>
+      <GestureHandlerRootView style={{ flexGrow: 1, width }}>
+        <View className="px-5 pt-10">
+          {children}
+        </View>
+      </GestureHandlerRootView>
     </TrueSheet>
   );
 }
