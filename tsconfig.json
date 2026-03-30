@@ -20,10 +20,15 @@
     "strict": true,
     "target": "es2022",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": [
+        "./src/*"
+      ]
     }
   },
-  "exclude": ["node_modules"],
+  "exclude": [
+    "node_modules",
+    "opensrc"
+  ],
   "include": [
     "**/*.ts",
     "**/*.tsx",
