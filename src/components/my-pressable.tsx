@@ -1,40 +1,47 @@
 import { createAnimatedPressable, CustomPressableProps, PressableOpacity, PressableScale } from "pressto";
+import { Pressable, PressableProps } from "react-native-gesture-handler";
 import { withUniwind } from "uniwind";
 
-// Extend CustomPressableProps to include className
 type CustomPressablePropsWithClassName = CustomPressableProps & { className?: string };
+type RNGHPressablePropsWithClassName = PressableProps & { className?: string };
+
+const BASE_HIT_SLOP = 10;
 
 const PressableScaleOpacity = createAnimatedPressable((progress) => {
 	"worklet";
 	return {
 		transform: [
 			{
-				translateX: progress * 1,
+				translateX: progress * 1.5,
 			},
 			{
 				scale: 1 - progress * 0.02,
 			},
 		],
-    opacity: 1 - progress * 0.4,
+		opacity: 1 - progress * 0.4,
 	};
 });
-
 
 const StyledPressableScaleOpacity = withUniwind(PressableScaleOpacity);
 const StyledPressableOpacity = withUniwind(PressableOpacity);
 const StyledPressableScale = withUniwind(PressableScale);
+const StyledPressable = withUniwind(Pressable);
 
 const MyTouchableScaleOpacity = ({ children, ...props }: CustomPressablePropsWithClassName) => {
-	return <StyledPressableScaleOpacity hitSlop={10} {...props}>{children}</StyledPressableScaleOpacity>;
+	return <StyledPressableScaleOpacity hitSlop={BASE_HIT_SLOP} {...props}>{children}</StyledPressableScaleOpacity>;
 };
 
 const MyTouchableOpacity = ({ children, ...props }: CustomPressablePropsWithClassName) => {
-	return <StyledPressableOpacity hitSlop={10} {...props}>{children}</StyledPressableOpacity>;
+	return <StyledPressableOpacity hitSlop={BASE_HIT_SLOP} {...props}>{children}</StyledPressableOpacity>;
 };
 
 const MyTouchableScale = ({ children, ...props }: CustomPressablePropsWithClassName) => {
-	return <StyledPressableScale hitSlop={10} {...props}>{children}</StyledPressableScale>;
+	return <StyledPressableScale hitSlop={BASE_HIT_SLOP} {...props}>{children}</StyledPressableScale>;
+};
+
+const MyPressable = ({ children, ...props }: RNGHPressablePropsWithClassName) => {
+	return <StyledPressable hitSlop={BASE_HIT_SLOP} {...props}>{children}</StyledPressable>;
 };
 
 
-export { MyTouchableOpacity, MyTouchableScale, MyTouchableScaleOpacity };
+export { MyTouchableOpacity, MyTouchableScale, MyTouchableScaleOpacity, MyPressable };

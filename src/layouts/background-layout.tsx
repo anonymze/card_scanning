@@ -1,11 +1,14 @@
+import { cn } from '@/libs/tailwind';
 import React from 'react';
 import { View } from 'react-native';
 import { useCSSVariable } from 'uniwind';
 
 export default function BackgroundLayout({
   children,
+  className,
 }: {
   children: React.ReactNode;
+  className?: string;
 }) {
   const [bgDarker, bgLighter, bg] = useCSSVariable([
     '--color-background-primary-darker',
@@ -20,7 +23,7 @@ export default function BackgroundLayout({
           experimental_backgroundImage: `linear-gradient(160deg, ${bgDarker}, ${bgLighter}, ${bg})`,
         },
       ]}
-      className="py-safe flex-1 px-4"
+      className={cn('py-safe flex-1 px-4', className)}
     >
       {children}
     </View>

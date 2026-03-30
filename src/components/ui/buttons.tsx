@@ -34,7 +34,6 @@ const Button = ({
       hitSlop={10}
     >
       <View
-        pointerEvents="none"
         className="rounded-2xl"
         style={[
           StyleSheet.absoluteFill,
