@@ -8,6 +8,7 @@ import BackgroundLayout from '@/layouts/background-layout';
 import { useCollections } from '@/stores/collections-store';
 import type { Collection } from '@/types/collection';
 import { LegendList } from '@legendapp/list/react-native';
+import { usePostHog } from 'posthog-react-native';
 import React from 'react';
 import { View } from 'react-native';
 import Animated, { Easing, FadeInDown } from 'react-native-reanimated';
@@ -53,7 +54,7 @@ function CollectionCard({
     >
       <CardFrame title={collection.name} onDelete={on_delete}>
         <View className="mb-3 flex-row items-center justify-between">
-          <Text className="text-foreground font-sans-semibold text-sm ml-auto">
+          <Text className="text-foreground font-sans-semibold ml-auto text-sm">
             {total_cards} {total_cards === 1 ? 'card' : 'cards'}
           </Text>
         </View>
@@ -87,6 +88,7 @@ export default function Page() {
   const create_collection = useCollections((s) => s.createCollection);
   const delete_collection = useCollections((s) => s.deleteCollection);
   const [sheet_title, set_sheet_title] = React.useState('New Collection');
+  const posthog = usePostHog();
 
   const handle_create = React.useCallback(() => {
     const value = input_ref.current?.getValue()?.trim() ?? '';
@@ -96,11 +98,15 @@ export default function Page() {
       return;
     }
 
-    create_collection(value, '');
+    const collection = create_collection(value, '');
+    posthog.capture('collection_created', {
+      collection_name: collection.name,
+      collection_id: collection.id,
+    });
     input_ref.current?.clear();
     set_sheet_title('New Collection');
     sheet_ref.current?.dismiss();
-  }, [create_collection]);
+  }, [create_collection, posthog]);
 
   return (
     <BackgroundLayout>
@@ -136,7 +142,17 @@ export default function Page() {
             renderItem={({ item }) => (
               <CollectionCard
                 collection={item}
-                on_delete={() => delete_collection(item.id)}
+                on_delete={() => {
+                  posthog.capture('collection_deleted', {
+                    collection_name: item.name,
+                    collection_id: item.id,
+                    card_count: item.cards.reduce(
+                      (sum, c) => sum + c.quantity,
+                      0,
+                    ),
+                  });
+                  delete_collection(item.id);
+                }}
               />
             )}
           />

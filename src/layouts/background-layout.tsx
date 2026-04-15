@@ -1,7 +1,10 @@
 import { cn } from '@/libs/tailwind';
 import React from 'react';
 import { View } from 'react-native';
-import { useCSSVariable } from 'uniwind';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { useCSSVariable, withUniwind } from 'uniwind';
+
+const StyledSafeAreaView = withUniwind(SafeAreaView);
 
 export default function BackgroundLayout({
   children,
@@ -17,15 +20,15 @@ export default function BackgroundLayout({
   ]);
 
   return (
-    <View
+    <StyledSafeAreaView
       style={[
         {
           experimental_backgroundImage: `linear-gradient(160deg, ${bgDarker}, ${bgLighter}, ${bg})`,
         },
       ]}
-      className={cn('py-safe flex-1 px-4', className)}
+      className={cn('flex-1 px-4', className)}
     >
       {children}
-    </View>
+    </StyledSafeAreaView>
   );
 }

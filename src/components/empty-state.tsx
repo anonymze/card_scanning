@@ -10,7 +10,6 @@ import Animated, {
   withSequence,
   withSpring,
 } from 'react-native-reanimated';
-import { useCSSVariable } from 'uniwind';
 import { Button } from './ui/buttons';
 import { Text } from './ui/texts';
 
@@ -72,10 +71,10 @@ export const EmptyState = ({
 
   return (
     <View className="flex-1 items-center justify-center gap-4">
-      <Animated.View style={animatedStyle}>
+      <Animated.View style={[animatedStyle, { marginBottom: -40 }]}>
         <EmptyCardsIllustration size={size} variant={variant} />
       </Animated.View>
-      <View className="items-center gap-2">
+      <View className="items-center gap-2 pt-5">
         <Text className="font-sans-semibold text-foreground text-center text-xl">
           {title}
         </Text>
@@ -84,7 +83,7 @@ export const EmptyState = ({
             {subtitle}
           </Text>
         ) : null}
-          <Button title={buttonText} onPress={onPress} className='mt-4' />
+        <Button title={buttonText} onPress={onPress} className="mt-4" />
       </View>
     </View>
   );

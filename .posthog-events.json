@@ -1,0 +1,57 @@
+[
+  {
+    "event": "collection_created",
+    "description": "User creates a new collection",
+    "file": "src/app/(tabs)/index.tsx"
+  },
+  {
+    "event": "collection_deleted",
+    "description": "User deletes a collection",
+    "file": "src/app/(tabs)/index.tsx"
+  },
+  {
+    "event": "deck_created",
+    "description": "User creates a new deck",
+    "file": "src/app/(tabs)/decks.tsx"
+  },
+  {
+    "event": "deck_deleted",
+    "description": "User deletes a deck",
+    "file": "src/app/(tabs)/decks.tsx"
+  },
+  {
+    "event": "card_added_to_collection",
+    "description": "Card added to a collection (with quantity and card name)",
+    "file": "src/stores/collections-store.ts"
+  },
+  {
+    "event": "card_removed_from_collection",
+    "description": "Card removed from a collection",
+    "file": "src/stores/collections-store.ts"
+  },
+  {
+    "event": "card_added_to_deck",
+    "description": "Card added to a deck (with quantity and card name)",
+    "file": "src/stores/decks-store.ts"
+  },
+  {
+    "event": "card_removed_from_deck",
+    "description": "Card removed from a deck",
+    "file": "src/stores/decks-store.ts"
+  },
+  {
+    "event": "camera_permission_requested",
+    "description": "User triggers camera permission request on scan screen",
+    "file": "src/app/(tabs)/scan.tsx"
+  },
+  {
+    "event": "scan_screen_viewed",
+    "description": "User opens the scan screen — top of card-scanning funnel",
+    "file": "src/app/(tabs)/scan.tsx"
+  },
+  {
+    "event": "card_searched",
+    "description": "User performs a card search via Scryfall API",
+    "file": "src/api/cards-queries.ts"
+  }
+]

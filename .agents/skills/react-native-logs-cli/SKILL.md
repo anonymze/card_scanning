@@ -6,7 +6,7 @@ description: >
 license: MIT
 metadata:
   author: okwasniewski
-  version: "1.0.0"
+  version: '1.0.0'
 ---
 
 # rn-logs cli

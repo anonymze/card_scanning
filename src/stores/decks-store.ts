@@ -1,9 +1,13 @@
-import { create } from 'zustand';
-import { persist, createJSONStorage, type StateStorage } from 'zustand/middleware';
-
-import type { Collection, CollectionCard } from '@/types/collection';
-import type { ScryfallCard } from '@/types/cards';
+import { posthog } from '@/libs/posthog';
 import { storage } from '@/libs/mmkv';
+import type { ScryfallCard } from '@/types/cards';
+import type { Collection, CollectionCard } from '@/types/collection';
+import { create } from 'zustand';
+import {
+  createJSONStorage,
+  persist,
+  type StateStorage,
+} from 'zustand/middleware';
 
 const mmkvStorage: StateStorage = {
   getItem: (name) => storage.getString(name) ?? null,
@@ -17,12 +21,16 @@ interface DecksState {
   deleteDeck: (id: string) => void;
   addCard: (deckId: string, card: ScryfallCard, quantity?: number) => void;
   removeCard: (deckId: string, cardId: string) => void;
-  updateCardQuantity: (deckId: string, cardId: string, quantity: number) => void;
+  updateCardQuantity: (
+    deckId: string,
+    cardId: string,
+    quantity: number,
+  ) => void;
 }
 
 export const useDecks = create<DecksState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       decks: [],
 
       createDeck: (name, description) => {
@@ -46,6 +54,12 @@ export const useDecks = create<DecksState>()(
       },
 
       addCard: (deckId, card, quantity = 1) => {
+        posthog.capture('card_added_to_deck', {
+          deck_id: deckId,
+          card_id: card.id,
+          card_name: card.name,
+          quantity,
+        });
         set((state) => ({
           decks: state.decks.map((deck) => {
             if (deck.id !== deckId) return deck;
@@ -78,6 +92,13 @@ export const useDecks = create<DecksState>()(
       },
 
       removeCard: (deckId, cardId) => {
+        const deck = get().decks.find((d) => d.id === deckId);
+        const card = deck?.cards.find((c) => c.id === cardId);
+        posthog.capture('card_removed_from_deck', {
+          deck_id: deckId,
+          card_id: cardId,
+          card_name: card?.card.name ?? null,
+        });
         set((state) => ({
           decks: state.decks.map((deck) => {
             if (deck.id !== deckId) return deck;

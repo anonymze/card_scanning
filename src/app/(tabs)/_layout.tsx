@@ -20,7 +20,7 @@ export default function TabLayout() {
   const [activeTint, inactiveTint, background] = useCSSVariable([
     '--color-foreground',
     '--color-gray',
-    '--color-background-primary-darker'
+    '--color-background-primary-darker',
   ]);
 
   return (

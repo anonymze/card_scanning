@@ -1,7 +1,13 @@
 import { cn } from '@/libs/tailwind';
 import * as Haptics from 'expo-haptics';
 import React from 'react';
-import { Pressable, Text, TextInput as RNTextInput, TextInputProps, View } from 'react-native';
+import {
+  Pressable,
+  TextInput as RNTextInput,
+  Text,
+  TextInputProps,
+  View,
+} from 'react-native';
 import Animated, {
   FadeIn,
   FadeOut,
@@ -31,10 +37,11 @@ const TextInput = ({
   className,
   ref,
   ...props
-}: { placeholder: string; className?: string; ref?: React.Ref<TextInputRef> } & Omit<
-  TextInputProps,
-  'placeholder'
->) => {
+}: {
+  placeholder: string;
+  className?: string;
+  ref?: React.Ref<TextInputRef>;
+} & Omit<TextInputProps, 'placeholder'>) => {
   const [grayLight] = useCSSVariable(['--color-gray-lighter']);
   const shakeOffset = useSharedValue(0);
   const inputRef = React.useRef<RNTextInput>(null);
@@ -66,7 +73,9 @@ const TextInput = ({
     transform: [{ translateX: shakeOffset.value }],
   }));
 
-  const target_width = has_value ? input_width - CLEAR_BUTTON_SPACE : input_width;
+  const target_width = has_value
+    ? input_width - CLEAR_BUTTON_SPACE
+    : input_width;
 
   const input_animated_style = useAnimatedStyle(() => {
     if (!input_width) return {};
@@ -125,9 +134,11 @@ const TextInput = ({
             exiting={FadeOut.duration(150)}
             onPress={handle_clear}
             hitSlop={10}
-            className="ml-2 bg-foreground-darker/30 h-6 w-6 items-center justify-center rounded-full"
+            className="bg-foreground-darker/30 ml-2 h-6 w-6 items-center justify-center rounded-full"
           >
-            <Text className="text-foreground text-xs font-bold leading-none">✕</Text>
+            <Text className="text-foreground text-xs leading-none font-bold">
+              ✕
+            </Text>
           </AnimatedPressable>
         ) : null}
       </View>

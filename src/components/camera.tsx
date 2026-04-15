@@ -28,7 +28,7 @@ const LayoutCamera = ({ children }: { children: React.ReactNode }) => {
 };
 
 const CameraNoPermissions = () => {
-  const [gray, foreground] = useCSSVariable([
+  const [gray] = useCSSVariable([
     '--color-gray',
     '--color-foreground',
   ]);
@@ -58,7 +58,7 @@ const CameraUnavailable = () => {
   return (
     <LayoutCamera>
       <CameraOffIcon width={70} height={70} color={String(gray)} />
-      <Text className="text-gray max-w-72 text-center">
+      <Text className="text-gray max-w-60 text-center">
         Vous semblez ne pas avoir de caméra sur votre appareil
       </Text>
     </LayoutCamera>

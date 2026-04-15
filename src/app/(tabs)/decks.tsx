@@ -8,6 +8,7 @@ import BackgroundLayout from '@/layouts/background-layout';
 import { useDecks } from '@/stores/decks-store';
 import type { Collection } from '@/types/collection';
 import { LegendList } from '@legendapp/list/react-native';
+import { usePostHog } from 'posthog-react-native';
 import React from 'react';
 import { View } from 'react-native';
 import Animated, { Easing, FadeInDown } from 'react-native-reanimated';
@@ -53,7 +54,7 @@ function DeckCard({
     >
       <CardFrame title={deck.name} onDelete={on_delete} variant="deck">
         <View className="mb-3 flex-row items-center justify-between">
-          <Text className="text-foreground font-sans-semibold text-sm ml-auto">
+          <Text className="text-foreground font-sans-semibold ml-auto text-sm">
             {total_cards} {total_cards === 1 ? 'card' : 'cards'}
           </Text>
         </View>
@@ -87,6 +88,7 @@ export default function Page() {
   const create_deck = useDecks((s) => s.createDeck);
   const delete_deck = useDecks((s) => s.deleteDeck);
   const [sheet_title, set_sheet_title] = React.useState('New Deck');
+  const posthog = usePostHog();
 
   const handle_create = React.useCallback(() => {
     const value = input_ref.current?.getValue()?.trim() ?? '';
@@ -96,11 +98,15 @@ export default function Page() {
       return;
     }
 
-    create_deck(value, '');
+    const deck = create_deck(value, '');
+    posthog.capture('deck_created', {
+      deck_name: deck.name,
+      deck_id: deck.id,
+    });
     input_ref.current?.clear();
     set_sheet_title('New Deck');
     sheet_ref.current?.dismiss();
-  }, [create_deck]);
+  }, [create_deck, posthog]);
 
   return (
     <BackgroundLayout>
@@ -136,7 +142,17 @@ export default function Page() {
             renderItem={({ item }) => (
               <DeckCard
                 deck={item}
-                on_delete={() => delete_deck(item.id)}
+                on_delete={() => {
+                  posthog.capture('deck_deleted', {
+                    deck_name: item.name,
+                    deck_id: item.id,
+                    card_count: item.cards.reduce(
+                      (sum, c) => sum + c.quantity,
+                      0,
+                    ),
+                  });
+                  delete_deck(item.id);
+                }}
               />
             )}
           />

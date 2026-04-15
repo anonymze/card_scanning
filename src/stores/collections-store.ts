@@ -1,9 +1,13 @@
-import { create } from 'zustand';
-import { persist, createJSONStorage, type StateStorage } from 'zustand/middleware';
-
-import type { Collection, CollectionCard } from '@/types/collection';
-import type { ScryfallCard } from '@/types/cards';
+import { posthog } from '@/libs/posthog';
 import { storage } from '@/libs/mmkv';
+import type { ScryfallCard } from '@/types/cards';
+import type { Collection, CollectionCard } from '@/types/collection';
+import { create } from 'zustand';
+import {
+  createJSONStorage,
+  persist,
+  type StateStorage,
+} from 'zustand/middleware';
 
 const mmkvStorage: StateStorage = {
   getItem: (name) => storage.getString(name) ?? null,
@@ -15,9 +19,17 @@ interface CollectionsState {
   collections: Collection[];
   createCollection: (name: string, description: string) => Collection;
   deleteCollection: (id: string) => void;
-  addCard: (collectionId: string, card: ScryfallCard, quantity?: number) => void;
+  addCard: (
+    collectionId: string,
+    card: ScryfallCard,
+    quantity?: number,
+  ) => void;
   removeCard: (collectionId: string, cardId: string) => void;
-  updateCardQuantity: (collectionId: string, cardId: string, quantity: number) => void;
+  updateCardQuantity: (
+    collectionId: string,
+    cardId: string,
+    quantity: number,
+  ) => void;
 }
 
 export const useCollections = create<CollectionsState>()(
@@ -46,6 +58,12 @@ export const useCollections = create<CollectionsState>()(
       },
 
       addCard: (collectionId, card, quantity = 1) => {
+        posthog.capture('card_added_to_collection', {
+          collection_id: collectionId,
+          card_id: card.id,
+          card_name: card.name,
+          quantity,
+        });
         set((state) => ({
           collections: state.collections.map((col) => {
             if (col.id !== collectionId) return col;
@@ -78,6 +96,13 @@ export const useCollections = create<CollectionsState>()(
       },
 
       removeCard: (collectionId, cardId) => {
+        const col = get().collections.find((c) => c.id === collectionId);
+        const card = col?.cards.find((c) => c.id === cardId);
+        posthog.capture('card_removed_from_collection', {
+          collection_id: collectionId,
+          card_id: cardId,
+          card_name: card?.card.name ?? null,
+        });
         set((state) => ({
           collections: state.collections.map((col) => {
             if (col.id !== collectionId) return col;

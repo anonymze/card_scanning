@@ -1,6 +1,5 @@
 pipx run labelme
 
-
 Roboflow 3.0 offers different sizes:
 
 - Fast - Smallest/lightest (available to all)

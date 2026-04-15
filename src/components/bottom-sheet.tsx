@@ -1,6 +1,6 @@
 import { TrueSheet } from '@lodev09/react-native-true-sheet';
 import React from 'react';
-import { useWindowDimensions, View } from 'react-native';
+import { useWindowDimensions } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useCSSVariable } from 'uniwind';
 
@@ -37,10 +37,17 @@ export function BottomSheet({
       cornerRadius={cornerRadius}
       backgroundColor={bgDarker}
       onDidDismiss={onDidDismiss}
-      grabberOptions={{ topMargin: 14, color: foregroundDarker, adaptive: false }}
+      grabberOptions={{
+        topMargin: 14,
+        color: foregroundDarker,
+        adaptive: false,
+      }}
     >
-      <GestureHandlerRootView style={{ flexGrow: 1, width }} className="px-5 pt-10">
-          {children}
+      <GestureHandlerRootView
+        style={{ flexGrow: 1, width }}
+        className="px-5 pt-10"
+      >
+        {children}
       </GestureHandlerRootView>
     </TrueSheet>
   );

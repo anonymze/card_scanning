@@ -22,6 +22,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 **Styling**: Uniwind (NativeWind/Tailwind CSS for RN). Global styles in `src/global.css`. CSS variables for theming (dark-first). Font-weight utilities disabled for Android compat.
 
 **State**:
+
 - Zustand + MMKV persistence for local state (`src/stores/`)
 - TanStack Query + MMKV cache persistence for server state (`src/api/`)
 - Query cache persisted to MMKV under key `rq-cache`, staleTime=4h, gcTime=Infinity

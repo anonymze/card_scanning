@@ -4,6 +4,8 @@ import {
   LayoutCamera,
 } from '@/components/camera';
 import { DecksIcon } from '@/components/icons';
+import { usePostHog } from 'posthog-react-native';
+import React from 'react';
 import { Text, View } from 'react-native';
 import {
   Camera,
@@ -18,6 +20,11 @@ export default function Page() {
   // const { start, stop } = useLoaderGlobal();
   const device = useCameraDevice('back');
   const { hasPermission, requestPermission } = useCameraPermission();
+  const posthog = usePostHog();
+
+  React.useEffect(() => {
+    posthog.capture('scan_screen_viewed');
+  }, [posthog]);
 
   // React.useEffect(
   //   React.useCallback(() => {
@@ -34,6 +41,7 @@ export default function Page() {
 
   if (device == null) return <CameraUnavailable />;
   if (!hasPermission) {
+    posthog.capture('camera_permission_requested');
     requestPermission();
     return <CameraNoPermissions />;
   }

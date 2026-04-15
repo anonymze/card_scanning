@@ -7,7 +7,6 @@ import {
   SweepGradient,
 } from '@shopify/react-native-skia';
 import React from 'react';
-import { useCSSVariable } from 'uniwind';
 import Animated, {
   useAnimatedStyle,
   useDerivedValue,
@@ -15,6 +14,7 @@ import Animated, {
   withRepeat,
   withTiming,
 } from 'react-native-reanimated';
+import { useCSSVariable } from 'uniwind';
 
 // otherwise the circle is cut off at the edges
 const canvasPadding = 20;
@@ -28,7 +28,10 @@ export const LoaderTabs = ({
   height: number;
   loading: boolean;
 }) => {
-  const [fgDarker, fg] = useCSSVariable(['--color-foreground-darker', '--color-foreground']);
+  const [fgDarker, fg] = useCSSVariable([
+    '--color-foreground-darker',
+    '--color-foreground',
+  ]);
   const canvasSize = React.useRef({ width: width, height: height });
   const circleSize = React.useRef(width);
   const progress = useSharedValue(0);
@@ -85,7 +88,7 @@ export const LoaderTabs = ({
           height: canvasSize.current.height,
         },
       ]}
-      className="items-center justify-center rounded-full border-2 border-foreground-darker bg-background-primary-darker"
+      className="border-foreground-darker bg-background-primary-darker items-center justify-center rounded-full border-2"
     >
       <Canvas
         style={{

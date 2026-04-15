@@ -34,10 +34,14 @@ export function AnimatedSplashOverlay() {
   React.useEffect(() => {
     zoomProgress.value = withDelay(
       HOLD,
-      withTiming(1, { duration: ZOOM_DURATION, easing: Easing.linear }, (finished) => {
-        'worklet';
-        if (finished) scheduleOnRN(setVisible, false);
-      }),
+      withTiming(
+        1,
+        { duration: ZOOM_DURATION, easing: Easing.linear },
+        (finished) => {
+          'worklet';
+          if (finished) scheduleOnRN(setVisible, false);
+        },
+      ),
     );
     bgOpacity.value = withDelay(
       HOLD + ZOOM_DURATION * 0.35,
