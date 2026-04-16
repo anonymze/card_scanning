@@ -25,7 +25,8 @@
       "bundleIdentifier": "com.anonymze.arcanelens",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
-        "CFBundleDisplayName": "Guide du Routard"
+        "CFBundleDisplayName": "Arcane Lens",
+        "NSCameraUsageDescription": "$(PRODUCT_NAME) needs access to your camera."
       }
     },
     "android": {
@@ -34,7 +35,8 @@
         "backgroundImage": "./resources/android-icon.png",
         "monochromeImage": "./resources/android-icon.png"
       },
-      "package": "com.anonymze.arcanelens"
+      "package": "com.anonymze.arcanelens",
+      "permissions": ["android.permission.CAMERA"]
     },
     "plugins": [
       "expo-router",
@@ -62,14 +64,17 @@
           "image": "./resources/splash.png"
         }
       ],
-      "react-native-edge-to-edge",
       [
-        "react-native-vision-camera",
+        "react-native-nano-icons",
         {
-          "cameraPermissionText": "$(PRODUCT_NAME) needs access to your Camera.",
-          "enableMicrophonePermission": false
+          "iconSets": [
+            {
+              "inputDir": "./src/assets/icons/"
+            }
+          ]
         }
-      ]
+      ],
+      "react-native-edge-to-edge"
     ],
     "extra": {
       "router": {
