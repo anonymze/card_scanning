@@ -58,12 +58,12 @@ export const useCollections = create<CollectionsState>()(
       },
 
       addCard: (collectionId, card, quantity = 1) => {
-        posthog.capture('card_added_to_collection', {
-          collection_id: collectionId,
-          card_id: card.id,
-          card_name: card.name,
-          quantity,
-        });
+        // posthog.capture('card_added_to_collection', {
+        //   collection_id: collectionId,
+        //   card_id: card.id,
+        //   card_name: card.name,
+        //   quantity,
+        // });
         set((state) => ({
           collections: state.collections.map((col) => {
             if (col.id !== collectionId) return col;

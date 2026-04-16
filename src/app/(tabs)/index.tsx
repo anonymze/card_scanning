@@ -88,7 +88,7 @@ export default function Page() {
   const create_collection = useCollections((s) => s.createCollection);
   const delete_collection = useCollections((s) => s.deleteCollection);
   const [sheet_title, set_sheet_title] = React.useState('New Collection');
-  const posthog = usePostHog();
+  // const posthog = usePostHog();
 
   const handle_create = React.useCallback(() => {
     const value = input_ref.current?.getValue()?.trim() ?? '';
@@ -99,14 +99,14 @@ export default function Page() {
     }
 
     const collection = create_collection(value, '');
-    posthog.capture('collection_created', {
-      collection_name: collection.name,
-      collection_id: collection.id,
-    });
+    // posthog.capture('collection_created', {
+    //   collection_name: collection.name,
+    //   collection_id: collection.id,
+    // });
     input_ref.current?.clear();
     set_sheet_title('New Collection');
     sheet_ref.current?.dismiss();
-  }, [create_collection, posthog]);
+  }, [create_collection]);
 
   return (
     <BackgroundLayout>
@@ -143,14 +143,14 @@ export default function Page() {
               <CollectionCard
                 collection={item}
                 on_delete={() => {
-                  posthog.capture('collection_deleted', {
-                    collection_name: item.name,
-                    collection_id: item.id,
-                    card_count: item.cards.reduce(
-                      (sum, c) => sum + c.quantity,
-                      0,
-                    ),
-                  });
+                  // posthog.capture('collection_deleted', {
+                  //   collection_name: item.name,
+                  //   collection_id: item.id,
+                  //   card_count: item.cards.reduce(
+                  //     (sum, c) => sum + c.quantity,
+                  //     0,
+                  //   ),
+                  // });
                   delete_collection(item.id);
                 }}
               />

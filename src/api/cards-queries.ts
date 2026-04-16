@@ -39,7 +39,7 @@ export const cardsInfiniteQueryOptions = (params: ScryfallSearchParams) =>
     queryKey: ['cards', 'infinite', params],
     queryFn: ({ pageParam }) => {
       if (pageParam === 1) {
-        posthog.capture('card_searched', { query: params.q });
+        // posthog.capture('card_searched', { query: params.q });
       }
       return getCards({ ...params, page: pageParam });
     },

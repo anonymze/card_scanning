@@ -18,7 +18,7 @@ export default function Page() {
   // const { start, stop } = useLoaderGlobal();
   const device = useCameraDevice('back');
   const { hasPermission, requestPermission } = useCameraPermission();
-  const posthog = usePostHog();
+  // const posthog = usePostHog();
 
   // React.useEffect(() => {
   //   posthog.capture('scan_screen_viewed');
@@ -33,7 +33,7 @@ export default function Page() {
 
   if (device == null) return <CameraUnavailable />;
   if (!hasPermission) {
-    posthog.capture('camera_permission_requested');
+    // posthog.capture('camera_permission_requested');
     requestPermission();
     return <CameraNoPermissions />;
   }

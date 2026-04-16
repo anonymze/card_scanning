@@ -88,7 +88,7 @@ export default function Page() {
   const create_deck = useDecks((s) => s.createDeck);
   const delete_deck = useDecks((s) => s.deleteDeck);
   const [sheet_title, set_sheet_title] = React.useState('New Deck');
-  const posthog = usePostHog();
+  // const posthog = usePostHog();
 
   const handle_create = React.useCallback(() => {
     const value = input_ref.current?.getValue()?.trim() ?? '';
@@ -99,14 +99,14 @@ export default function Page() {
     }
 
     const deck = create_deck(value, '');
-    posthog.capture('deck_created', {
-      deck_name: deck.name,
-      deck_id: deck.id,
-    });
+    // posthog.capture('deck_created', {
+    //   deck_name: deck.name,
+    //   deck_id: deck.id,
+    // });
     input_ref.current?.clear();
     set_sheet_title('New Deck');
     sheet_ref.current?.dismiss();
-  }, [create_deck, posthog]);
+  }, [create_deck]);
 
   return (
     <BackgroundLayout>
@@ -143,14 +143,14 @@ export default function Page() {
               <DeckCard
                 deck={item}
                 on_delete={() => {
-                  posthog.capture('deck_deleted', {
-                    deck_name: item.name,
-                    deck_id: item.id,
-                    card_count: item.cards.reduce(
-                      (sum, c) => sum + c.quantity,
-                      0,
-                    ),
-                  });
+                  // posthog.capture('deck_deleted', {
+                  //   deck_name: item.name,
+                  //   deck_id: item.id,
+                  //   card_count: item.cards.reduce(
+                  //     (sum, c) => sum + c.quantity,
+                  //     0,
+                  //   ),
+                  // });
                   delete_deck(item.id);
                 }}
               />
