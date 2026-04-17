@@ -9,6 +9,7 @@
       "output": "static",
       "favicon": "./resources/android-icon.png"
     },
+    "owner": "anonymze",
     "experiments": {
       "reactCompiler": true,
       "buildCacheProvider": "eas",
@@ -79,6 +80,9 @@
     "extra": {
       "router": {
         "origin": false
+      },
+      "eas": {
+        "projectId": "f0458fef-7e20-44b1-a02f-69f3ad67dc75"
       }
     }
   }
