@@ -25,3 +25,9 @@ x/
 opensrc/
 .env
 runs/
+
+# customs
+
+x/
+.claude
+.venv
