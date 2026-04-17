@@ -20,11 +20,11 @@ npm-debug.*
 tsconfig.tsbuildinfo
 web-build/
 
-/training
-/training/**
-/.venv
-/.venv/**
-/runs
-/runs/**
-/x
-/x/**
+training
+training/**
+.venv
+.venv/**
+runs
+runs/**
+x
+x/**
