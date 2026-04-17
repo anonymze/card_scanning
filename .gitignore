@@ -27,3 +27,4 @@ runs/
 x/
 .claude
 .venv
+training/

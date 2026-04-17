@@ -1,5 +1,6 @@
 .DS_Store
 .env.local
+.env
 .eslintcache
 .expo/
 .metro-health-check*
@@ -20,11 +21,10 @@ npm-debug.*
 tsconfig.tsbuildinfo
 web-build/
 
-training
-training/**
+# customs
+
+runs/
+x/
+.claude
 .venv
-.venv/**
-runs
-runs/**
-x
-x/**
+training/
