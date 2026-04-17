@@ -23,11 +23,11 @@ export default function BackgroundLayout({
       style={{
         paddingTop: insets.top,
         paddingBottom: insets.bottom,
-        paddingLeft: insets.left,
-        paddingRight: insets.right,
+        paddingLeft: insets.left + 16,
+        paddingRight: insets.right + 16,
         experimental_backgroundImage: `linear-gradient(160deg, ${bgDarker}, ${bgLighter}, ${bg})`,
       }}
-      className={cn('flex-1 px-4', className)}
+      className={cn('flex-1', className)}
     >
       {children}
     </View>
