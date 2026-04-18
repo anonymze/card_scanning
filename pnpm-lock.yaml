@@ -161,9 +161,6 @@ importers:
       react-native-worklets:
         specifier: ^0.8.1
         version: 0.8.1(@babel/core@7.28.0)(@react-native/metro-config@0.81.0(@babel/core@7.28.0))(react-native@0.83.2(@babel/core@7.28.0)(@react-native/metro-config@0.81.0(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.0))(react@19.2.0)
-      react-native-worklets-core:
-        specifier: ^1.6.2
-        version: 1.6.2(react-native@0.83.2(@babel/core@7.28.0)(@react-native/metro-config@0.81.0(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.0))(react@19.2.0)
       tailwind-merge:
         specifier: ^3.5.0
         version: 3.5.0
@@ -11760,6 +11757,7 @@ snapshots:
       react: 19.2.0
       react-native: 0.83.2(@babel/core@7.28.0)(@react-native/metro-config@0.81.0(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.0)
       string-hash-64: 1.0.3
+    optional: true
 
   react-native-worklets@0.8.1(@babel/core@7.28.0)(@react-native/metro-config@0.81.0(@babel/core@7.28.0))(react-native@0.83.2(@babel/core@7.28.0)(@react-native/metro-config@0.81.0(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.0))(react@19.2.0):
     dependencies:
@@ -12160,7 +12158,8 @@ snapshots:
 
   strict-uri-encode@2.0.0: {}
 
-  string-hash-64@1.0.3: {}
+  string-hash-64@1.0.3:
+    optional: true
 
   string-width@4.2.3:
     dependencies:
