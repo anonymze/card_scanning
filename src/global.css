@@ -15,40 +15,40 @@
 @layer theme {
   :root {
     @variant light {
-      --color-foreground: hsl(43, 96%, 56%);
-      --color-foreground-lighter: hsl(45, 93%, 47%);
-      --color-foreground-darker: hsl(38, 92%, 50%);
-      --color-gray: hsl(215, 20%, 65%);
-      --color-gray-lighter: hsl(215, 20%, 45%);
-      --color-gray-darker: hsl(215, 20%, 80%);
-      --color-background-primary: hsl(217, 33%, 17%);
-      --color-background-primary-lighter: hsl(215, 25%, 27%);
-      --color-background-primary-darker: hsl(222, 47%, 11%);
-      --color-background-secondary: hsl(221, 83%, 53%);
-      --color-background-secondary-lighter: hsl(217, 91%, 60%);
-      --color-background-secondary-darker: hsl(192, 91%, 36%);
-      --color-card-collection: hsl(280, 40%, 18%);
-      --color-card-collection-lighter: hsl(280, 35%, 25%);
-      --color-card-deck: hsl(0, 45%, 18%);
-      --color-card-deck-lighter: hsl(0, 40%, 25%);
+      --color-foreground: #fabd23;
+      --color-foreground-lighter: #e7b008;
+      --color-foreground-darker: #f59f0a;
+      --color-gray: #94a3b8;
+      --color-gray-lighter: #5c6f8a;
+      --color-gray-darker: #c2cad6;
+      --color-background-primary: #1d283a;
+      --color-background-primary-lighter: #344256;
+      --color-background-primary-darker: #08091a;
+      --color-background-secondary: #2463eb;
+      --color-background-secondary-lighter: #3c83f6;
+      --color-background-secondary-darker: #088eaf;
+      --color-card-collection: #341c40;
+      --color-card-collection-lighter: #472956;
+      --color-card-deck: #431919;
+      --color-card-deck-lighter: #592626;
     }
     @variant dark {
-      --color-foreground: hsl(43, 96%, 56%);
-      --color-foreground-lighter: hsl(45, 93%, 47%);
-      --color-foreground-darker: hsl(38, 92%, 50%);
-      --color-gray: hsl(215, 20%, 65%);
-      --color-gray-lighter: hsl(215, 20%, 45%);
-      --color-gray-darker: hsl(215, 20%, 80%);
-      --color-background-primary: hsl(217, 33%, 17%);
-      --color-background-primary-lighter: hsl(215, 25%, 27%);
-      --color-background-primary-darker: hsl(222, 47%, 11%);
-      --color-background-secondary: hsl(221, 83%, 53%);
-      --color-background-secondary-lighter: hsl(217, 91%, 60%);
-      --color-background-secondary-darker: hsl(192, 91%, 36%);
-      --color-card-collection: hsl(280, 40%, 18%);
-      --color-card-collection-lighter: hsl(280, 35%, 25%);
-      --color-card-deck: hsl(0, 45%, 18%);
-      --color-card-deck-lighter: hsl(0, 40%, 25%);
+      --color-foreground: #fabd23;
+      --color-foreground-lighter: #e7b008;
+      --color-foreground-darker: #f59f0a;
+      --color-gray: #94a3b8;
+      --color-gray-lighter: #5c6f8a;
+      --color-gray-darker: #c2cad6;
+      --color-background-primary: #1d283a;
+      --color-background-primary-lighter: #344256;
+      --color-background-primary-darker: #08091a;
+      --color-background-secondary: #2463eb;
+      --color-background-secondary-lighter: #3c83f6;
+      --color-background-secondary-darker: #088eaf;
+      --color-card-collection: #341c40;
+      --color-card-collection-lighter: #472956;
+      --color-card-deck: #431919;
+      --color-card-deck-lighter: #592626;
     }
   }
 }

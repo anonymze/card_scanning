@@ -72,6 +72,10 @@ module.exports = {
         },
       ],
       'react-native-edge-to-edge',
+      [
+        'expo-build-properties',
+        { android: { minSdkVersion: 26 } },
+      ],
     ],
     extra: {
       router: { origin: false },

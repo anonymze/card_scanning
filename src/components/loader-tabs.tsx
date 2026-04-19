@@ -40,12 +40,12 @@ export const LoaderTabs = ({
   // basic rotation animation that cancels smoothly
   React.useEffect(() => {
     progress.value = loading
-      ? withRepeat(withTiming(1, { duration: 1000 }), -1, false)
-      : withTiming(0, { duration: 400 });
+      ? withRepeat(withTiming(1, { duration: 800 }), -1, false)
+      : withTiming(0, { duration: 300 });
 
     loadingState.value = loading
-      ? withTiming(1, { duration: 700 })
-      : withTiming(0, { duration: 700 });
+      ? withTiming(1, { duration: 600 })
+      : withTiming(0, { duration: 600 });
   }, [loading]);
 
   const rContainerStyle = useAnimatedStyle(() => ({
@@ -54,15 +54,15 @@ export const LoaderTabs = ({
   }));
 
   // path made in svg skia
-  const circlePath = React.useMemo(() => {
-    const skiaPath = Skia.Path.Make();
-    skiaPath.addCircle(
-      canvasSize.current.width / 2 + canvasPadding / 2,
-      canvasSize.current.height / 2 + canvasPadding / 2,
-      circleSize.current / 2,
-    );
-    return skiaPath;
-  }, []);
+  const circlePath = React.useMemo(
+    () =>
+      Skia.Path.Circle(
+        canvasSize.current.width / 2 + canvasPadding / 2,
+        canvasSize.current.height / 2 + canvasPadding / 2,
+        circleSize.current / 2,
+      ),
+    [],
+  );
 
   // create the empty corner path and animated
   const startPath = useDerivedValue(() => {

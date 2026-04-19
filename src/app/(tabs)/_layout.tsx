@@ -1,16 +1,26 @@
 import { AnimatedTabIcon } from '@/components/animated-tab-icon';
-import {
-  CollectionIcon,
-  DecksIcon,
-  ScanIcon,
-  SettingsIcon,
-  ShopIcon,
-} from '@/components/icons';
+import { Icon } from '@/components/icons';
 import { LoaderTabs } from '@/components/loader-tabs';
 import { useLoaderGlobal } from '@/stores/loader-store';
 import { Tabs } from 'expo-router';
+import React from 'react';
 import { Text, View } from 'react-native';
 import { useCSSVariable } from 'uniwind';
+
+const ScanTabIcon = React.memo(({ color }: { color: string }) => {
+  const { loading } = useLoaderGlobal();
+  return (
+    <>
+      <LoaderTabs width={92} height={92} loading={loading} />
+      <View className="absolute w-12 items-center justify-center gap-1">
+        <Icon name="scan" size={28} color={color} />
+        <Text style={{ color }} className="text-xs">
+          Scan
+        </Text>
+      </View>
+    </>
+  );
+});
 
 export const unstable_settings = {
   initialRouteName: 'index',
@@ -52,7 +62,7 @@ export default function TabLayout() {
           }) => {
             return (
               <AnimatedTabIcon focused={focused}>
-                <CollectionIcon width={26} height={26} color={color} />
+                <Icon name="collection" size={26} color={color} />
               </AnimatedTabIcon>
             );
           },
@@ -72,7 +82,7 @@ export default function TabLayout() {
           }) => {
             return (
               <AnimatedTabIcon focused={focused}>
-                <DecksIcon width={26} height={26} color={color} />
+                <Icon name="decks" size={26} color={color} />
               </AnimatedTabIcon>
             );
           },
@@ -82,30 +92,9 @@ export default function TabLayout() {
         name="scan"
         options={{
           title: '',
-          tabBarIcon: ({ color }: { color: string }) => {
-            const { loading } = useLoaderGlobal();
-            return (
-              <>
-                <LoaderTabs width={92} height={92} loading={loading} />
-                <View className="absolute w-12 items-center justify-center gap-1">
-                  <ScanIcon
-                    width={28}
-                    height={28}
-                    stroke={color}
-                    color={'transparent'}
-                  />
-                  <Text
-                    style={{
-                      color,
-                    }}
-                    className="text-xs"
-                  >
-                    Scan
-                  </Text>
-                </View>
-              </>
-            );
-          },
+          tabBarIcon: ({ color }: { color: string }) => (
+            <ScanTabIcon color={color} />
+          ),
         }}
       />
       <Tabs.Screen
@@ -122,7 +111,7 @@ export default function TabLayout() {
           }) => {
             return (
               <AnimatedTabIcon focused={focused}>
-                <ShopIcon width={26} height={26} color={color} />
+                <Icon name="shop" size={26} color={color} />
               </AnimatedTabIcon>
             );
           },
@@ -141,7 +130,7 @@ export default function TabLayout() {
           }) => {
             return (
               <AnimatedTabIcon focused={focused}>
-                <SettingsIcon width={26} height={26} stroke={color} />
+                <Icon name="settings" size={26} color={color} />
               </AnimatedTabIcon>
             );
           },

@@ -5,10 +5,10 @@ import { Button } from '@/components/ui/buttons';
 import { TextInput, TextInputRef } from '@/components/ui/text-inputs';
 import { Text } from '@/components/ui/texts';
 import BackgroundLayout from '@/layouts/background-layout';
+import { Header } from '@/layouts/header';
 import { useDecks } from '@/stores/decks-store';
 import type { Collection } from '@/types/collection';
 import { LegendList } from '@legendapp/list/react-native';
-import { usePostHog } from 'posthog-react-native';
 import React from 'react';
 import { View } from 'react-native';
 import Animated, { Easing, FadeInDown } from 'react-native-reanimated';
@@ -24,13 +24,13 @@ const CARD_TYPES = [
   'Battle',
 ] as const;
 
-function get_type_breakdown(deck: Collection) {
+function getTypeBreakdown(deck: Collection) {
   const counts: Record<string, number> = {};
 
   for (const entry of deck.cards) {
-    const raw_type = entry.card.type_line.split('—')[0]?.trim() ?? '';
-    const matched_type = CARD_TYPES.find((t) => raw_type.includes(t));
-    const label = matched_type ?? 'Other';
+    const rawType = entry.card.type_line.split('—')[0]?.trim() ?? '';
+    const matchedType = CARD_TYPES.find((t) => rawType.includes(t));
+    const label = matchedType ?? 'Other';
     counts[label] = (counts[label] ?? 0) + entry.quantity;
   }
 
@@ -39,29 +39,29 @@ function get_type_breakdown(deck: Collection) {
 
 function DeckCard({
   deck,
-  on_delete,
+  onDelete,
 }: {
   deck: Collection;
-  on_delete: () => void;
+  onDelete: () => void;
 }) {
-  const total_cards = deck.cards.reduce((sum, c) => sum + c.quantity, 0);
-  const type_breakdown = get_type_breakdown(deck);
+  const totalCards = deck.cards.reduce((sum, c) => sum + c.quantity, 0);
+  const typeBreakdown = getTypeBreakdown(deck);
 
   return (
     <Animated.View
       entering={FadeInDown.duration(400).easing(Easing.bezier(0.16, 1, 0.3, 1))}
       className="mb-4"
     >
-      <CardFrame title={deck.name} onDelete={on_delete} variant="deck">
+      <CardFrame title={deck.name} onDelete={onDelete} variant="deck">
         <View className="mb-3 flex-row items-center justify-between">
           <Text className="text-foreground font-sans-semibold ml-auto text-sm">
-            {total_cards} {total_cards === 1 ? 'card' : 'cards'}
+            {totalCards} {totalCards === 1 ? 'card' : 'cards'}
           </Text>
         </View>
 
-        {type_breakdown.length > 0 ? (
+        {typeBreakdown.length > 0 ? (
           <View className="border-foreground-darker/20 border-t pt-3">
-            {type_breakdown.map(([type, count]) => (
+            {typeBreakdown.map(([type, count]) => (
               <View
                 key={type}
                 className="flex-row items-center justify-between py-1"
@@ -82,31 +82,31 @@ function DeckCard({
 }
 
 export default function Page() {
-  const sheet_ref = React.useRef<BottomSheetRef>(null);
-  const input_ref = React.useRef<TextInputRef>(null);
+  const sheetRef = React.useRef<BottomSheetRef>(null);
+  const inputRef = React.useRef<TextInputRef>(null);
   const decks = useDecks((s) => s.decks);
-  const create_deck = useDecks((s) => s.createDeck);
-  const delete_deck = useDecks((s) => s.deleteDeck);
-  const [sheet_title, set_sheet_title] = React.useState('New Deck');
+  const createDeck = useDecks((s) => s.createDeck);
+  const deleteDeck = useDecks((s) => s.deleteDeck);
+  const [sheetTitle, setSheetTitle] = React.useState('New Deck');
   // const posthog = usePostHog();
 
-  const handle_create = React.useCallback(() => {
-    const value = input_ref.current?.getValue()?.trim() ?? '';
+  const handleCreate = React.useCallback(() => {
+    const value = inputRef.current?.getValue()?.trim() ?? '';
 
     if (!value) {
-      input_ref.current?.shake();
+      inputRef.current?.shake();
       return;
     }
 
-    const deck = create_deck(value, '');
+    const deck = createDeck(value, '');
     // posthog.capture('deck_created', {
     //   deck_name: deck.name,
     //   deck_id: deck.id,
     // });
-    input_ref.current?.clear();
-    set_sheet_title('New Deck');
-    sheet_ref.current?.dismiss();
-  }, [create_deck]);
+    inputRef.current?.clear();
+    setSheetTitle('New Deck');
+    sheetRef.current?.dismiss();
+  }, [createDeck]);
 
   return (
     <BackgroundLayout>
@@ -117,21 +117,21 @@ export default function Page() {
           title="No decks yet"
           subtitle="Scan cards or add them manually to build your first deck"
           onPress={() => {
-            sheet_ref.current?.present();
+            sheetRef.current?.present();
           }}
         />
       ) : (
         <>
-          <View className="flex-row items-center justify-between pb-5">
-            <Text className="font-cinzel-semibold text-foreground text-2xl">
-              Decks
-            </Text>
-            <Button
-              title="+ New"
-              onPress={() => sheet_ref.current?.present()}
-              className="h-11 px-5"
-            />
-          </View>
+          <Header
+            title="Decks"
+            rightSlot={
+              <Button
+                title="+ New"
+                onPress={() => sheetRef.current?.present()}
+                className="h-11 px-5"
+              />
+            }
+          />
           <LegendList
             data={decks}
             extraData={decks.length}
@@ -142,7 +142,7 @@ export default function Page() {
             renderItem={({ item }) => (
               <DeckCard
                 deck={item}
-                on_delete={() => {
+                onDelete={() => {
                   // posthog.capture('deck_deleted', {
                   //   deck_name: item.name,
                   //   deck_id: item.id,
@@ -151,7 +151,7 @@ export default function Page() {
                   //     0,
                   //   ),
                   // });
-                  delete_deck(item.id);
+                  deleteDeck(item.id);
                 }}
               />
             )}
@@ -159,24 +159,24 @@ export default function Page() {
         </>
       )}
       <BottomSheet
-        sheetRef={sheet_ref}
+        sheetRef={sheetRef}
         onDidDismiss={() => {
-          set_sheet_title('New Deck');
-          input_ref.current?.clear();
+          setSheetTitle('New Deck');
+          inputRef.current?.clear();
         }}
       >
-        <CardFrame title={sheet_title} variant="deck">
+        <CardFrame title={sheetTitle} variant="deck">
           <Text className="font-sans-semibold text-gray mb-2 text-sm">
             Title
           </Text>
           <TextInput
-            ref={input_ref}
+            ref={inputRef}
             placeholder="My deck name"
             onChangeText={(text) => {
-              set_sheet_title(text.trim() || 'New Deck');
+              setSheetTitle(text.trim() || 'New Deck');
             }}
           />
-          <Button title="Create deck" onPress={handle_create} />
+          <Button title="Create deck" onPress={handleCreate} />
         </CardFrame>
       </BottomSheet>
     </BackgroundLayout>

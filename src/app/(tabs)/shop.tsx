@@ -1,10 +1,10 @@
 import BackgroundLayout from '@/layouts/background-layout';
-import { Text } from 'react-native';
+import { Header } from '@/layouts/header';
 
 export default function Page() {
   return (
     <BackgroundLayout>
-      <Text>Shop</Text>
+      <Header title="Shop" />
     </BackgroundLayout>
   );
 }

@@ -1,7 +1,7 @@
 import * as Linking from 'expo-linking';
 import { View } from 'react-native';
 import { useCSSVariable } from 'uniwind';
-import { CameraOffIcon } from './icons';
+import { Icon } from './icons';
 import { Button } from './ui/buttons';
 import { Text } from './ui/texts';
 
@@ -35,7 +35,7 @@ const CameraNoPermissions = () => {
 
   return (
     <LayoutCamera>
-      <CameraOffIcon width={90} height={90} color={String(gray)} />
+      <Icon name="camera-off" size={90} color={String(gray)} />
       <View className="max-w-72 gap-10">
         <Text className="text-gray max-w-72 text-center">
           Vous n'avez pas autorisé la permission de la caméra
@@ -57,7 +57,7 @@ const CameraUnavailable = () => {
 
   return (
     <LayoutCamera>
-      <CameraOffIcon width={70} height={70} color={String(gray)} />
+      <Icon name="camera-off" size={70} color={String(gray)} />
       <Text className="text-gray max-w-60 text-center">
         Vous semblez ne pas avoir de caméra sur votre appareil
       </Text>

@@ -46,10 +46,10 @@ const TextInput = ({
   const shakeOffset = useSharedValue(0);
   const inputRef = React.useRef<RNTextInput>(null);
   const valueRef = React.useRef('');
-  const on_change_ref = React.useRef(props.onChangeText);
-  on_change_ref.current = props.onChangeText;
-  const [has_value, set_has_value] = React.useState(false);
-  const [input_width, set_input_width] = React.useState(0);
+  const onChangeRef = React.useRef(props.onChangeText);
+  onChangeRef.current = props.onChangeText;
+  const [hasValue, setHasValue] = React.useState(false);
+  const [inputWidth, setInputWidth] = React.useState(0);
 
   React.useImperativeHandle(ref, () => ({
     shake: () => {
@@ -63,24 +63,24 @@ const TextInput = ({
     getValue: () => valueRef.current,
     clear: () => {
       valueRef.current = '';
-      set_has_value(false);
+      setHasValue(false);
       inputRef.current?.clear();
-      on_change_ref.current?.('');
+      onChangeRef.current?.('');
     },
   }));
 
-  const shake_style = useAnimatedStyle(() => ({
+  const shakeStyle = useAnimatedStyle(() => ({
     transform: [{ translateX: shakeOffset.value }],
   }));
 
-  const target_width = has_value
-    ? input_width - CLEAR_BUTTON_SPACE
-    : input_width;
+  const targetWidth = hasValue
+    ? inputWidth - CLEAR_BUTTON_SPACE
+    : inputWidth;
 
-  const input_animated_style = useAnimatedStyle(() => {
-    if (!input_width) return {};
+  const inputAnimatedStyle = useAnimatedStyle(() => {
+    if (!inputWidth) return {};
     return {
-      width: withSpring(target_width, {
+      width: withSpring(targetWidth, {
         damping: 30,
         stiffness: 800,
         mass: 0.7,
@@ -88,27 +88,27 @@ const TextInput = ({
     };
   });
 
-  const handle_change = React.useCallback((text: string) => {
+  const handleChange = React.useCallback((text: string) => {
     valueRef.current = text;
-    set_has_value(text.length > 0);
-    on_change_ref.current?.(text);
+    setHasValue(text.length > 0);
+    onChangeRef.current?.(text);
   }, []);
 
-  const handle_clear = React.useCallback(() => {
+  const handleClear = React.useCallback(() => {
     valueRef.current = '';
-    set_has_value(false);
+    setHasValue(false);
     inputRef.current?.clear();
-    on_change_ref.current?.('');
+    onChangeRef.current?.('');
   }, []);
 
   return (
     <Animated.View
-      style={shake_style}
+      style={shakeStyle}
       className="mb-6"
-      onLayout={(e) => set_input_width(e.nativeEvent.layout.width)}
+      onLayout={(e) => setInputWidth(e.nativeEvent.layout.width)}
     >
       <View className="flex-row items-center">
-        <Animated.View style={input_animated_style}>
+        <Animated.View style={inputAnimatedStyle}>
           <RNTextInput
             autoCorrect={false}
             autoComplete="off"
@@ -125,14 +125,14 @@ const TextInput = ({
             placeholderTextColor={grayLight}
             placeholder={placeholder}
             {...props}
-            onChangeText={handle_change}
+            onChangeText={handleChange}
           />
         </Animated.View>
-        {has_value ? (
+        {hasValue ? (
           <AnimatedPressable
             entering={FadeIn.duration(150)}
             exiting={FadeOut.duration(150)}
-            onPress={handle_clear}
+            onPress={handleClear}
             hitSlop={10}
             className="bg-foreground-darker/30 ml-2 h-6 w-6 items-center justify-center rounded-full"
           >

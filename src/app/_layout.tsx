@@ -27,16 +27,16 @@ export default function RootLayout() {
   const { stop, loading } = useLoaderGlobal();
   const pathname = usePathname();
   const params = useGlobalSearchParams();
-  const previous_pathname = React.useRef<string | undefined>(undefined);
+  const previousPathname = React.useRef<string | undefined>(undefined);
 
   React.useEffect(() => {
     if (loading) stop();
   }, [pathname]);
 
   React.useEffect(() => {
-    if (previous_pathname.current !== pathname) {
+    if (previousPathname.current !== pathname) {
       posthog.screen(pathname, { ...params });
-      previous_pathname.current = pathname;
+      previousPathname.current = pathname;
     }
   }, [pathname, params]);
 
@@ -60,11 +60,9 @@ export default function RootLayout() {
                   animationConfig={{ duration: 100 }}
                 >
                   <KeyboardProvider>
-                    <Stack>
-                      <Stack.Screen
-                        name="(tabs)"
-                        options={{ headerShown: false }}
-                      />
+                    <Stack screenOptions={{ headerShown: false }}>
+                      <Stack.Screen name="(tabs)" />
+                      <Stack.Screen name="collection/[id]" />
                     </Stack>
                   </KeyboardProvider>
                 </PressablesConfig>

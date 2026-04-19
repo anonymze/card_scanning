@@ -5,7 +5,7 @@ import {
   CameraUnavailable,
   LayoutCamera,
 } from '@/components/camera';
-import { DecksIcon } from '@/components/icons';
+import { Icon } from '@/components/icons';
 import { useIsFocused } from '@react-navigation/native';
 import { StyleSheet, Text, View } from 'react-native';
 import {
@@ -34,7 +34,6 @@ export default function Page() {
           style={StyleSheet.absoluteFill}
           device={device}
           isActive={isFocused}
-          // enablePreviewSizedOutputBuffers={true}
           onFrame={(frame, render) => {
             'worklet';
             render(({ frameTexture, canvas }) => {
@@ -43,14 +42,9 @@ export default function Page() {
             frame.dispose();
           }}
         />
-        <View className="flex-row items-center gap-1 pt-3.5  pl-3.5">
-          <DecksIcon
-            className="top-20 left-10 mx-20"
-            color={foregroundDarker}
-          />
-          <Text className="font-sans-bold text-foreground-darker">
-            3
-          </Text>
+        <View className="flex-row items-center gap-1 pt-3.5 pl-3.5">
+          <Icon name="decks" size={20} color={String(foregroundDarker)} />
+          <Text className="font-sans-bold text-foreground-darker">3</Text>
         </View>
       </View>
     </LayoutCamera>
