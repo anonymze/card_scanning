@@ -28,3 +28,4 @@ x/
 .claude
 .venv
 training/
+.agents/
