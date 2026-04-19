@@ -1,10 +1,13 @@
+'use no memo';
+
 import {
   CameraNoPermissions,
   CameraUnavailable,
   LayoutCamera,
 } from '@/components/camera';
 import { DecksIcon } from '@/components/icons';
-import { Text, View } from 'react-native';
+import { useIsFocused } from '@react-navigation/native';
+import { StyleSheet, Text, View } from 'react-native';
 import {
   useCameraDevice,
   useCameraPermission,
@@ -16,6 +19,7 @@ export default function Page() {
   const [foregroundDarker] = useCSSVariable(['--color-foreground-darker']);
   const device = useCameraDevice('back');
   const { hasPermission, requestPermission } = useCameraPermission();
+  const isFocused = useIsFocused();
 
   if (device == null) return <CameraUnavailable />;
   if (!hasPermission) {
@@ -27,25 +31,25 @@ export default function Page() {
     <LayoutCamera>
       <View className="w-full flex-1 overflow-hidden rounded-3xl">
         <SkiaCamera
+          style={StyleSheet.absoluteFill}
           device={device}
-          isActive={true}
+          isActive={isFocused}
+          // enablePreviewSizedOutputBuffers={true}
           onFrame={(frame, render) => {
-            // 'worklet';
-            // // ... custom Frame processing logic
-            // render(({ frameTexture, canvas }) => {
-            //   // ... custom drawing operations
-            //   canvas.drawImage(frameTexture, 0, 0);
-            // });
-            // frame.dispose();
+            'worklet';
+            render(({ frameTexture, canvas }) => {
+              canvas.drawImage(frameTexture, 0, 0);
+            });
+            frame.dispose();
           }}
         />
-        <View className="flex-row items-center gap-1 pt-safe px-safe">
+        <View className="flex-row items-center gap-1 pt-3.5  pl-3.5">
           <DecksIcon
             className="top-20 left-10 mx-20"
             color={foregroundDarker}
           />
           <Text className="font-sans-bold text-foreground-darker">
-            Step 3: skia camera
+            3
           </Text>
         </View>
       </View>

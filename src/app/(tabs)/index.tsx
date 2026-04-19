@@ -8,7 +8,6 @@ import BackgroundLayout from '@/layouts/background-layout';
 import { useCollections } from '@/stores/collections-store';
 import type { Collection } from '@/types/collection';
 import { LegendList } from '@legendapp/list/react-native';
-import { usePostHog } from 'posthog-react-native';
 import React from 'react';
 import { View } from 'react-native';
 import Animated, { Easing, FadeInDown } from 'react-native-reanimated';

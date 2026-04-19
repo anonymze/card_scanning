@@ -4,7 +4,6 @@ import type {
   ScryfallSearchResponse,
 } from '@/types/cards';
 import { infiniteQueryOptions } from '@tanstack/react-query';
-import { fetch } from 'react-native-nitro-fetch';
 
 const SCRYFALL_SEARCH_URL = 'https://api.scryfall.com/cards/search';
 

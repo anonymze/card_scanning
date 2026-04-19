@@ -17,11 +17,11 @@ module.exports = {
       typedRoutes: true,
     },
     orientation: 'portrait',
-    icon: './resources/app-icon.icon',
     backgroundColor: '#08091A',
     userInterfaceStyle: 'dark',
     assetBundlePatterns: ['**/*'],
     ios: {
+      icon: './resources/app-icon.icon',
       supportsTablet: true,
       bundleIdentifier: 'com.anonymze.arcanelens',
       infoPlist: {
@@ -33,7 +33,7 @@ module.exports = {
     android: {
       adaptiveIcon: {
         foregroundImage: './resources/android-icon.png',
-        backgroundImage: './resources/android-icon.png',
+        backgroundColor: '#08091A',
         monochromeImage: './resources/android-icon.png',
       },
       package: 'com.anonymze.arcanelens',
