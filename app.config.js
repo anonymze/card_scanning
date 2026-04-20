@@ -12,7 +12,7 @@ module.exports = {
     owner: 'anonymze',
     experiments: {
       reactCompiler: true,
-      buildCacheProvider: 'eas',
+      // buildCacheProvider: 'eas',
       tsconfigPaths: true,
       typedRoutes: true,
     },
