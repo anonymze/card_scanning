@@ -113,6 +113,15 @@ importers:
       react-native-edge-to-edge:
         specifier: ^1.6.2
         version: 1.6.2(react-native@0.83.2(@babel/core@7.28.0)(@react-native/metro-config@0.81.0(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.0))(react@19.2.0)
+      react-native-executorch:
+        specifier: ^0.8.3
+        version: 0.8.3(react-native@0.83.2(@babel/core@7.28.0)(@react-native/metro-config@0.81.0(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.0))(react@19.2.0)
+      react-native-executorch-expo-resource-fetcher:
+        specifier: ^0.8.0
+        version: 0.8.0(expo-asset@55.0.10(expo@55.0.8)(react-native@0.83.2(@babel/core@7.28.0)(@react-native/metro-config@0.81.0(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.0))(react@19.2.0)(typescript@5.9.2))(expo-file-system@55.0.12(expo@55.0.8)(react-native@0.83.2(@babel/core@7.28.0)(@react-native/metro-config@0.81.0(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.0)))(expo@55.0.8)(react-native-executorch@0.8.3(react-native@0.83.2(@babel/core@7.28.0)(@react-native/metro-config@0.81.0(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.0))(react@19.2.0))(react-native@0.83.2(@babel/core@7.28.0)(@react-native/metro-config@0.81.0(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.0))
+      react-native-fast-tflite:
+        specifier: ^3.0.0
+        version: 3.0.0(react-native-nitro-modules@0.35.4(react-native@0.83.2(@babel/core@7.28.0)(@react-native/metro-config@0.81.0(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.0))(react@19.2.0))(react-native@0.83.2(@babel/core@7.28.0)(@react-native/metro-config@0.81.0(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.0))(react@19.2.0)
       react-native-gesture-handler:
         specifier: ^2.30.0
         version: 2.30.0(react-native@0.83.2(@babel/core@7.28.0)(@react-native/metro-config@0.81.0(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.0))(react@19.2.0)
@@ -1606,6 +1615,10 @@ packages:
     peerDependencies:
       react: '*'
       react-native: '*'
+
+  '@huggingface/jinja@0.5.7':
+    resolution: {integrity: sha512-OosMEbF/R6zkKNNzqhI7kvKYCpo1F0UeIv46/h4D4UjVEKKd6k3TiV8sgu6fkreX4lbBiRI+lZG8UnXnqVQmEQ==}
+    engines: {node: '>=18'}
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -4100,6 +4113,13 @@ packages:
   jsonify@0.0.1:
     resolution: {integrity: sha512-2/Ki0GcmuqSrgFyelQq9M05y7PS0mEwuIzrf3f1fPqkVDVRvZrPZtVSMHxdgo8Aq0sxAOb/cr2aqqA3LeWHVPg==}
 
+  jsonrepair@3.14.0:
+    resolution: {integrity: sha512-tWPGKMZf/8UPim+fcW2EfcQ/d/7aKUrP6IECz9G3Tu6Q5dX0orSleqJ9z6sSw7qrQkjF8/Edo4DvsWBZ8H+HNg==}
+    hasBin: true
+
+  jsonschema@1.5.0:
+    resolution: {integrity: sha512-K+A9hhqbn0f3pJX17Q/7H6yQfD/5OXgdrR5UE12gMXCiN9D5Xq2o5mddV2QEcX/bjla99ASsAAQUyMCCRWAEhw==}
+
   keyv@4.5.4:
     resolution: {integrity: sha512-oxVHkHR/EJf2CNXnWxRLW6mg7JyCCUcG0DtEGmL2ctUo1PNTin1PUil+r/+4r5MpVgC/fn1kjsx7mjSujKqIpw==}
 
@@ -4804,6 +4824,10 @@ packages:
     resolution: {integrity: sha512-NCrCHhWmnQklfH4MtJMRjZ2a8c80qXeMlQMv2uVp9ISJMTt562SbGd6n2oq0PaPgKm7Z6pL9E2UlLIhC+SHL3w==}
     engines: {node: '>=4.0.0'}
 
+  pngjs@7.0.0:
+    resolution: {integrity: sha512-LKWqWJRhstyYo9pGvgor/ivk2w94eSjE3RGVuzLGlr3NmD8bf7RcYGze1mNdEHRP6TRP6rMuDHk5t44hnTRyow==}
+    engines: {node: '>=14.19.0'}
+
   postcss-value-parser@4.2.0:
     resolution: {integrity: sha512-1NNCs6uurfkVbeXG4S8JFT9t19m45ICnif8zWLd5oPSZ50QnwMfK+H3jv408d4jw/7Bttv5axS5IiHoLaVNHeQ==}
 
@@ -5037,6 +5061,29 @@ packages:
     peerDependencies:
       react: '*'
       react-native: '*'
+
+  react-native-executorch-expo-resource-fetcher@0.8.0:
+    resolution: {integrity: sha512-vdAne2FBL0nCQ2c2yHTSt8Uttm0Klmo/K7tirSVlKxgVtli4cmsfl+UpR5giaNtlRZ3ImMAMXNW34j0fItmRfQ==}
+    peerDependencies:
+      expo: '>=54.0.0'
+      expo-asset: '>=12.0.0'
+      expo-file-system: '>=19.0.0'
+      react-native: '*'
+      react-native-executorch: '*'
+
+  react-native-executorch@0.8.3:
+    resolution: {integrity: sha512-BJ5eawHqb/C815fCUXxa4ftr4tzjZbqNIJYxEI5gzUYWmeYvoVMWXNu3n70Um2Kp/S+CP83sOR2Z/lGVlfEu2g==}
+    peerDependencies:
+      react: '*'
+      react-native: '*'
+
+  react-native-fast-tflite@3.0.0:
+    resolution: {integrity: sha512-M2yw7s0pfZZe+C4NXCPB/Om31VSy/LigR/8035+uxz//UDxmNjW62Kwk3GYMe5zkXjkZIaP9vExZL3k5kieaZg==}
+    engines: {node: '>= 18'}
+    peerDependencies:
+      react: '*'
+      react-native: '*'
+      react-native-nitro-modules: '*'
 
   react-native-gesture-handler@2.30.0:
     resolution: {integrity: sha512-5YsnKHGa0X9C8lb5oCnKm0fLUPM6CRduvUUw2Bav4RIj/C3HcFh4RIUnF8wgG6JQWCL1//gRx4v+LVWgcIQdGA==}
@@ -6123,6 +6170,9 @@ packages:
 
   zod@3.25.76:
     resolution: {integrity: sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ==}
+
+  zod@4.3.6:
+    resolution: {integrity: sha512-rftlrkhHZOcjDwkGlnUtZZkvaPHCsDATp4pGpuOOMDaTdDDXF91wuVDJoWoPsKX/3YPQ5fHuF3STjcYyKr+Qhg==}
 
   zustand@5.0.7:
     resolution: {integrity: sha512-Ot6uqHDW/O2VdYsKLLU8GQu8sCOM1LcoE8RwvLv9uuRT9s6SOHCKs0ZEOhxg+I1Ld+A1Q5lwx+UlKXXUoCZITg==}
@@ -7809,6 +7859,8 @@ snapshots:
       nanoid: 3.3.11
       react: 19.2.0
       react-native: 0.83.2(@babel/core@7.28.0)(@react-native/metro-config@0.81.0(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.0)
+
+  '@huggingface/jinja@0.5.7': {}
 
   '@humanfs/core@0.19.1': {}
 
@@ -10590,6 +10642,10 @@ snapshots:
 
   jsonify@0.0.1: {}
 
+  jsonrepair@3.14.0: {}
+
+  jsonschema@1.5.0: {}
+
   keyv@4.5.4:
     dependencies:
       json-buffer: 3.0.1
@@ -11461,6 +11517,8 @@ snapshots:
 
   pngjs@3.4.0: {}
 
+  pngjs@7.0.0: {}
+
   postcss-value-parser@4.2.0: {}
 
   postcss@8.4.49:
@@ -11601,6 +11659,30 @@ snapshots:
     dependencies:
       react: 19.2.0
       react-native: 0.83.2(@babel/core@7.28.0)(@react-native/metro-config@0.81.0(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.0)
+
+  react-native-executorch-expo-resource-fetcher@0.8.0(expo-asset@55.0.10(expo@55.0.8)(react-native@0.83.2(@babel/core@7.28.0)(@react-native/metro-config@0.81.0(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.0))(react@19.2.0)(typescript@5.9.2))(expo-file-system@55.0.12(expo@55.0.8)(react-native@0.83.2(@babel/core@7.28.0)(@react-native/metro-config@0.81.0(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.0)))(expo@55.0.8)(react-native-executorch@0.8.3(react-native@0.83.2(@babel/core@7.28.0)(@react-native/metro-config@0.81.0(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.0))(react@19.2.0))(react-native@0.83.2(@babel/core@7.28.0)(@react-native/metro-config@0.81.0(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.0)):
+    dependencies:
+      expo: 55.0.8(@babel/core@7.28.0)(@expo/dom-webview@55.0.3)(@expo/metro-runtime@55.0.6)(expo-router@55.0.7)(react-dom@19.2.0(react@19.2.0))(react-native@0.83.2(@babel/core@7.28.0)(@react-native/metro-config@0.81.0(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.0))(react@19.2.0)(typescript@5.9.2)
+      expo-asset: 55.0.10(expo@55.0.8)(react-native@0.83.2(@babel/core@7.28.0)(@react-native/metro-config@0.81.0(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.0))(react@19.2.0)(typescript@5.9.2)
+      expo-file-system: 55.0.12(expo@55.0.8)(react-native@0.83.2(@babel/core@7.28.0)(@react-native/metro-config@0.81.0(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.0))
+      react-native: 0.83.2(@babel/core@7.28.0)(@react-native/metro-config@0.81.0(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.0)
+      react-native-executorch: 0.8.3(react-native@0.83.2(@babel/core@7.28.0)(@react-native/metro-config@0.81.0(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.0))(react@19.2.0)
+
+  react-native-executorch@0.8.3(react-native@0.83.2(@babel/core@7.28.0)(@react-native/metro-config@0.81.0(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.0))(react@19.2.0):
+    dependencies:
+      '@huggingface/jinja': 0.5.7
+      jsonrepair: 3.14.0
+      jsonschema: 1.5.0
+      pngjs: 7.0.0
+      react: 19.2.0
+      react-native: 0.83.2(@babel/core@7.28.0)(@react-native/metro-config@0.81.0(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.0)
+      zod: 4.3.6
+
+  react-native-fast-tflite@3.0.0(react-native-nitro-modules@0.35.4(react-native@0.83.2(@babel/core@7.28.0)(@react-native/metro-config@0.81.0(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.0))(react@19.2.0))(react-native@0.83.2(@babel/core@7.28.0)(@react-native/metro-config@0.81.0(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.0))(react@19.2.0):
+    dependencies:
+      react: 19.2.0
+      react-native: 0.83.2(@babel/core@7.28.0)(@react-native/metro-config@0.81.0(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.0)
+      react-native-nitro-modules: 0.35.4(react-native@0.83.2(@babel/core@7.28.0)(@react-native/metro-config@0.81.0(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.0))(react@19.2.0)
 
   react-native-gesture-handler@2.30.0(react-native@0.83.2(@babel/core@7.28.0)(@react-native/metro-config@0.81.0(@babel/core@7.28.0))(@types/react@19.2.14)(react@19.2.0))(react@19.2.0):
     dependencies:
@@ -12693,6 +12775,8 @@ snapshots:
   yoctocolors@2.1.2: {}
 
   zod@3.25.76: {}
+
+  zod@4.3.6: {}
 
   zustand@5.0.7(@types/react@19.2.14)(react@19.2.0)(use-sync-external-store@1.5.0(react@19.2.0)):
     optionalDependencies:

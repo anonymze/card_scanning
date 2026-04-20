@@ -4,6 +4,10 @@ import '@/global.css';
 import { AnimatedSplashOverlay } from '@/layouts/animated-splash-overlay';
 import { useLoaderGlobal } from '@/stores/loader-store';
 import { QueryClientProvider } from '@tanstack/react-query';
+import { initExecutorch } from 'react-native-executorch';
+import { ExpoResourceFetcher } from 'react-native-executorch-expo-resource-fetcher';
+
+initExecutorch({ resourceFetcher: ExpoResourceFetcher });
 import { Stack, useGlobalSearchParams, usePathname } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { PostHogErrorBoundary, PostHogProvider } from 'posthog-react-native';
