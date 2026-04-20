@@ -1,32 +1,11 @@
+import { Icon } from '@/components/icons';
 import { Menu, MenuAction } from '@/components/menu';
+import { MyTouchableScale } from '@/components/my-pressable';
 import { Text } from '@/components/ui/texts';
-import { router } from 'expo-router';
-import { Pressable, View } from 'react-native';
-import Svg, { Path } from 'react-native-svg';
-
-const ICON = 18;
-
-function ChevronLeft({ color }: { color: string }) {
-  return (
-    <Svg width={ICON} height={ICON} viewBox="0 0 24 24" fill="none">
-      <Path
-        d="M15 6l-6 6 6 6"
-        stroke={color}
-        strokeWidth={2}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </Svg>
-  );
-}
-
-function Dots({ color }: { color: string }) {
-  return (
-    <Svg width={ICON} height={ICON} viewBox="0 0 24 24" fill={color}>
-      <Path d="M5 10a2 2 0 100 4 2 2 0 000-4zm7 0a2 2 0 100 4 2 2 0 000-4zm7 0a2 2 0 100 4 2 2 0 000-4z" />
-    </Svg>
-  );
-}
+import { cn } from '@/libs/tailwind';
+import { router, usePathname } from 'expo-router';
+import { View } from 'react-native';
+import { useCSSVariable } from 'uniwind';
 
 function CircleButton({
   children,
@@ -36,12 +15,12 @@ function CircleButton({
   onPress?: () => void;
 }) {
   return (
-    <Pressable
+    <MyTouchableScale
       onPress={onPress}
       className="border-foreground-darker h-10 w-10 items-center justify-center rounded-full border"
     >
       {children}
-    </Pressable>
+    </MyTouchableScale>
   );
 }
 
@@ -50,31 +29,36 @@ export function Header({
   subtitle,
   actions,
   rightSlot,
+  back,
 }: {
   title: string;
   subtitle?: string;
   actions?: MenuAction[];
   rightSlot?: React.ReactNode;
+  back?: boolean;
 }) {
-  const canBack = router.canGoBack();
+  const [foreground] = useCSSVariable(['--color-foreground']);
+  const pathname = usePathname();
   const hasMenu = actions && actions.length > 0;
+  const showBack =
+    back ?? pathname.split('/').filter(Boolean).length > 1;
 
   return (
-    <View className="flex-row items-center justify-between pb-5">
-      {canBack && (
+    <View className="flex-row items-center justify-between">
+      {showBack && (
         <View className="w-10 items-start">
           <CircleButton onPress={() => router.back()}>
-            <ChevronLeft color="#caa05a" />
+            <Icon name="chevron-left" size={18} color={String(foreground)} />
           </CircleButton>
         </View>
       )}
-      <View className={canBack ? 'flex-1 items-center' : 'flex-1 items-start'}>
+      <View className={cn('flex-1 items-start', showBack && 'pl-3')}>
         {subtitle && (
-          <Text className="text-foreground-darker text-xs tracking-widest">
-            {subtitle.toUpperCase()}
+          <Text className="text-gray text-xs tracking-[3px] uppercase" numberOfLines={1}>
+            {subtitle}
           </Text>
         )}
-        <Text className="font-cinzel-semibold text-foreground text-2xl">
+        <Text className="font-cinzel-semibold text-foreground text-2xl" numberOfLines={1}>
           {title}
         </Text>
       </View>
@@ -82,7 +66,7 @@ export function Header({
         {hasMenu ? (
           <Menu actions={actions}>
             <CircleButton>
-              <Dots color="#caa05a" />
+              <Icon name="dots" size={18} color={String(foreground)} />
             </CircleButton>
           </Menu>
         ) : (

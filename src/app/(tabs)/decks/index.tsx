@@ -8,17 +8,17 @@ import { TextInput, TextInputRef } from '@/components/ui/text-inputs';
 import { Text } from '@/components/ui/texts';
 import BackgroundLayout from '@/layouts/background-layout';
 import { BlurHeader } from '@/layouts/blur-header';
-import { useCollections } from '@/stores/collections-store';
+import { useDecks } from '@/stores/decks-store';
 import React from 'react';
 
 export default function Page() {
   const sheetRef = React.useRef<BottomSheetRef>(null);
   const inputRef = React.useRef<TextInputRef>(null);
-  const collections = useCollections((s) => s.collections);
-  const createCollection = useCollections((s) => s.createCollection);
-  const deleteCollection = useCollections((s) => s.deleteCollection);
-  const [sheetTitle, setSheetTitle] = React.useState('New Collection');
-  const initialIdsRef = React.useRef(new Set(collections.map((c) => c.id)));
+  const decks = useDecks((s) => s.decks);
+  const createDeck = useDecks((s) => s.createDeck);
+  const deleteDeck = useDecks((s) => s.deleteDeck);
+  const [sheetTitle, setSheetTitle] = React.useState('New Deck');
+  const initialIdsRef = React.useRef(new Set(decks.map((d) => d.id)));
 
   const handleCreate = React.useCallback(() => {
     const value = inputRef.current?.getValue()?.trim() ?? '';
@@ -28,20 +28,20 @@ export default function Page() {
       return;
     }
 
-    createCollection(value, '');
+    createDeck(value, '');
     inputRef.current?.clear();
-    setSheetTitle('New Collection');
+    setSheetTitle('New Deck');
     sheetRef.current?.dismiss();
-  }, [createCollection]);
+  }, [createDeck]);
 
   return (
     <BackgroundLayout noTopPadding>
-      {collections.length === 0 ? (
+      {decks.length === 0 ? (
         <EmptyState
-          buttonText="+ Create a collection"
-          variant="collection"
-          title="Your collection is empty"
-          subtitle="Scan cards or add them manually to build your first collection"
+          buttonText="+ Create a deck"
+          variant="decks"
+          title="No decks yet"
+          subtitle="Scan cards or add them manually to build your first deck"
           onPress={() => {
             sheetRef.current?.present();
           }}
@@ -50,22 +50,22 @@ export default function Page() {
         <>
           <ScrollList
             blurHeader
-            data={collections}
-            extraData={collections.length}
+            data={decks}
+            extraData={decks.length}
             keyExtractor={(item) => item.id}
             estimatedItemSize={180}
             recycleItems
             renderItem={({ item }) => (
               <ListCard
                 item={item}
-                variant="collection"
+                variant="deck"
                 animate={!initialIdsRef.current.has(item.id)}
-                onDelete={() => deleteCollection(item.id)}
+                onDelete={() => deleteDeck(item.id)}
               />
             )}
           />
           <BlurHeader
-            title="Collections"
+            title="Decks"
             rightSlot={
               <Button
                 title="+ New"
@@ -79,22 +79,22 @@ export default function Page() {
       <BottomSheet
         sheetRef={sheetRef}
         onDidDismiss={() => {
-          setSheetTitle('New Collection');
+          setSheetTitle('New Deck');
           inputRef.current?.clear();
         }}
       >
-        <CardFrame title={sheetTitle}>
+        <CardFrame title={sheetTitle} variant="deck">
           <Text className="font-sans-semibold text-gray mb-2 text-sm">
             Title
           </Text>
           <TextInput
             ref={inputRef}
-            placeholder="My collection name"
+            placeholder="My deck name"
             onChangeText={(text) => {
-              setSheetTitle(text.trim() || 'New Collection');
+              setSheetTitle(text.trim() || 'New Deck');
             }}
           />
-          <Button title="Create collection" onPress={handleCreate} />
+          <Button title="Create deck" onPress={handleCreate} />
         </CardFrame>
       </BottomSheet>
     </BackgroundLayout>

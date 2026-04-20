@@ -136,6 +136,7 @@ export default function TabLayout() {
           },
         }}
       />
+      <Tabs.Screen name="collection/[id]" options={{ href: null }} />
     </Tabs>
   );
 }

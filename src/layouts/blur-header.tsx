@@ -5,13 +5,14 @@ import { StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { VariableHeaderBlurView } from 'variable-header-blur';
 
-const HEADER_CONTENT_HEIGHT = 56;
+const HEADER_CONTENT_HEIGHT = 70;
 
 export function BlurHeader(props: {
   title: string;
   subtitle?: string;
   actions?: MenuAction[];
   rightSlot?: React.ReactNode;
+  back?: boolean;
 }) {
   const insets = useSafeAreaInsets();
   const totalHeight = HEADER_CONTENT_HEIGHT + insets.top;

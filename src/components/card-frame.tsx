@@ -1,4 +1,5 @@
 import { MyTouchableOpacity } from '@/components/my-pressable';
+import { cn } from '@/libs/tailwind';
 import React from 'react';
 import { Text, View } from 'react-native';
 import { useCSSVariable } from 'uniwind';
@@ -27,7 +28,10 @@ const CardFrame = ({
   return (
     <View className="border-foreground-darker rounded-xl border-2 p-1.5">
       <View
-        className={`border-foreground-darker/40 rounded-lg border ${variant === 'deck' ? 'border-dashed' : ''}`}
+        className={cn(
+          'border-foreground-darker/40 rounded-lg border',
+          variant === 'deck' && 'border-dashed',
+        )}
       >
         <View className="bg-background-primary-lighter mx-2 mt-2 mb-2 overflow-hidden rounded-md">
           <View
