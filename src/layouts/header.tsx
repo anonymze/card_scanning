@@ -7,7 +7,7 @@ import { router, usePathname } from 'expo-router';
 import { View } from 'react-native';
 import { useCSSVariable } from 'uniwind';
 
-function CircleButton({
+function IconCard({
   children,
   onPress,
 }: {
@@ -17,7 +17,7 @@ function CircleButton({
   return (
     <MyTouchableScale
       onPress={onPress}
-      className="border-foreground-darker h-10 w-10 items-center justify-center rounded-full border"
+      className="border-foreground-darker h-10 w-10 items-center justify-center rounded-xl border"
     >
       {children}
     </MyTouchableScale>
@@ -47,9 +47,9 @@ export function Header({
     <View className="flex-row items-center justify-between">
       {showBack && (
         <View className="w-10 items-start">
-          <CircleButton onPress={() => router.back()}>
+          <IconCard onPress={() => router.back()}>
             <Icon name="chevron-left" size={18} color={String(foreground)} />
-          </CircleButton>
+          </IconCard>
         </View>
       )}
       <View className={cn('flex-1 items-start', showBack && 'pl-3')}>
@@ -65,9 +65,9 @@ export function Header({
       <View className="items-end">
         {hasMenu ? (
           <Menu actions={actions}>
-            <CircleButton>
+            <IconCard>
               <Icon name="dots" size={18} color={String(foreground)} />
-            </CircleButton>
+            </IconCard>
           </Menu>
         ) : (
           rightSlot ?? <View className="w-10" />

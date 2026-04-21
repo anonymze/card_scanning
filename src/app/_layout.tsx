@@ -1,9 +1,10 @@
 import { queryClient } from '@/api/_config';
+import { dbVersionQueryOptions } from '@/api/queries/db-queries';
 import { posthog } from '@/libs/posthog';
 import '@/global.css';
 import { AnimatedSplashOverlay } from '@/layouts/animated-splash-overlay';
 import { useLoaderGlobal } from '@/stores/loader-store';
-import { QueryClientProvider } from '@tanstack/react-query';
+import { QueryClientProvider, useQuery } from '@tanstack/react-query';
 import { initExecutorch } from 'react-native-executorch';
 import { ExpoResourceFetcher } from 'react-native-executorch-expo-resource-fetcher';
 
@@ -27,6 +28,19 @@ SplashScreen.setOptions({
   fade: false,
 });
 
+function SplashGate() {
+  const { isSuccess, isError, error, refetch } = useQuery(
+    dbVersionQueryOptions(),
+  );
+  return (
+    <AnimatedSplashOverlay
+      ready={isSuccess}
+      error={isError ? (error?.message ?? 'Network unreachable') : undefined}
+      onRetry={() => refetch()}
+    />
+  );
+}
+
 export default function RootLayout() {
   const { stop, loading } = useLoaderGlobal();
   const pathname = usePathname();
@@ -39,7 +53,7 @@ export default function RootLayout() {
 
   React.useEffect(() => {
     if (previousPathname.current !== pathname) {
-      posthog.screen(pathname, { ...params });
+      // posthog.screen(pathname, { ...params });
       previousPathname.current = pathname;
     }
   }, [pathname, params]);
@@ -71,8 +85,8 @@ export default function RootLayout() {
                 </PressablesConfig>
               </PostHogErrorBoundary>
             </PostHogProvider>
+            <SplashGate />
           </QueryClientProvider>
-          <AnimatedSplashOverlay />
         </GestureHandlerRootView>
       </SafeAreaListener>
     </SafeAreaProvider>
