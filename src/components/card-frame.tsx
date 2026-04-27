@@ -41,7 +41,7 @@ const CardFrame = ({
               <MyTouchableOpacity
                 onPress={onDelete}
                 hitSlop={20}
-                className="bg-foreground-darker/30 h-5.5 w-5.5 rotate-45 items-center justify-center rounded-md"
+                className="bg-foreground-darker/30 h-5.5 w-5.5 rotate-45 items-center justify-center rounded-[7px]"
               >
                 <Text className="text-foreground -rotate-45 text-[11px] leading-none font-bold">
                   ✕
