@@ -1,6 +1,7 @@
 import { AnimatedTabIcon } from '@/components/animated-tab-icon';
 import { Icon } from '@/components/icons';
 import { LoaderTabs } from '@/components/loader-tabs';
+import { haptic } from '@/libs/haptics';
 import { useLoaderGlobal } from '@/stores/loader-store';
 import { Tabs } from 'expo-router';
 import React from 'react';
@@ -35,6 +36,9 @@ export default function TabLayout() {
 
   return (
     <Tabs
+      screenListeners={{
+        tabPress: () => haptic('tap'),
+      }}
       screenOptions={{
         headerShown: false,
         tabBarStyle: {

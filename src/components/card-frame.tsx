@@ -1,5 +1,4 @@
 import { MyTouchableOpacity } from '@/components/my-pressable';
-import { cn } from '@/libs/tailwind';
 import React from 'react';
 import { Text, View } from 'react-native';
 import { useCSSVariable } from 'uniwind';
@@ -27,12 +26,7 @@ const CardFrame = ({
   const [base, lighter] = useCSSVariable(vars);
   return (
     <View className="border-foreground-darker rounded-xl border-2 p-1.5">
-      <View
-        className={cn(
-          'border-foreground-darker/40 rounded-lg border',
-          variant === 'deck' && 'border-dashed',
-        )}
-      >
+      <View className="border-foreground-darker/40 rounded-lg border border-dashed">
         <View className="bg-background-primary-lighter mx-2 mt-2 mb-2 overflow-hidden rounded-md">
           <View
             style={{
@@ -46,20 +40,16 @@ const CardFrame = ({
             {onDelete ? (
               <MyTouchableOpacity
                 onPress={onDelete}
-                hitSlop={15}
-                className="bg-foreground-darker/30 h-6 w-6 items-center justify-center rounded-full"
+                hitSlop={20}
+                className="bg-foreground-darker/30 h-5.5 w-5.5 rotate-45 items-center justify-center rounded-md"
               >
-                <Text className="text-foreground text-xs leading-none font-bold">
+                <Text className="text-foreground -rotate-45 text-[11px] leading-none font-bold">
                   ✕
                 </Text>
               </MyTouchableOpacity>
             ) : (
               <View className="flex-row items-center gap-1.5">
-                {variant === 'deck' ? (
-                  <View className="bg-foreground-darker h-3 w-3 rotate-45 rounded-sm" />
-                ) : (
-                  <View className="bg-foreground-darker h-2.5 w-2.5 rounded-full" />
-                )}
+                <View className="bg-foreground-darker h-3 w-3 rotate-45 rounded-sm" />
               </View>
             )}
           </View>

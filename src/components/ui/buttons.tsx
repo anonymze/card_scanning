@@ -1,7 +1,7 @@
 import { cn } from '@/libs/tailwind';
 import { StyleSheet, Text, View } from 'react-native';
 import { useCSSVariable } from 'uniwind';
-import { MyTouchableScaleOpacity } from '../my-pressable';
+import { MyTouchableScale } from '../my-pressable';
 
 const Button = ({
   title,
@@ -21,7 +21,7 @@ const Button = ({
   ]);
 
   return (
-    <MyTouchableScaleOpacity
+    <MyTouchableScale
       className={cn(
         'h-14 flex-row items-center justify-center gap-3 overflow-hidden rounded-2xl px-10 py-2',
 
@@ -45,7 +45,7 @@ const Button = ({
       <Text className="font-sans-semibold text-background-primary-darker text-lg">
         {title}
       </Text>
-    </MyTouchableScaleOpacity>
+    </MyTouchableScale>
   );
 };
 

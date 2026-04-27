@@ -1,6 +1,9 @@
 import { Icon } from '@/components/icons';
 import { Menu, MenuAction } from '@/components/menu';
-import { MyTouchableScale } from '@/components/my-pressable';
+import {
+  MyTouchableScale,
+  MyTouchableScaleOpacity,
+} from '@/components/my-pressable';
 import { Text } from '@/components/ui/texts';
 import { cn } from '@/libs/tailwind';
 import { router, usePathname } from 'expo-router';
@@ -10,17 +13,20 @@ import { useCSSVariable } from 'uniwind';
 function IconCard({
   children,
   onPress,
+  withOpacity,
 }: {
   children: React.ReactNode;
   onPress?: () => void;
+  withOpacity?: boolean;
 }) {
+  const Component = withOpacity ? MyTouchableScaleOpacity : MyTouchableScale;
   return (
-    <MyTouchableScale
+    <Component
       onPress={onPress}
       className="border-foreground-darker h-10 w-10 items-center justify-center rounded-xl border"
     >
       {children}
-    </MyTouchableScale>
+    </Component>
   );
 }
 
@@ -47,7 +53,7 @@ export function Header({
     <View className="flex-row items-center justify-between">
       {showBack && (
         <View className="w-10 items-start">
-          <IconCard onPress={() => router.back()}>
+          <IconCard withOpacity onPress={() => router.back()}>
             <Icon name="chevron-left" size={18} color={String(foreground)} />
           </IconCard>
         </View>
