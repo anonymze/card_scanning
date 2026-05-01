@@ -22,6 +22,7 @@ export function ScrollList<T>({
       {...props}
       showsVerticalScrollIndicator={showsVerticalScrollIndicator}
       contentContainerStyle={mergedContentContainerStyle}
+      style={{ flex: 1 }}
     />
   );
 }

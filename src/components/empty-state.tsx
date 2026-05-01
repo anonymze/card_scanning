@@ -1,4 +1,8 @@
-import { EmptyCardsIllustration, EmptyStateVariant } from '@/components/icons';
+import {
+  EmptyCardsIllustration,
+  EmptySearchIllustration,
+  EmptyStateVariant,
+} from '@/components/icons';
 import { useFocusEffect } from 'expo-router';
 import React from 'react';
 import { View } from 'react-native';
@@ -11,14 +15,18 @@ import Animated, {
 } from 'react-native-reanimated';
 import { Button } from './ui/buttons';
 import { Text } from './ui/texts';
+import { cn } from '@/libs/tailwind';
+
+type Variant = EmptyStateVariant | 'search';
 
 type EmptyStateProps = {
-  variant: EmptyStateVariant;
+  variant: Variant;
   title: string;
-  buttonText: string;
+  buttonText?: string;
   subtitle?: string;
   size?: number;
   onPress?: () => void;
+  className?: string;
 };
 
 function AnimatedIllustration({
@@ -26,7 +34,7 @@ function AnimatedIllustration({
   variant,
 }: {
   size: number;
-  variant: EmptyStateVariant;
+  variant: Variant;
 }) {
   const translateX = useSharedValue(0);
   const translateY = useSharedValue(0);
@@ -59,8 +67,12 @@ function AnimatedIllustration({
   }));
 
   return (
-    <Animated.View style={[animatedStyle, { marginBottom: -40 }]}>
-      <EmptyCardsIllustration size={size} variant={variant} />
+    <Animated.View style={[animatedStyle, { marginTop: -45 }]}>
+      {variant === 'search' ? (
+        <EmptySearchIllustration size={size} />
+      ) : (
+        <EmptyCardsIllustration size={size} variant={variant} />
+      )}
     </Animated.View>
   );
 }
@@ -70,8 +82,9 @@ export const EmptyState = ({
   title,
   subtitle,
   buttonText,
-  size = 280,
   onPress,
+  className,
+  size = 280,
 }: EmptyStateProps) => {
   const [animKey, setAnimKey] = React.useState(0);
 
@@ -82,9 +95,9 @@ export const EmptyState = ({
   );
 
   return (
-    <View className="flex-1 items-center justify-center gap-4">
+    <View className={cn('flex-1 items-center justify-center gap-2', className)}>
       <AnimatedIllustration key={animKey} size={size} variant={variant} />
-      <View className="items-center gap-2 pt-5">
+      <View className="items-center gap-2">
         <Text className="font-sans-semibold text-foreground text-center text-xl">
           {title}
         </Text>
@@ -93,7 +106,9 @@ export const EmptyState = ({
             {subtitle}
           </Text>
         ) : null}
-        <Button title={buttonText} onPress={onPress} className="mt-4" />
+        {buttonText ? (
+          <Button title={buttonText} onPress={onPress} className="mt-4" />
+        ) : null}
       </View>
     </View>
   );

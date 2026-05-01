@@ -1,5 +1,7 @@
 import { queryClient } from '@/api/_config';
 import { dbVersionQueryOptions } from '@/api/queries/db-queries';
+import { logDbStats } from '@/libs/db';
+import { ensureDbDownloaded } from '@/libs/db-download';
 import { posthog } from '@/libs/posthog';
 import '@/global.css';
 import { AnimatedSplashOverlay } from '@/layouts/animated-splash-overlay';
@@ -29,14 +31,42 @@ SplashScreen.setOptions({
 });
 
 function SplashGate() {
-  const { isSuccess, isError, error, refetch } = useQuery(
-    dbVersionQueryOptions(),
-  );
+  const versionQuery = useQuery(dbVersionQueryOptions());
+  const [dbReady, setDbReady] = React.useState(false);
+  const [dbError, setDbError] = React.useState<string | undefined>();
+
+  React.useEffect(() => {
+    if (!versionQuery.data) return;
+    setDbError(undefined);
+    ensureDbDownloaded(versionQuery.data)
+      .then(() => {
+        logDbStats();
+        setDbReady(true);
+      })
+      .catch((e) =>
+        setDbError(e instanceof Error ? e.message : 'Download failed'),
+      );
+  }, [versionQuery.data]);
+
+  const error = versionQuery.isError
+    ? (versionQuery.error?.message ?? 'Network unreachable')
+    : dbError;
+
   return (
     <AnimatedSplashOverlay
-      ready={isSuccess}
-      error={isError ? (error?.message ?? 'Network unreachable') : undefined}
-      onRetry={() => refetch()}
+      ready={dbReady}
+      error={error}
+      onRetry={() => {
+        setDbError(undefined);
+        if (versionQuery.isError) versionQuery.refetch();
+        else if (versionQuery.data) {
+          ensureDbDownloaded(versionQuery.data)
+            .then(() => setDbReady(true))
+            .catch((e) =>
+              setDbError(e instanceof Error ? e.message : 'Download failed'),
+            );
+        }
+      }}
     />
   );
 }

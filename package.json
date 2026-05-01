@@ -105,5 +105,8 @@
     "onlyBuiltDependencies": [
       "@shopify/react-native-skia"
     ]
+  },
+  "op-sqlite": {
+    "fts5": true
   }
 }

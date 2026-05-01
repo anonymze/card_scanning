@@ -1,6 +1,7 @@
+import { CloseIcon } from '@/components/icons';
 import { MyTouchableOpacity } from '@/components/my-pressable';
 import React from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import { useCSSVariable } from 'uniwind';
 import { TextTitle } from './ui/texts';
 
@@ -23,7 +24,10 @@ const CardFrame = ({
   variant?: CardFrameVariant;
 }) => {
   const vars = GRADIENT_VARS[variant];
-  const [base, lighter] = useCSSVariable(vars);
+  const [base, lighter, bgPrimary] = useCSSVariable([
+    ...vars,
+    '--color-background-primary',
+  ]);
   return (
     <View className="border-foreground-darker rounded-xl border-2 p-1.5">
       <View className="border-foreground-darker/40 rounded-lg border border-dashed">
@@ -41,11 +45,11 @@ const CardFrame = ({
               <MyTouchableOpacity
                 onPress={onDelete}
                 hitSlop={20}
-                className="bg-foreground-darker/30 h-5.5 w-5.5 rotate-45 items-center justify-center rounded-[7px]"
+                className="bg-foreground h-5 w-5 rotate-45 items-center justify-center rounded-md"
               >
-                <Text className="text-foreground -rotate-45 text-[11px] leading-none font-bold">
-                  ✕
-                </Text>
+                <View className="-rotate-45">
+                  <CloseIcon color={String(bgPrimary)} size={12} />
+                </View>
               </MyTouchableOpacity>
             ) : (
               <View className="flex-row items-center gap-1.5">

@@ -1,10 +1,10 @@
+import { CloseIcon } from '@/components/icons';
 import { cn } from '@/libs/tailwind';
 import * as Haptics from 'expo-haptics';
 import React from 'react';
 import {
   Pressable,
   TextInput as RNTextInput,
-  Text,
   TextInputProps,
   View,
 } from 'react-native';
@@ -42,7 +42,10 @@ const TextInput = ({
   className?: string;
   ref?: React.Ref<TextInputRef>;
 } & Omit<TextInputProps, 'placeholder'>) => {
-  const [grayLight] = useCSSVariable(['--color-gray-lighter']);
+  const [grayLight, bgPrimary] = useCSSVariable([
+    '--color-gray-lighter',
+    '--color-background-primary',
+  ]);
   const shakeOffset = useSharedValue(0);
   const inputRef = React.useRef<RNTextInput>(null);
   const valueRef = React.useRef('');
@@ -133,12 +136,12 @@ const TextInput = ({
             entering={FadeIn.duration(150)}
             exiting={FadeOut.duration(150)}
             onPress={handleClear}
-            hitSlop={10}
-            className="bg-foreground-darker/30 ml-2 h-6 w-6 items-center justify-center rounded-full"
+            hitSlop={20}
+            className="bg-foreground ml-3 h-5 w-5 rotate-45 items-center justify-center rounded-md"
           >
-            <Text className="text-foreground text-xs leading-none font-bold">
-              ✕
-            </Text>
+            <View className="-rotate-45">
+              <CloseIcon color={String(bgPrimary)} size={12} />
+            </View>
           </AnimatedPressable>
         ) : null}
       </View>

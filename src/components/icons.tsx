@@ -69,6 +69,40 @@ const EmptyCardsIllustration = ({
   );
 };
 
+const CloseIcon = ({
+  color = 'currentColor',
+  size = 12,
+  ...props
+}: { color?: string; size?: number } & SvgProps) => {
+  return (
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" {...props}>
+      <Path
+        d="M6 6 L18 18 M18 6 L6 18"
+        stroke={color}
+        strokeWidth={4}
+        strokeLinecap="round"
+      />
+    </Svg>
+  );
+};
+
+const PlusIcon = ({
+  color = 'currentColor',
+  size = 24,
+  ...props
+}: { color?: string; size?: number } & SvgProps) => {
+  return (
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" {...props}>
+      <Path
+        d="M12 5 L12 19 M5 12 L19 12"
+        stroke={color}
+        strokeWidth={3.5}
+        strokeLinecap="round"
+      />
+    </Svg>
+  );
+};
+
 const EyeIcon = ({
   color = 'currentColor',
   width = 20,
@@ -126,6 +160,8 @@ const EmptySearchIllustration = ({ size = 280 }: { size?: number }) => {
 export {
   Icon,
   EyeIcon,
+  CloseIcon,
+  PlusIcon,
   EmptyCardsIllustration,
   EmptySearchIllustration,
 };
