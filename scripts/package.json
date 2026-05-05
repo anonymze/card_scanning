@@ -4,12 +4,20 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "fetch": "tsx scryfall.ts"
+    "fetch": "tsx scryfall.ts",
+    "phash": "tsx phash.ts",
+    "sqlite": "tsx build-sqlite.ts",
+    "upload": "tsx upload.ts"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.1043.0",
+    "better-sqlite3": "^12.9.0",
+    "sharp": "^0.34.5",
+    "sharp-phash": "^2.2.0",
     "stream-json": "^1.9.1"
   },
   "devDependencies": {
+    "@types/better-sqlite3": "^7.6.13",
     "@types/node": "^22.9.0",
     "@types/stream-json": "^1.7.8",
     "tsx": "^4.19.2",
