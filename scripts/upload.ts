@@ -1,3 +1,4 @@
+import { createHash } from 'node:crypto';
 import { readFileSync, statSync } from 'node:fs';
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
 
@@ -32,6 +33,9 @@ async function main() {
   console.log(`[upload] ${dbKey} (${(stats.size / 1024 / 1024).toFixed(1)}MB)`);
 
   const body = readFileSync(SQLITE_FILE);
+  const sha256 = createHash('sha256').update(body).digest('hex');
+  console.log(`[upload] sha256=${sha256}`);
+
   await s3.send(
     new PutObjectCommand({
       Bucket: bucket,
@@ -46,6 +50,7 @@ async function main() {
     version,
     url: dbKey,
     size: stats.size,
+    sha256,
     uploaded_at: new Date().toISOString(),
   };
 
