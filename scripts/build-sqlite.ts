@@ -37,6 +37,7 @@ async function main() {
   db.pragma('synchronous = OFF');
   const schema = readFileSync(join(__dirname, 'schema.sql'), 'utf8');
   db.exec(schema);
+  db.pragma('foreign_keys = OFF');
 
   const insertCard = db.prepare(`
     INSERT OR IGNORE INTO cards
