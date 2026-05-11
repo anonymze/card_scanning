@@ -1,11 +1,11 @@
-import type { ScryfallCard } from './cards';
+import type { Card } from './card';
 
 export interface CollectionCard {
   id: string;
-  scryfallId: string;
+  oracleId: string;
   quantity: number;
   addedAt: number;
-  card: ScryfallCard;
+  card: Card;
 }
 
 export interface Collection {

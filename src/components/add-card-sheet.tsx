@@ -1,21 +1,22 @@
 import { BottomSheet, BottomSheetRef } from '@/components/bottom-sheet';
+import { CardPreview } from '@/components/card-preview';
 import { EmptyState } from '@/components/empty-state';
 import { ScrollList } from '@/components/scroll-list';
+import { ManaCost } from '@/components/ui/mana-cost';
 import { TextInput, TextInputRef } from '@/components/ui/text-inputs';
 import { Text } from '@/components/ui/texts';
+import { useCardTarget, type CardTargetType } from '@/hooks/use-card-target';
 import { listCards, searchCards } from '@/libs/db';
-import type { CardSearchRow } from '@/types/db';
+import type { Card } from '@/types/card';
+import * as Haptics from 'expo-haptics';
 import * as Localization from 'expo-localization';
 import React, { Activity } from 'react';
-import { Pressable, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
+import { useCSSVariable } from 'uniwind';
 
 const PAGE_SIZE = 50;
 
-function fetchPage(
-  query: string,
-  lang: string,
-  offset: number,
-): CardSearchRow[] {
+function fetchPage(query: string, lang: string, offset: number): Card[] {
   const q = query.trim();
   try {
     return q.length < 2
@@ -31,19 +32,41 @@ export function AddCardSheet({
   sheetRef,
   type,
   id,
-  onPick,
 }: {
   sheetRef: React.RefObject<BottomSheetRef | null>;
-  type: 'collection' | 'deck';
+  type: CardTargetType;
   id: string;
-  onPick?: (oracleId: string) => void;
 }) {
   const inputRef = React.useRef<TextInputRef>(null);
   const [search, setSearch] = React.useState('');
-  const [results, setResults] = React.useState<CardSearchRow[]>([]);
+  const [results, setResults] = React.useState<Card[]>([]);
   const [hasMore, setHasMore] = React.useState(true);
+  const [preview, setPreview] = React.useState<Card | null>(null);
   const loadingRef = React.useRef(false);
   const lang = Localization.getLocales()[0]?.languageCode ?? 'en';
+
+  const target = useCardTarget(type, id);
+
+  const countByOracleId = React.useMemo(() => {
+    const m: Record<string, number> = {};
+    for (const c of target.cards) m[c.oracleId] = c.quantity;
+    return m;
+  }, [target.cards]);
+
+  const [common, uncommon, rare, mythic] = useCSSVariable([
+    '--color-rarity-common',
+    '--color-rarity-uncommon',
+    '--color-rarity-rare',
+    '--color-rarity-mythic',
+  ]);
+  const rarityColor: Record<string, string> = {
+    common: String(common),
+    uncommon: String(uncommon),
+    rare: String(rare),
+    mythic: String(mythic),
+    special: String(rare),
+    bonus: String(mythic),
+  };
 
   React.useEffect(() => {
     const page = fetchPage(search, lang, 0);
@@ -60,10 +83,17 @@ export function AddCardSheet({
     loadingRef.current = false;
   }, [search, lang, results.length, hasMore]);
 
-  const handlePick = (oracleId: string) => {
-    onPick?.(oracleId);
-    console.log('add', { type, id, oracle_id: oracleId });
-    sheetRef.current?.dismiss();
+  const handleAdd = (card: Card) => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    target.addCard(card, 1);
+  };
+
+  const handleInc = (card: Card) => target.addCard(card, 1);
+  const handleDec = (card: Card) => {
+    const entry = target.cards.find((c) => c.oracleId === card.oracle_id);
+    if (!entry) return;
+    if (entry.quantity <= 1) target.removeCard(entry.id);
+    else target.updateQuantity(entry.id, entry.quantity - 1);
   };
 
   return (
@@ -73,10 +103,11 @@ export function AddCardSheet({
       scrollable
       onDidDismiss={() => {
         setSearch('');
+        setPreview(null);
         inputRef.current?.clear();
       }}
     >
-      <Text className="font-cinzel-semibold text-foreground mb-4 text-2xl">
+      <Text className="font-cinzel-semibold text-foreground mb-3 text-2xl">
         Add cards
       </Text>
       <TextInput
@@ -95,36 +126,72 @@ export function AddCardSheet({
       ) : null}
       <Activity mode={results.length === 0 ? 'hidden' : 'visible'}>
         <ScrollList
+          style={{ flex: 1, marginTop: 8 }}
           data={results}
           keyExtractor={(item) => item.oracle_id}
-          estimatedItemSize={56}
+          estimatedItemSize={68}
           keyboardShouldPersistTaps="handled"
           onEndReached={loadMore}
           onEndReachedThreshold={0.5}
-          renderItem={({ item }) => (
-            <Pressable
-              onPress={() => handlePick(item.oracle_id)}
-              className="border-foreground-darker/20 flex-row items-center justify-between border-b py-3"
-            >
-              <View className="flex-1">
-                <Text className="text-foreground" numberOfLines={1}>
-                  {item.display_name}
-                </Text>
-                {item.display_type ? (
-                  <Text className="text-gray text-xs" numberOfLines={1}>
-                    {item.display_type}
+          renderItem={({ item }) => {
+            const count = countByOracleId[item.oracle_id] ?? 0;
+            const color = rarityColor[item.rarity] ?? rarityColor.common;
+            const subtitle = [
+              item.printed_type_line ?? item.type_line,
+              item.set_code.toUpperCase(),
+            ]
+              .filter(Boolean)
+              .join(' · ');
+            return (
+              <Pressable
+                onPress={() => handleAdd(item)}
+                onLongPress={() => setPreview(item)}
+                className="mb-1.5 flex-row items-center justify-between overflow-hidden rounded-xl px-3 py-3"
+              >
+                <View
+                  pointerEvents="none"
+                  style={[
+                    StyleSheet.absoluteFill,
+                    {
+                      experimental_backgroundImage: `linear-gradient(to right, ${color}77 0%, ${color}77 55%, ${color}33 100%)`,
+                    },
+                  ]}
+                />
+                <View className="flex-1 pr-3">
+                  <View className="flex-row items-center gap-2">
+                    <Text
+                      className="text-foreground shrink text-base"
+                      numberOfLines={1}
+                    >
+                      {item.printed_name ?? item.name}
+                    </Text>
+                    {item.mana_cost ? (
+                      <ManaCost cost={item.mana_cost} size={19} />
+                    ) : null}
+                  </View>
+                  <Text className="text-gray mt-1 text-sm" numberOfLines={1}>
+                    {subtitle}
                   </Text>
+                </View>
+                {count > 0 ? (
+                  <View className="bg-foreground/10 min-w-10 items-center rounded-full px-2.5 py-1">
+                    <Text className="text-foreground text-sm font-bold">
+                      ×{count}
+                    </Text>
+                  </View>
                 ) : null}
-              </View>
-              {item.mana_cost ? (
-                <Text className="text-foreground-darker font-sans-semibold ml-3 text-sm">
-                  {item.mana_cost}
-                </Text>
-              ) : null}
-            </Pressable>
-          )}
+              </Pressable>
+            );
+          }}
         />
       </Activity>
+      <CardPreview
+        card={preview}
+        count={preview ? (countByOracleId[preview.oracle_id] ?? 0) : 0}
+        onClose={() => setPreview(null)}
+        onInc={handleInc}
+        onDec={handleDec}
+      />
     </BottomSheet>
   );
 }

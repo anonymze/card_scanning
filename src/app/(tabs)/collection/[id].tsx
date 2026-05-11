@@ -1,5 +1,5 @@
+import { AddCardSheet } from '@/components/add-card-sheet';
 import { BottomSheetRef } from '@/components/bottom-sheet';
-import { AddCardSheetVariantB } from '@/components/prototypes/add-card-sheet-variant-b';
 import { EmptyState } from '@/components/empty-state';
 import { ScrollList } from '@/components/scroll-list';
 import { FAB } from '@/components/ui/fab';
@@ -89,7 +89,7 @@ export default function Page() {
         </View>
       )}
       <FAB onPress={handleAdd} />
-      <AddCardSheetVariantB
+      <AddCardSheet
         sheetRef={sheetRef}
         type="collection"
         id={collection.id}

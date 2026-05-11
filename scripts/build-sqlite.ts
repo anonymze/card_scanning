@@ -51,13 +51,13 @@ async function main() {
   const insertPrinting = db.prepare(`
     INSERT OR IGNORE INTO printings
       (id, oracle_id, lang, set_code, set_name, collector_number, rarity,
-       released_at, artist, image_small, image_normal,
+       released_at, artist, image_small, image_normal, image_art_crop,
        printed_name, printed_text, printed_type_line,
        price_usd, price_eur, price_usd_foil, price_eur_foil,
        tcgplayer_id, cardmarket_id, illustration_id, phash)
     VALUES
       (@id, @oracle_id, @lang, @set_code, @set_name, @collector_number, @rarity,
-       @released_at, @artist, @image_small, @image_normal,
+       @released_at, @artist, @image_small, @image_normal, @image_art_crop,
        @printed_name, @printed_text, @printed_type_line,
        @price_usd, @price_eur, @price_usd_foil, @price_eur_foil,
        @tcgplayer_id, @cardmarket_id, @illustration_id, @phash)
@@ -113,6 +113,7 @@ async function main() {
         artist: c.artist ?? null,
         image_small: c.image_uris.small,
         image_normal: c.image_uris.normal,
+        image_art_crop: c.image_uris.art_crop ?? null,
         printed_name: c.printed_name ?? null,
         printed_text: c.printed_text ?? null,
         printed_type_line: c.printed_type_line ?? null,

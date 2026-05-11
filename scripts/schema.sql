@@ -29,6 +29,7 @@ CREATE TABLE printings (
   artist            TEXT,
   image_small       TEXT NOT NULL,
   image_normal      TEXT NOT NULL,
+  image_art_crop    TEXT,
   printed_name      TEXT,
   printed_text      TEXT,
   printed_type_line TEXT,

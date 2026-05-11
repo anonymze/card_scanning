@@ -1,5 +1,5 @@
 import { storage } from '@/libs/mmkv';
-import type { ScryfallCard } from '@/types/cards';
+import type { Card } from '@/types/card';
 import type { Collection, CollectionCard } from '@/types/collection';
 import { create } from 'zustand';
 import {
@@ -18,7 +18,7 @@ interface DecksState {
   decks: Collection[];
   createDeck: (name: string, description: string) => Collection;
   deleteDeck: (id: string) => void;
-  addCard: (deckId: string, card: ScryfallCard, quantity?: number) => void;
+  addCard: (deckId: string, card: Card, quantity?: number) => void;
   removeCard: (deckId: string, cardId: string) => void;
   updateCardQuantity: (
     deckId: string,
@@ -62,13 +62,15 @@ export const useDecks = create<DecksState>()(
         set((state) => ({
           decks: state.decks.map((deck) => {
             if (deck.id !== deckId) return deck;
-            const existing = deck.cards.find((c) => c.scryfallId === card.id);
+            const existing = deck.cards.find(
+              (c) => c.oracleId === card.oracle_id,
+            );
             if (existing) {
               return {
                 ...deck,
                 updatedAt: Date.now(),
                 cards: deck.cards.map((c) =>
-                  c.scryfallId === card.id
+                  c.oracleId === card.oracle_id
                     ? { ...c, quantity: c.quantity + quantity }
                     : c,
                 ),
@@ -76,7 +78,7 @@ export const useDecks = create<DecksState>()(
             }
             const newCard: CollectionCard = {
               id: `card_${Date.now()}`,
-              scryfallId: card.id,
+              oracleId: card.oracle_id,
               quantity,
               addedAt: Date.now(),
               card,

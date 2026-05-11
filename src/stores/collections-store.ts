@@ -1,6 +1,6 @@
 import { posthog } from '@/libs/posthog';
 import { storage } from '@/libs/mmkv';
-import type { ScryfallCard } from '@/types/cards';
+import type { Card } from '@/types/card';
 import type { Collection, CollectionCard } from '@/types/collection';
 import { create } from 'zustand';
 import {
@@ -21,7 +21,7 @@ interface CollectionsState {
   deleteCollection: (id: string) => void;
   addCard: (
     collectionId: string,
-    card: ScryfallCard,
+    card: Card,
     quantity?: number,
   ) => void;
   removeCard: (collectionId: string, cardId: string) => void;
@@ -67,13 +67,15 @@ export const useCollections = create<CollectionsState>()(
         set((state) => ({
           collections: state.collections.map((col) => {
             if (col.id !== collectionId) return col;
-            const existing = col.cards.find((c) => c.scryfallId === card.id);
+            const existing = col.cards.find(
+              (c) => c.oracleId === card.oracle_id,
+            );
             if (existing) {
               return {
                 ...col,
                 updatedAt: Date.now(),
                 cards: col.cards.map((c) =>
-                  c.scryfallId === card.id
+                  c.oracleId === card.oracle_id
                     ? { ...c, quantity: c.quantity + quantity }
                     : c,
                 ),
@@ -81,7 +83,7 @@ export const useCollections = create<CollectionsState>()(
             }
             const newCard: CollectionCard = {
               id: `card_${Date.now()}`,
-              scryfallId: card.id,
+              oracleId: card.oracle_id,
               quantity,
               addedAt: Date.now(),
               card,

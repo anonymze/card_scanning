@@ -21,7 +21,7 @@ function getTypeBreakdown(item: Collection) {
   const counts: Record<string, number> = {};
 
   for (const entry of item.cards) {
-    const rawType = entry.card.type_line.split('—')[0]?.trim() ?? '';
+    const rawType = entry.card.type_line?.split('—')[0]?.trim() ?? '';
     const matchedType = CARD_TYPES.find((t) => rawType.includes(t));
     const label = matchedType ?? 'Other';
     counts[label] = (counts[label] ?? 0) + entry.quantity;

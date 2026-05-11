@@ -41,7 +41,7 @@ const FIELDS_TO_DROP = new Set([
   'watermark',
 ]);
 
-const IMAGE_URIS_TO_DROP = new Set(['png', 'art_crop', 'border_crop']);
+const IMAGE_URIS_TO_DROP = new Set(['png', 'border_crop']);
 
 async function getBulkUrl(): Promise<{ url: string; updated_at: string; size: number }> {
   const res = await fetch(BULK_API, {
