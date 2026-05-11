@@ -2,6 +2,10 @@ import { CloseIcon } from '@/components/icons';
 import { MyTouchableOpacity } from '@/components/my-pressable';
 import { ManaCost } from '@/components/ui/mana-cost';
 import { Text } from '@/components/ui/texts';
+import {
+  buildManaGradientBlend,
+  type ManaColorMap,
+} from '@/libs/mana-gradient';
 import type { Card } from '@/types/card';
 import { Image } from 'expo-image';
 import { Pressable, StyleSheet, View } from 'react-native';
@@ -36,8 +40,31 @@ export function CardPreview({
   onInc: (card: Card) => void;
   onDec: (card: Card) => void;
 }) {
-  const [bgPrimary] = useCSSVariable(['--color-background-primary']);
+  const [bgPrimary, w, u, b, r, g, c, m] = useCSSVariable([
+    '--color-background-primary',
+    '--color-mana-w',
+    '--color-mana-u',
+    '--color-mana-b',
+    '--color-mana-r',
+    '--color-mana-g',
+    '--color-mana-c',
+    '--color-mana-multi',
+  ]);
   if (!card) return null;
+  const manaColor: ManaColorMap = {
+    W: String(w),
+    U: String(u),
+    B: String(b),
+    R: String(r),
+    G: String(g),
+    C: String(c),
+    M: String(m),
+  };
+  const gradient = buildManaGradientBlend(
+    card.color_identity,
+    manaColor,
+    'to top',
+  );
   const description = card.printed_text ?? card.oracle_text;
   return (
     <Animated.View
@@ -57,8 +84,17 @@ export function CardPreview({
             .stiffness(230)
             .mass(0.65)}
           exiting={FadeOutDown.duration(120)}
-          className="bg-background-primary-darker w-full max-w-sm rounded-2xl p-5"
+          className="bg-background-primary-darker w-full max-w-sm overflow-hidden rounded-2xl p-5"
         >
+          <View
+            pointerEvents="none"
+            style={[
+              StyleSheet.absoluteFill,
+              {
+                experimental_backgroundImage: gradient,
+              },
+            ]}
+          />
           <MyTouchableOpacity
             onPress={onClose}
             hitSlop={20}
@@ -82,7 +118,7 @@ export function CardPreview({
           </Animated.View>
           <Animated.View
             entering={enter(1)}
-            className="flex-row items-center self-stretch"
+            className="flex-row items-center gap-1 self-stretch"
           >
             <Text className="font-cinzel-semibold text-foreground flex-1 text-xl">
               {card.printed_name ?? card.name}
