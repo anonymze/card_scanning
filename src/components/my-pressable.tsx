@@ -58,10 +58,15 @@ const MyTouchableOpacity = ({
 
 const MyTouchableScale = ({
   children,
+  delayLongPress,
   ...props
-}: CustomPressablePropsWithClassName) => {
+}: CustomPressablePropsWithClassName & { delayLongPress?: number }) => {
   return (
-    <StyledPressableScale hitSlop={BASE_HIT_SLOP} {...props}>
+    <StyledPressableScale
+      hitSlop={BASE_HIT_SLOP}
+      {...{ delayLongPress }}
+      {...props}
+    >
       {children}
     </StyledPressableScale>
   );

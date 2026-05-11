@@ -7,10 +7,6 @@ import { TextInput, TextInputRef } from '@/components/ui/text-inputs';
 import { Text } from '@/components/ui/texts';
 import { useCardTarget, type CardTargetType } from '@/hooks/use-card-target';
 import { listCards, searchCards } from '@/libs/db';
-import {
-  buildManaGradientSolid,
-  type ManaColorMap,
-} from '@/libs/mana-gradient';
 import type { Card } from '@/types/card';
 import * as Haptics from 'expo-haptics';
 import { Image } from 'expo-image';
@@ -21,6 +17,7 @@ import { MyTouchableScale } from '@/components/my-pressable';
 import { useCSSVariable } from 'uniwind';
 
 const PAGE_SIZE = 50;
+const ItemSeparator = () => <View style={{ height: 6 }} />;
 
 function fetchPage(query: string, lang: string, offset: number): Card[] {
   const q = query.trim();
@@ -59,23 +56,19 @@ export function AddCardSheet({
     return m;
   }, [target.cards]);
 
-  const [w, u, b, r, g, c, m] = useCSSVariable([
-    '--color-mana-w',
-    '--color-mana-u',
-    '--color-mana-b',
-    '--color-mana-r',
-    '--color-mana-g',
-    '--color-mana-c',
-    '--color-mana-multi',
+  const [common, uncommon, rare, mythic] = useCSSVariable([
+    '--color-rarity-common',
+    '--color-rarity-uncommon',
+    '--color-rarity-rare',
+    '--color-rarity-mythic',
   ]);
-  const manaColor: ManaColorMap = {
-    W: String(w),
-    U: String(u),
-    B: String(b),
-    R: String(r),
-    G: String(g),
-    C: String(c),
-    M: String(m),
+  const rarityColor: Record<string, string> = {
+    common: String(common),
+    uncommon: String(uncommon),
+    rare: String(rare),
+    mythic: String(mythic),
+    special: String(rare),
+    bonus: String(mythic),
   };
 
   React.useEffect(() => {
@@ -140,17 +133,17 @@ export function AddCardSheet({
           data={results}
           extraData={countByOracleId}
           keyExtractor={(item) => item.oracle_id}
-          estimatedItemSize={68}
+          estimatedItemSize={72}
+          drawDistance={800}
+          recycleItems
+          ItemSeparatorComponent={ItemSeparator}
           keyboardShouldPersistTaps="handled"
           onEndReached={loadMore}
           onEndReachedThreshold={0.5}
           renderItem={({ item }) => {
             const count = countByOracleId[item.oracle_id] ?? 0;
-            const gradient = buildManaGradientSolid(
-              item.color_identity,
-              manaColor,
-              'to right',
-            );
+            const color = rarityColor[item.rarity] ?? rarityColor.common;
+            const gradient = `linear-gradient(to right, ${color}77 0%, ${color}77 55%, ${color}33 100%)`;
             const subtitle = [
               item.printed_type_line ?? item.type_line,
               item.set_code.toUpperCase(),
@@ -165,8 +158,8 @@ export function AddCardSheet({
                 }}
                 onPress={() => handleAdd(item)}
                 onLongPress={() => setPreview(item)}
-                delayLongPress={400}
-                className="mb-1.5 flex-row items-center justify-between overflow-hidden rounded-xl px-3 py-3"
+                delayLongPress={420}
+                className="flex-row items-center justify-between overflow-hidden rounded-xl px-3 py-3"
               >
                 <View
                   pointerEvents="none"
