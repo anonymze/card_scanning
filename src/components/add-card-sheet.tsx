@@ -9,9 +9,11 @@ import { useCardTarget, type CardTargetType } from '@/hooks/use-card-target';
 import { listCards, searchCards } from '@/libs/db';
 import type { Card } from '@/types/card';
 import * as Haptics from 'expo-haptics';
+import { Image } from 'expo-image';
 import * as Localization from 'expo-localization';
 import React, { Activity } from 'react';
-import { Pressable, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import { MyTouchableScale } from '@/components/my-pressable';
 import { useCSSVariable } from 'uniwind';
 
 const PAGE_SIZE = 50;
@@ -128,6 +130,7 @@ export function AddCardSheet({
         <ScrollList
           style={{ flex: 1, marginTop: 8 }}
           data={results}
+          extraData={countByOracleId}
           keyExtractor={(item) => item.oracle_id}
           estimatedItemSize={68}
           keyboardShouldPersistTaps="handled"
@@ -143,7 +146,11 @@ export function AddCardSheet({
               .filter(Boolean)
               .join(' · ');
             return (
-              <Pressable
+              <MyTouchableScale
+                onPressIn={() => {
+                  const uri = item.image_art_crop ?? item.image_normal;
+                  if (uri) Image.prefetch(uri);
+                }}
                 onPress={() => handleAdd(item)}
                 onLongPress={() => setPreview(item)}
                 className="mb-1.5 flex-row items-center justify-between overflow-hidden rounded-xl px-3 py-3"
@@ -180,7 +187,7 @@ export function AddCardSheet({
                     </Text>
                   </View>
                 ) : null}
-              </Pressable>
+              </MyTouchableScale>
             );
           }}
         />

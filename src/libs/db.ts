@@ -20,7 +20,7 @@ const SELECT_CARD = `
          c.keywords, c.legalities, c.card_faces,
          p.id AS printing_id, p.lang, p.set_code, p.set_name,
          p.collector_number, p.rarity, p.released_at, p.artist,
-         p.image_small, p.image_normal, p.image_art_crop,
+         p.image_small, p.image_normal,
          p.printed_name, p.printed_text, p.printed_type_line,
          p.price_usd, p.price_eur, p.price_usd_foil, p.price_eur_foil,
          p.tcgplayer_id, p.cardmarket_id, p.illustration_id, p.phash
@@ -85,7 +85,7 @@ function rowToCard(r: Record<string, unknown>): Card {
     artist: toNullableString(r.artist),
     image_small: toString(r.image_small),
     image_normal: toString(r.image_normal),
-    image_art_crop: toNullableString(r.image_art_crop),
+    image_art_crop: null,
     printed_name: toNullableString(r.printed_name),
     printed_text: toNullableString(r.printed_text),
     printed_type_line: toNullableString(r.printed_type_line),
@@ -98,22 +98,6 @@ function rowToCard(r: Record<string, unknown>): Card {
     illustration_id: toNullableString(r.illustration_id),
     phash: toNullableString(r.phash),
   };
-}
-
-export function logDbStats() {
-  const db = openDb();
-  const cards = db.executeSync(`SELECT COUNT(*) AS n FROM cards`).rows;
-  const printings = db.executeSync(`SELECT COUNT(*) AS n FROM printings`).rows;
-  const reps = db.executeSync(
-    `SELECT COUNT(*) AS n FROM representative_printings`,
-  ).rows;
-  const langs = db.executeSync(
-    `SELECT lang, COUNT(*) AS n FROM printings GROUP BY lang`,
-  ).rows;
-  console.log('[db] cards:', cards?.[0]);
-  console.log('[db] printings:', printings?.[0]);
-  console.log('[db] reps:', reps?.[0]);
-  console.log('[db] langs:', langs);
 }
 
 export function listCards(lang: string, limit = 50, offset = 0): Card[] {

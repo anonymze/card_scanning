@@ -1,7 +1,27 @@
+import { CloseIcon } from '@/components/icons';
+import { MyTouchableOpacity } from '@/components/my-pressable';
 import { ManaCost } from '@/components/ui/mana-cost';
 import { Text } from '@/components/ui/texts';
 import type { Card } from '@/types/card';
-import { Image, Pressable, StyleSheet, View } from 'react-native';
+import { Image } from 'expo-image';
+import { Pressable, StyleSheet, View } from 'react-native';
+import { useCSSVariable } from 'uniwind';
+import Animated, {
+  FadeIn,
+  FadeInDown,
+  FadeOut,
+  FadeOutDown,
+} from 'react-native-reanimated';
+
+const ENTER_BASE = 40;
+const ENTER_STEP = 35;
+const enter = (i: number) =>
+  FadeInDown.duration(170)
+    .delay(ENTER_BASE + i * ENTER_STEP)
+    .springify()
+    .damping(22)
+    .stiffness(230)
+    .mass(0.6);
 
 export function CardPreview({
   card,
@@ -16,9 +36,13 @@ export function CardPreview({
   onInc: (card: Card) => void;
   onDec: (card: Card) => void;
 }) {
+  const [bgPrimary] = useCSSVariable(['--color-background-primary']);
   if (!card) return null;
+  const description = card.printed_text ?? card.oracle_text;
   return (
-    <View
+    <Animated.View
+      entering={FadeIn.duration(100)}
+      exiting={FadeOut.duration(100)}
       style={[StyleSheet.absoluteFill, { zIndex: 1000 }]}
       pointerEvents="auto"
     >
@@ -26,63 +50,87 @@ export function CardPreview({
         className="flex-1 items-center justify-center bg-black/70 p-6"
         onPress={onClose}
       >
-        <Pressable className="bg-background-primary-darker w-full max-w-sm rounded-2xl p-5">
-          <Pressable
+        <Animated.View
+          entering={FadeInDown.duration(200)
+            .springify()
+            .damping(22)
+            .stiffness(230)
+            .mass(0.65)}
+          exiting={FadeOutDown.duration(120)}
+          className="bg-background-primary-darker w-full max-w-sm rounded-2xl p-5"
+        >
+          <MyTouchableOpacity
             onPress={onClose}
-            hitSlop={12}
-            className="absolute right-3 top-3 z-10 h-8 w-8 items-center justify-center rounded-full bg-foreground/10"
+            hitSlop={20}
+            className="bg-foreground absolute right-3 top-3 z-10 h-6 w-6 rotate-45 items-center justify-center rounded-md"
           >
-            <Text className="text-foreground text-lg">×</Text>
-          </Pressable>
-          <View className="items-center">
+            <View className="-rotate-45">
+              <CloseIcon color={String(bgPrimary)} size={13} />
+            </View>
+          </MyTouchableOpacity>
+          <Animated.View entering={enter(0)} className="items-center">
             <Image
-              source={{ uri: card.image_art_crop ?? card.image_normal }}
+              source={card.image_art_crop ?? card.image_normal}
+              contentFit="cover"
               style={{
-                width: 260,
-                height: 190,
+                width: '100%',
+                aspectRatio: 626 / 457,
                 borderRadius: 12,
                 marginBottom: 16,
               }}
             />
-          </View>
-          <View className="flex-row items-center self-stretch">
+          </Animated.View>
+          <Animated.View
+            entering={enter(1)}
+            className="flex-row items-center self-stretch"
+          >
             <Text className="font-cinzel-semibold text-foreground flex-1 text-xl">
               {card.printed_name ?? card.name}
             </Text>
             {card.mana_cost ? (
               <ManaCost cost={card.mana_cost} size={20} />
             ) : null}
-          </View>
-          <Text className="text-foreground-darker mt-1 self-stretch text-sm">
+          </Animated.View>
+          <Animated.Text
+            entering={enter(2)}
+            className="text-foreground-darker mt-1 self-stretch text-sm"
+          >
             {card.printed_type_line ?? card.type_line ?? ''}
-          </Text>
-          {card.printed_text ?? card.oracle_text ? (
-            <Text className="mt-3 self-stretch text-sm text-white">
-              {card.printed_text ?? card.oracle_text}
-            </Text>
+          </Animated.Text>
+          {description ? (
+            <Animated.Text
+              entering={enter(3)}
+              className="mt-3 self-stretch text-sm text-white"
+            >
+              {description}
+            </Animated.Text>
           ) : null}
-          <View className="bg-background-primary mt-5 flex-row items-center justify-between self-stretch rounded-xl p-3">
+          <Animated.View
+            entering={enter(4)}
+            onStartShouldSetResponder={() => true}
+            className="bg-background-primary mt-5 flex-row items-center justify-between self-stretch rounded-xl p-3"
+          >
             <Text className="text-foreground">In your list</Text>
             <View className="flex-row items-center gap-3">
-              <Pressable
+              <MyTouchableOpacity
                 onPress={() => onDec(card)}
                 className="bg-foreground/10 h-9 w-9 items-center justify-center rounded-full"
               >
-                <Text className="text-foreground text-xl">−</Text>
-              </Pressable>
-              <Text className="text-foreground w-8 text-center text-lg font-bold">
+                <Text className="text-foreground text-base">−</Text>
+              </MyTouchableOpacity>
+              <Text className="text-foreground w-7 text-center text-base font-bold">
                 {count}
               </Text>
-              <Pressable
+              <MyTouchableOpacity
                 onPress={() => onInc(card)}
                 className="bg-foreground h-9 w-9 items-center justify-center rounded-full"
               >
-                <Text className="text-background-primary text-xl">+</Text>
-              </Pressable>
+                <Text className="text-background-primary text-base">+</Text>
+              </MyTouchableOpacity>
             </View>
-          </View>
-        </Pressable>
+          </Animated.View>
+        </Animated.View>
       </Pressable>
-    </View>
+    </Animated.View>
   );
 }

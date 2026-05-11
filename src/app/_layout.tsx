@@ -1,6 +1,5 @@
 import { queryClient } from '@/api/_config';
 import { dbVersionQueryOptions } from '@/api/queries/db-queries';
-import { logDbStats } from '@/libs/db';
 import { ensureDbDownloaded } from '@/libs/db-download';
 import { posthog } from '@/libs/posthog';
 import '@/global.css';
@@ -39,10 +38,7 @@ function SplashGate() {
     if (!versionQuery.data) return;
     setDbError(undefined);
     ensureDbDownloaded(versionQuery.data)
-      .then(() => {
-        logDbStats();
-        setDbReady(true);
-      })
+      .then(() => setDbReady(true))
       .catch((e) =>
         setDbError(e instanceof Error ? e.message : 'Download failed'),
       );
