@@ -1,6 +1,4 @@
 import { cardsInfiniteQueryOptions } from '@/api/queries/cards-queries';
-import { storage } from '@/libs/mmkv';
-import { persistQueryClient } from '@tanstack/query-persist-client-core';
 import { QueryClient } from '@tanstack/react-query';
 
 export const queryClient = new QueryClient({

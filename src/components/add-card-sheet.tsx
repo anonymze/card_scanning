@@ -77,7 +77,7 @@ export function AddCardSheet({
       }}
     >
       <Text className="font-cinzel-semibold text-foreground mb-4 text-2xl">
-        Add a card
+        Add cards
       </Text>
       <TextInput
         ref={inputRef}

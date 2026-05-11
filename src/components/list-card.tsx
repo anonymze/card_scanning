@@ -59,6 +59,12 @@ export function ListCard({
       className="mb-4"
     >
       <MyTouchableScale
+        onPressIn={() =>
+          router.prefetch({
+            pathname: PATHNAME[variant],
+            params: { id: item.id },
+          })
+        }
         onPress={() =>
           router.push({ pathname: PATHNAME[variant], params: { id: item.id } })
         }

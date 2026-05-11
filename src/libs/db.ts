@@ -58,7 +58,7 @@ export function listCards(
       LIMIT ? OFFSET ?`,
     [lang, limit, offset],
   );
-  return (result.rows ?? []).map((r) => ({
+  return (result.rows ?? []).map((r: Record<string, unknown>) => ({
     oracle_id: String(r.oracle_id),
     display_name: String(r.display_name),
     display_type: r.display_type == null ? null : String(r.display_type),
@@ -93,7 +93,7 @@ export function searchCards(
       LIMIT ? OFFSET ?`,
     [lang, fts, limit, offset],
   );
-  return (result.rows ?? []).map((r) => ({
+  return (result.rows ?? []).map((r: Record<string, unknown>) => ({
     oracle_id: String(r.oracle_id),
     display_name: String(r.display_name),
     display_type: r.display_type == null ? null : String(r.display_type),

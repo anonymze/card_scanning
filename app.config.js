@@ -53,6 +53,7 @@ module.exports = {
             './src/assets/fonts/space_grotesk/SpaceGrotesk-Regular.ttf',
             './src/assets/fonts/space_grotesk/SpaceGrotesk-SemiBold.ttf',
             './src/assets/fonts/space_grotesk/SpaceGrotesk-Bold.ttf',
+            './src/assets/fonts/mana/mana.ttf',
           ],
         },
       ],

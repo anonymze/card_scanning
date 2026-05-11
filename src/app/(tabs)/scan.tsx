@@ -40,6 +40,7 @@ export default function Page() {
       const out = await mtg.forward([
         { dataPtr: input, sizes: [1, 3, SIZE, SIZE], scalarType: ScalarType.FLOAT },
       ]);
+      // @ts-expect-error TensorBuffer union but model output is FLOAT
       detections.value = parseDetections(new Float32Array(out[0].dataPtr));
     }, 1000);
     return () => clearInterval(id);
@@ -79,7 +80,9 @@ export default function Page() {
                 const rect = { x: x - w / 2, y: y - h / 2, width: w, height: h };
                 const rrect = { rect, rx: 14, ry: 14 };
                 const mat = Skia.Matrix();
-                mat.postRotate(angle, x, y);
+                mat.translate(x, y);
+                mat.postRotate(angle);
+                mat.translate(-x, -y);
                 const shader = Skia.Shader.MakeSweepGradient(
                   x, y,
                   [

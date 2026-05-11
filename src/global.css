@@ -10,6 +10,7 @@
   --font-cinzel: 'Cinzel-Regular';
   --font-cinzel-semibold: 'Cinzel-SemiBold';
   --font-cinzel-bold: 'Cinzel-Bold';
+  --font-mana: 'mana';
 }
 
 @layer theme {
@@ -31,6 +32,20 @@
       --color-card-collection-lighter: #472956;
       --color-card-deck: #431919;
       --color-card-deck-lighter: #592626;
+
+      /* Mana color identity */
+      --color-mana-w: #fffbd5;
+      --color-mana-u: #aae0fa;
+      --color-mana-b: #cbc2bf;
+      --color-mana-r: #f9aa8f;
+      --color-mana-g: #9bd3ae;
+      --color-mana-c: #ccc2c0;
+
+      /* Rarity */
+      --color-rarity-common: #1a1718;
+      --color-rarity-uncommon: #707883;
+      --color-rarity-rare: #a58e4a;
+      --color-rarity-mythic: #bf4427;
     }
     @variant dark {
       --color-foreground: #fabd23;
@@ -49,6 +64,20 @@
       --color-card-collection-lighter: #472956;
       --color-card-deck: #431919;
       --color-card-deck-lighter: #592626;
+
+      /* Mana color identity */
+      --color-mana-w: #fffbd5;
+      --color-mana-u: #aae0fa;
+      --color-mana-b: #cbc2bf;
+      --color-mana-r: #f9aa8f;
+      --color-mana-g: #9bd3ae;
+      --color-mana-c: #ccc2c0;
+
+      /* Rarity */
+      --color-rarity-common: #1a1718;
+      --color-rarity-uncommon: #707883;
+      --color-rarity-rare: #a58e4a;
+      --color-rarity-mythic: #bf4427;
     }
   }
 }

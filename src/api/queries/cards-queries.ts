@@ -1,4 +1,3 @@
-import { posthog } from '@/libs/posthog';
 import type {
   ScryfallSearchParams,
   ScryfallSearchResponse,

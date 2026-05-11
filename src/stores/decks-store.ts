@@ -1,4 +1,3 @@
-import { posthog } from '@/libs/posthog';
 import { storage } from '@/libs/mmkv';
 import type { ScryfallCard } from '@/types/cards';
 import type { Collection, CollectionCard } from '@/types/collection';
@@ -92,13 +91,6 @@ export const useDecks = create<DecksState>()(
       },
 
       removeCard: (deckId, cardId) => {
-        const deck = get().decks.find((d) => d.id === deckId);
-        const card = deck?.cards.find((c) => c.id === cardId);
-        // posthog.capture('card_removed_from_deck', {
-        //   deck_id: deckId,
-        //   card_id: cardId,
-        //   card_name: card?.card.name ?? null,
-        // });
         set((state) => ({
           decks: state.decks.map((deck) => {
             if (deck.id !== deckId) return deck;
