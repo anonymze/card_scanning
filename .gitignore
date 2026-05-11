@@ -29,3 +29,4 @@ x/
 .venv
 training/
 .agents/
+skills-lock.json
