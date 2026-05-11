@@ -134,7 +134,7 @@ export function AddCardSheet({
           extraData={countByOracleId}
           keyExtractor={(item) => item.oracle_id}
           estimatedItemSize={72}
-          drawDistance={600}
+          drawDistance={500}
           recycleItems
           ItemSeparatorComponent={ItemSeparator}
           keyboardShouldPersistTaps="handled"
