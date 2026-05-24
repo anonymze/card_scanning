@@ -1,6 +1,7 @@
 import { BottomSheet, BottomSheetRef } from '@/components/bottom-sheet';
 import { CardPreview } from '@/components/card-preview';
 import { EmptyState } from '@/components/empty-state';
+import { MyTouchableScale } from '@/components/my-pressable';
 import { ScrollList } from '@/components/scroll-list';
 import { ManaCost } from '@/components/ui/mana-cost';
 import { TextInput, TextInputRef } from '@/components/ui/text-inputs';
@@ -11,9 +12,8 @@ import type { Card } from '@/types/card';
 import * as Haptics from 'expo-haptics';
 import { Image } from 'expo-image';
 import * as Localization from 'expo-localization';
-import React, { Activity } from 'react';
+import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { MyTouchableScale } from '@/components/my-pressable';
 import { useCSSVariable } from 'uniwind';
 
 const PAGE_SIZE = 50;
@@ -118,86 +118,84 @@ export function AddCardSheet({
         placeholder="Search cards..."
         onChangeText={setSearch}
       />
-      {results.length === 0 ? (
-        <EmptyState
-          size={200}
-          variant="search"
-          className="flex-none items-center pt-12"
-          title="No cards found"
-          subtitle="Try a different search term"
-        />
-      ) : null}
-      <Activity mode={results.length === 0 ? 'hidden' : 'visible'}>
-        <ScrollList
-          style={{ flex: 1, marginTop: 8 }}
-          data={results}
-          extraData={countByOracleId}
-          keyExtractor={(item) => item.oracle_id}
-          estimatedItemSize={72}
-          drawDistance={500}
-          recycleItems
-          ItemSeparatorComponent={ItemSeparator}
-          keyboardShouldPersistTaps="handled"
-          onEndReached={loadMore}
-          onEndReachedThreshold={0.5}
-          renderItem={({ item }) => {
-            const count = countByOracleId[item.oracle_id] ?? 0;
-            const color = rarityColor[item.rarity] ?? rarityColor.common;
-            const gradient = `linear-gradient(to right, ${color}77 0%, ${color}77 55%, ${color}33 100%)`;
-            const subtitle = [
-              item.printed_type_line ?? item.type_line,
-              item.set_code.toUpperCase(),
-            ]
-              .filter(Boolean)
-              .join(' · ');
-            return (
-              <MyTouchableScale
-                onPressIn={() => {
-                  const uri = item.image_art_crop ?? item.image_normal;
-                  if (uri) Image.prefetch(uri);
-                }}
-                onPress={() => handleAdd(item)}
-                onLongPress={() => setPreview(item)}
-                delayLongPress={420}
-                className="flex-row items-center justify-between overflow-hidden rounded-xl px-3 py-3"
-              >
-                <View
-                  pointerEvents="none"
-                  style={[
-                    StyleSheet.absoluteFill,
-                    {
-                      experimental_backgroundImage: gradient,
-                    },
-                  ]}
-                />
-                <View className="flex-1 pr-3">
-                  <View className="flex-row items-center gap-2">
-                    <Text
-                      className="text-foreground shrink text-base"
-                      numberOfLines={1}
-                    >
-                      {item.printed_name ?? item.name}
-                    </Text>
-                    {item.mana_cost ? (
-                      <ManaCost cost={item.mana_cost} size={19} />
-                    ) : null}
-                  </View>
-                  <Text className="text-gray mt-1 text-sm" numberOfLines={1}>
-                    {subtitle}
+      <ScrollList
+        style={{ flex: 1, marginTop: 8 }}
+        data={results}
+        extraData={countByOracleId}
+        keyExtractor={(item) => item.oracle_id}
+        estimatedItemSize={72}
+        drawDistance={500}
+        recycleItems
+        ItemSeparatorComponent={ItemSeparator}
+        keyboardShouldPersistTaps="handled"
+        onEndReached={loadMore}
+        onEndReachedThreshold={0.5}
+        ListEmptyComponent={
+          <EmptyState
+            size={200}
+            variant="search"
+            className="flex-none items-center pt-12"
+            title="No cards found"
+            subtitle="Try a different search term"
+          />
+        }
+        renderItem={({ item }) => {
+          const count = countByOracleId[item.oracle_id] ?? 0;
+          const color = rarityColor[item.rarity] ?? rarityColor.common;
+          const gradient = `linear-gradient(to right, ${color}77 0%, ${color}77 55%, ${color}33 100%)`;
+          const subtitle = [
+            item.printed_type_line ?? item.type_line,
+            item.set_code.toUpperCase(),
+          ]
+            .filter(Boolean)
+            .join(' · ');
+          return (
+            <MyTouchableScale
+              onPressIn={() => {
+                const uri = item.image_art_crop ?? item.image_normal;
+                if (uri) Image.prefetch(uri);
+              }}
+              onPress={() => handleAdd(item)}
+              onLongPress={() => setPreview(item)}
+              delayLongPress={420}
+              className="flex-row items-center justify-between overflow-hidden rounded-xl px-3 py-3"
+            >
+              <View
+                pointerEvents="none"
+                style={[
+                  StyleSheet.absoluteFill,
+                  {
+                    experimental_backgroundImage: gradient,
+                  },
+                ]}
+              />
+              <View className="flex-1 pr-3">
+                <View className="flex-row items-center gap-2">
+                  <Text
+                    className="text-foreground shrink text-base"
+                    numberOfLines={1}
+                  >
+                    {item.printed_name ?? item.name}
+                  </Text>
+                  {item.mana_cost ? (
+                    <ManaCost cost={item.mana_cost} size={19} />
+                  ) : null}
+                </View>
+                <Text className="text-gray mt-1 text-sm" numberOfLines={1}>
+                  {subtitle}
+                </Text>
+              </View>
+              {count > 0 ? (
+                <View className="bg-foreground/10 min-w-10 items-center rounded-full px-2.5 py-1">
+                  <Text className="text-foreground text-sm font-bold">
+                    ×{count}
                   </Text>
                 </View>
-                {count > 0 ? (
-                  <View className="bg-foreground/10 min-w-10 items-center rounded-full px-2.5 py-1">
-                    <Text className="text-foreground text-sm font-bold">
-                      ×{count}
-                    </Text>
-                  </View>
-                ) : null}
-              </MyTouchableScale>
-            );
-          }}
-        />
-      </Activity>
+              ) : null}
+            </MyTouchableScale>
+          );
+        }}
+      />
       <CardPreview
         card={preview}
         count={preview ? (countByOracleId[preview.oracle_id] ?? 0) : 0}

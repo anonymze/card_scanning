@@ -9,6 +9,7 @@ export function ScrollList<T>({
   blurHeader,
   contentContainerStyle,
   showsVerticalScrollIndicator = false,
+  style,
   ...props
 }: LegendListProps<T> & { blurHeader?: boolean }) {
   const insets = useSafeAreaInsets();
@@ -22,7 +23,7 @@ export function ScrollList<T>({
       {...props}
       showsVerticalScrollIndicator={showsVerticalScrollIndicator}
       contentContainerStyle={mergedContentContainerStyle}
-      style={{ flex: 1 }}
+      style={[{ flex: 1 }, style]}
     />
   );
 }

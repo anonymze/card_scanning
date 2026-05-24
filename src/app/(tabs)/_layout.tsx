@@ -5,16 +5,16 @@ import { haptic } from '@/libs/haptics';
 import { useLoaderGlobal } from '@/stores/loader-store';
 import { Tabs } from 'expo-router';
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, type ColorValue } from 'react-native';
 import { useCSSVariable } from 'uniwind';
 
-const ScanTabIcon = React.memo(({ color }: { color: string }) => {
+const ScanTabIcon = React.memo(({ color }: { color: ColorValue }) => {
   const { loading } = useLoaderGlobal();
   return (
     <>
       <LoaderTabs width={92} height={92} loading={loading} />
       <View className="absolute w-12 items-center justify-center gap-1">
-        <Icon name="scan" size={28} color={color} />
+        <Icon name="scan" size={28} color={String(color)} />
         <Text style={{ color }} className="text-xs">
           Scan
         </Text>
@@ -61,12 +61,12 @@ export default function TabLayout() {
             color,
             focused,
           }: {
-            color: string;
+            color: ColorValue;
             focused: boolean;
           }) => {
             return (
               <AnimatedTabIcon focused={focused}>
-                <Icon name="collection" size={26} color={color} />
+                <Icon name="collection" size={26} color={String(color)} />
               </AnimatedTabIcon>
             );
           },
@@ -81,12 +81,12 @@ export default function TabLayout() {
             color,
             focused,
           }: {
-            color: string;
+            color: ColorValue;
             focused: boolean;
           }) => {
             return (
               <AnimatedTabIcon focused={focused}>
-                <Icon name="decks" size={26} color={color} />
+                <Icon name="decks" size={26} color={String(color)} />
               </AnimatedTabIcon>
             );
           },
@@ -96,7 +96,7 @@ export default function TabLayout() {
         name="scan"
         options={{
           title: '',
-          tabBarIcon: ({ color }: { color: string }) => (
+          tabBarIcon: ({ color }: { color: ColorValue }) => (
             <ScanTabIcon color={color} />
           ),
         }}
@@ -110,12 +110,12 @@ export default function TabLayout() {
             color,
             focused,
           }: {
-            color: string;
+            color: ColorValue;
             focused: boolean;
           }) => {
             return (
               <AnimatedTabIcon focused={focused}>
-                <Icon name="shop" size={26} color={color} />
+                <Icon name="shop" size={26} color={String(color)} />
               </AnimatedTabIcon>
             );
           },
@@ -129,12 +129,12 @@ export default function TabLayout() {
             color,
             focused,
           }: {
-            color: string;
+            color: ColorValue;
             focused: boolean;
           }) => {
             return (
               <AnimatedTabIcon focused={focused}>
-                <Icon name="settings" size={26} color={color} />
+                <Icon name="settings" size={26} color={String(color)} />
               </AnimatedTabIcon>
             );
           },

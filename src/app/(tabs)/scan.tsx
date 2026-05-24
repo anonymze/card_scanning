@@ -7,7 +7,7 @@ import {
 } from '@/components/camera';
 import { Icon } from '@/components/icons';
 import { Skia } from '@shopify/react-native-skia';
-import { useIsFocused } from '@react-navigation/native';
+import { useIsFocused } from 'expo-router/react-navigation';
 import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import { ScalarType, useExecutorchModule } from 'react-native-executorch';
