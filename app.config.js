@@ -27,7 +27,8 @@ module.exports = {
       infoPlist: {
         ITSAppUsesNonExemptEncryption: false,
         CFBundleDisplayName: 'Arcane Lens',
-        NSCameraUsageDescription: '$(PRODUCT_NAME) needs access to your camera.',
+        NSCameraUsageDescription:
+          '$(PRODUCT_NAME) needs access to your camera.',
       },
     },
     android: {
@@ -41,6 +42,8 @@ module.exports = {
     },
     plugins: [
       'expo-router',
+      'expo-image',
+      'expo-status-bar',
       'expo-localization',
       [
         'expo-font',
@@ -73,10 +76,7 @@ module.exports = {
         },
       ],
       'react-native-edge-to-edge',
-      [
-        'expo-build-properties',
-        { android: { minSdkVersion: 33 } },
-      ],
+      ['expo-build-properties', { android: { minSdkVersion: 33 } }],
     ],
     extra: {
       router: { origin: false },
